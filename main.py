@@ -78,15 +78,12 @@ if __name__ == "__main__":
     sorted = dict(sorted(freqDict.items(), key=lambda item: item[1]))
     print(sorted)
 
-
-
     file = open("frequency.txt", "w", encoding='utf-8')
 
     for key, value in sorted.items():
 
         # file.write(str(key) + str(value) + "\n")
         file.write(str(key) + "\n")
-
 
     print("Miss-matched: ")
     for line in missMatch:
