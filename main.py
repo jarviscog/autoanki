@@ -17,11 +17,19 @@ if __name__ == "__main__":
     freqDict = {}
     missMatch = []
     missMatchCount = 0
-    for lineNum in range(700):
+    for lineNum in range(7000):
 
         linePinyin = f.readline().split(" ")
         lineChars = f.readline().split(" ")
 
+        # print(lineNum)
+        # print(linePinyin)
+        # print(lineChars)
+
+        # if (linePinyin[-1] == '\n' and lineChars[-1] == '\n'):
+        #     print("Pop")
+            # linePinyin.pop(-1)
+            # lineChars.pop(-1)
         # print(lineNum)
 
         # There are some sentences that do not play well in the translator. These are looked at separately, and can be differentiated by
@@ -34,6 +42,21 @@ if __name__ == "__main__":
             missMatch.append([lineNum,linePinyin,lineChars])
 
             missMatchCount +=1
+
+            for i in range(len(lineChars)-1):
+
+                if not containsAny(lineChars[i], "。，？！…"):
+
+                    # print(lineChars[i] + "  " + linePinyin[i])
+
+                    if lineChars[i] in freqDict:
+
+                        # print("Key found: " + str(freqDict[lineChars[i]]))
+                        freqDict[lineChars[i]] += 1
+
+                    else:
+
+                        freqDict[lineChars[i]] = 1
 
         else:
 
@@ -55,12 +78,22 @@ if __name__ == "__main__":
     sorted = dict(sorted(freqDict.items(), key=lambda item: item[1]))
     print(sorted)
 
-    print("Miss-matched: ")
-    # for line in missMatch:
 
-        # print(line[0])
-        # print(line[1])
-        # print(line[2])
-        # print("")
+
+    file = open("frequency.txt", "w", encoding='utf-8')
+
+    for key, value in sorted.items():
+
+        # file.write(str(key) + str(value) + "\n")
+        file.write(str(key) + "\n")
+
+
+    print("Miss-matched: ")
+    for line in missMatch:
+
+        print(line[0])
+        print(line[1])
+        print(line[2])
+        print("")
 
     print(missMatchCount)
