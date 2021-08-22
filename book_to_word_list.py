@@ -1,7 +1,6 @@
-import codecs
 import pinyin as pin
 import os
-import main
+import general_functions
 
 def containsAny(str, set):
     """ Check whether sequence str contains ANY of the items in set. """
@@ -14,17 +13,16 @@ def convert(filename="full_book_with_pinyin.txt", sort_by_frequency = False, has
 
 
     if(has_pinyin):
-        numOfLines = int(main.file_len(filename)/2)
+        numOfLines = int(general_functions.file_len(filename)/2)
     else:
-        numOfLines = int(main.file_len(filename))
-
-    print(numOfLines)
+        numOfLines = int(general_functions.file_len(filename))
 
     f = open(filename, "r", encoding='utf-8')
 
     freqDict = {}
     missMatch = []
     missMatchCount = 0
+    linePinyin = None
     for lineNum in range(numOfLines):
 
         if(has_pinyin):
@@ -80,10 +78,14 @@ def convert(filename="full_book_with_pinyin.txt", sort_by_frequency = False, has
     for key, value in dictToWrite.items():
 
         # Writes the number of times a character shows up in the book if specified
+
+        lineToWrite = str(key)
+
+
         if(write_frequency):
-            file.write(str(key) + " " + str(value) + "\n")
-        else:
-            file.write(str(key) + "\n")
+            lineToWrite += ", number_of_appearances:" + str(value)
+
+        file.write(lineToWrite + "\n")
 
     return newFileName
 
