@@ -83,7 +83,7 @@ def convert(filename="full_book_with_pinyin.txt", sort_by_frequency = False, has
 
 
         if(write_frequency):
-            lineToWrite += ", number_of_appearances:" + str(value)
+            lineToWrite += "& number_of_appearances:" + str(value)
 
         file.write(lineToWrite + "\n")
 
