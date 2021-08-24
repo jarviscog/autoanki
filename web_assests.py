@@ -14,7 +14,7 @@ def getAssets(filename):
         filename: the file to be read from. The output file will be the filename with _definitions appended
 
     '''
-    print(getDefinitions(filename, 10))
+    print(getDefinitions(filename, 1))
     # print(getAudio(filename))
     # print(getImages(filename))
 
@@ -39,7 +39,7 @@ def getPinyin(filename):
         options.add_experimental_option("prefs", prefs)
         options.headless = False
         url = 'https://www.purpleculture.net/chinese-pinyin-converter/'
-        driver = webdriver.Chrome(options=options, executable_path=r'D:\Downloads\chromedriver_win32\chromedriver.exe')
+        driver = webdriver.Chrome(options=options, executable_path=str(os.getcwd() + "\\" + 'chromedriver.exe'))
         driver.get(url)
         # Grabs the definition part of the screen
         file_tab = driver.find_element_by_xpath('//*[@id="pageTwo"]/div[3]/div[1]/ul/li[2]/a')
@@ -94,7 +94,7 @@ def getDefinitions(filename, number_of_definitions_to_add):
         lineArr = line.split("&")
         chars = lineArr[0]
 
-        driver = webdriver.Chrome(options=options, executable_path=r'D:\Downloads\chromedriver_win32\chromedriver.exe')
+        driver = webdriver.Chrome(options=options, executable_path=str(os.getcwd() + "\\" + 'chromedriver.exe'))
         driver.get(url)
 
         # Grabs the definition part of the screen
@@ -127,8 +127,38 @@ def getDefinitions(filename, number_of_definitions_to_add):
     print("Definitions dict")
     print(definitionsDict)
 
+    charLineDict = {}
+
     for key, value in definitionsDict.items():
         print(key, '->', value)
+
+        file = open(filename, "r", encoding='utf-8')
+        fileLength = general_functions.file_len(filename)
+        for i in range(fileLength):
+
+            line = file.readline()
+            chars = line.split("&")[0]
+
+            if (key == chars):
+
+                print("Found a match on line " + str(i))
+
+                charLineDict[chars] = i
+
+        for key, value in definitionsDict.items():
+
+            ogFile = open(filename, "r", encoding='utf-8')
+
+            for i in range(int(value)):
+
+                ogFile.readline()
+
+                print(i)
+
+            print("The key is " + key)
+            print("The value is " + value)
+            print("The key is " + key)
+
 
 
 
