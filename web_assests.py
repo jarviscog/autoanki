@@ -14,8 +14,8 @@ def getAssets(filename):
         filename: the file to be read from. The output file will be the filename with _definitions appended
 
     '''
-    print(getDefinitions(filename, 1))
-    # print(getAudio(filename))
+    # print(getDefinitions(filename, 10))
+    print(getAudio("pinyinForAudioDownloader.txt"))
     # print(getImages(filename))
 
 def getPinyin(filename):
@@ -63,7 +63,7 @@ def getPinyin(filename):
     newFileName = os.path.splitext(filename)[0] + "_pinyin.txt"
 
     newFile = open(newFileName, "w", encoding='utf-8')
-    length = general_functions.file_len(downloadedFilepath)
+    length = int(general_functions.file_len(downloadedFilepath)/2)
 
     for i in range(length):
 
@@ -93,14 +93,22 @@ def getDefinitions(filename, number_of_definitions_to_add):
         line = f.readline()
         lineArr = line.split("&")
         chars = lineArr[0]
+        hasDefinition = False
+        for i in range(len(lineArr)):
+            if(lineArr[i].split(':')[0].strip() == "definition"):
+                print("There is a definition here " + chars)
+                hasDefinition = True
+        if(hasDefinition):
+            continue
+        print("This better not have a definition: " + chars)
 
         driver = webdriver.Chrome(options=options, executable_path=str(os.getcwd() + "\\" + 'chromedriver.exe'))
         driver.get(url)
-
         # Grabs the definition part of the screen
         search_box = driver.find_element_by_name('word')
         search_box.send_keys(chars)
         search_box.submit()
+
         try:
 
             mainData = driver.find_element_by_id('mainData')
@@ -121,6 +129,7 @@ def getDefinitions(filename, number_of_definitions_to_add):
         except Exception as e:
 
             print(e)
+            definitionsDict[chars] = "null"
 
         driver.quit()
 
@@ -161,6 +170,17 @@ def getDefinitions(filename, number_of_definitions_to_add):
 
 
 
+    newFileName = os.path.splitext(filename)[0] + "_definitions.txt"
+    file = open(filename, "r", encoding='utf-8')
+    newFile = open(newFileName, "w", encoding='utf-8')
+
+    length = general_functions.file_len(filename)
+
+    for i in range(length):
+
+        file.readline()
+
+
 
 def getAudio(filename):
     '''
@@ -168,27 +188,26 @@ def getAudio(filename):
         filename: the file to be read from. The files downloaded will be in the audio file
 
     '''
-    charsFile = open(filename, "r", encoding='utf-8')
+    pinyinToDownload = open(filename, "r", encoding='utf-8')
+    length = general_functions.file_len(filename)
 
-    charsFileLength = general_functions.file_len(filename)
+    for i in range(410):
 
-    # for i in range(charsFileLength):
-    for i in range(5):
-        line = charsFile.readline()
+        line = pinyinToDownload.readline().strip('\n').strip()
 
-        chars = line.split('&')[0].strip()
-        pinyin = line.split('&')[2].split(':')[1]
-        pinyinClean = unidecode.unidecode(pinyin)
-        print(chars)
-        print(len(chars))
-        print(pinyin)
-        print(pinyinClean)
-        if (os.path.exists("audio\\" + pinyinClean + '1')):
-            print('found 1')
+        # Used to check if the file has already been downloaded
+        fileExists = {1:False,2:False,3:False,4:False,5:False}
+        requesters = {}
+        for i in range(5):
 
+            if (os.path.exists("audio\\" + line + str(i+1) + '.mp3')):
+                print('Found a file in audio: ' + line + str(i+1))
+                fileExists[i+1] = True
 
-        # print("Error finding")
-        # print('https://r.yellowbridge.com/sounds/py-cbr/tiao3.mp3')
+            if(fileExists[i+1] == False):
+                requesters[i+1] = requests.get(str('https://r.yellowbridge.com/sounds/py-cbr/' + line + str(i+1) + '.mp3'), allow_redirects=True)
+                time.sleep(1)
+                open(str('audio\\' + line + str(i+1) + '.mp3'), 'wb').write(requesters[i+1].content)
 
 def getImages(filename):
 
