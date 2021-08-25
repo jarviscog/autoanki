@@ -41,7 +41,7 @@ def convert(filename="full_book_with_pinyin.txt", sort_by_frequency = False, has
             missMatchCount +=1
 
             for i in range(len(lineChars)-1):
-                if not containsAny(lineChars[i], "。，？！…"):
+                if not containsAny(lineChars[i], "。，？！…、·"):
                     # print(lineChars[i] + "  " + linePinyin[i])
                     if lineChars[i] in freqDict:
                         # print("Key found: " + str(freqDict[lineChars[i]]))
@@ -51,7 +51,7 @@ def convert(filename="full_book_with_pinyin.txt", sort_by_frequency = False, has
 
         else:
             for i in range(len(lineChars)-1):
-                if not containsAny(lineChars[i], "。，？！…"):
+                if not containsAny(lineChars[i], "。，？！…、·"):
                     if lineChars[i] in freqDict:
                         # print("Key found: " + str(freqDict[lineChars[i]]))
                         freqDict[lineChars[i]] += 1

@@ -524,7 +524,6 @@
 然后& number_of_appearances:50
 旋转& number_of_appearances:16
 团& number_of_appearances:24
-、& number_of_appearances:214
 组成& number_of_appearances:2
 迷雾& number_of_appearances:5
 涌起& number_of_appearances:16
@@ -8605,7 +8604,6 @@
 同事& number_of_appearances:1
 发件人& number_of_appearances:1
 艾娃& number_of_appearances:1
-·& number_of_appearances:1
 佩奇& number_of_appearances:1
 组& number_of_appearances:2
 此次& number_of_appearances:2

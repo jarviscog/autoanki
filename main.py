@@ -19,4 +19,3 @@ if __name__ == "__main__":
     word_list_w_pinyin = web_assests.getPinyin(word_list_filename)
 
     web_assests.getAssets(word_list_w_pinyin)
-
