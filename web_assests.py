@@ -1,22 +1,12 @@
 from time import sleep
+import book_to_word_list
+from selenium.webdriver.support.select import Select
 import general_functions
 import requests
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
-import unidecode
 import time
 import os
-
-
-def getAssets(filename):
-    '''
-    Downloads the definitions, audio, and images for all of the characters in a given file. All words should be on different lines in the file
-        filename: the file to be read from. The output file will be the filename with _definitions appended
-
-    '''
-    # print(getDefinitions(filename, 10))
-    print(getAudio("pinyinForAudioDownloader.txt"))
-    # print(getImages(filename))
 
 def getPinyin(filename):
 
@@ -26,9 +16,8 @@ def getPinyin(filename):
     downloadedFilepath = "C:\\Users\\jarvi\\Downloads\\" + filename
 
     if(os.path.exists(file_to_be_created)):
-
+        print('getPinyin() already done')
         return file_to_be_created
-
 
     if os.path.exists(downloadedFilepath):
     #     File has already been downloaded
@@ -73,9 +62,80 @@ def getPinyin(filename):
         newFile.write(originalFile + "&pinyin:" + pinyin + "\n")
 
     # print('getPinyin end')
+
     return newFileName
 
-def getDefinitions(filename, number_of_definitions_to_add):
+def getPinyinNumbers(filename):
+
+    file_to_be_created = os.path.splitext(filename)[0] + "_pinyinNum.txt"
+
+    print(file_to_be_created)
+
+    # FIXME Remove hard-coding of downloaded filepath
+    downloadedFilepath = "C:\\Users\\jarvi\\Downloads\\" + file_to_be_created
+
+    if(os.path.exists(file_to_be_created)):
+        print('getPinyinNumbers() already done')
+        return file_to_be_created
+
+    if os.path.exists(downloadedFilepath):
+    #     File has already been downloaded
+        print("File already downloaded")
+    else:
+
+        cut_filename = general_functions.cut(filename)
+
+        downloadedFilepath = "C:\\Users\\jarvi\\Downloads\\" + cut_filename
+
+        options = Options()
+        options.headless = False
+        url = 'https://www.purpleculture.net/chinese-pinyin-converter/'
+        driver = webdriver.Chrome(options=options, executable_path=str(os.getcwd() + "\\" + 'chromedriver.exe'))
+        driver.get(url)
+        # Grabs the definition part of the screen
+        file_tab = driver.find_element_by_xpath('//*[@id="pageTwo"]/div[3]/div[1]/ul/li[2]/a')
+        file_tab.click()
+        uploadBox = driver.find_element_by_id('txtfile')
+        uploadBox.send_keys(os.getcwd() + "\\" + cut_filename)
+        select = Select(driver.find_element_by_id('toneselection_file'))
+        # select by visible text
+        select.select_by_value('number')
+
+        convertButton = driver.find_element_by_xpath('//*[@id="fileuploadform"]/div[2]/div/button[1]')
+        convertButton.click()
+        #Wait until file is in downloads file. Times out after 15 seconds
+        for i in range(30):
+            if(os.path.exists(downloadedFilepath)):
+                break
+            time.sleep(0.5)
+            if(i == 29):
+                print("getPinyinNum File not downloaded correctly")
+                return
+        driver.quit()
+
+    # The file with the characters and pinyin numbers
+    pinyinFile = open(downloadedFilepath, "r", encoding='utf-8')
+    # The new file to be created
+    newFileName = os.path.splitext(filename)[0] + "_pinyinNum.txt"
+
+    wordListFile = open(filename, 'r', encoding='utf-8')
+
+    newFile = open(newFileName, "w", encoding='utf-8')
+    length = int(general_functions.file_len(downloadedFilepath)/2)
+
+    for i in range(length):
+
+        pinyin = pinyinFile.readline().strip()
+        originalFileCut = pinyinFile.readline().replace("\n", "").strip()
+        wordListFileLine = wordListFile.readline().replace("\n", "").strip()
+        newFile.write(wordListFileLine + "&pinyinNum:" + pinyin + "\n")
+
+    # print('getPinyinNum() done')
+
+    return newFileName
+
+
+def getDefinitions(filename, new_filename, number_of_definitions_to_add):
     '''
     Takes a file with 1 definition per line, and downloads definitions for each
         filename: the file to be read from. The output file will be the filename with _definitions appended
@@ -84,7 +144,7 @@ def getDefinitions(filename, number_of_definitions_to_add):
     f = open(filename, "r", encoding='utf-8')
 
     options = Options()
-    options.headless = False
+    options.headless = True
     url = 'https://www.yellowbridge.com/chinese/dictionary.php'
     definitionsDict = {}
 
@@ -100,7 +160,6 @@ def getDefinitions(filename, number_of_definitions_to_add):
                 hasDefinition = True
         if(hasDefinition):
             continue
-        print("This better not have a definition: " + chars)
 
         driver = webdriver.Chrome(options=options, executable_path=str(os.getcwd() + "\\" + 'chromedriver.exe'))
         driver.get(url)
@@ -133,44 +192,28 @@ def getDefinitions(filename, number_of_definitions_to_add):
 
         driver.quit()
 
-    print("Definitions dict")
-    print(definitionsDict)
+    # print("Definitions dict")
+    # print(definitionsDict)
 
-    charLineDict = {}
+    # charLineDict = {}
+    #
+    # for key, value in definitionsDict.items():
+    #     print(key, '->', value)
+    #
+    #     file = open(filename, "r", encoding='utf-8')
+    #     fileLength = general_functions.file_len(filename)
+    #     for i in range(fileLength):
+    #
+    #         line = file.readline()
+    #         chars = line.split("&")[0]
+    #
+    #         if (key == chars):
+    #
+    #             print("Found a match on line " + str(i))
+    #
+    #             charLineDict[chars] = i
 
-    for key, value in definitionsDict.items():
-        print(key, '->', value)
-
-        file = open(filename, "r", encoding='utf-8')
-        fileLength = general_functions.file_len(filename)
-        for i in range(fileLength):
-
-            line = file.readline()
-            chars = line.split("&")[0]
-
-            if (key == chars):
-
-                print("Found a match on line " + str(i))
-
-                charLineDict[chars] = i
-
-        for key, value in definitionsDict.items():
-
-            ogFile = open(filename, "r", encoding='utf-8')
-
-            for i in range(int(value)):
-
-                ogFile.readline()
-
-                print(i)
-
-            print("The key is " + key)
-            print("The value is " + value)
-            print("The key is " + key)
-
-
-
-    newFileName = os.path.splitext(filename)[0] + "_definitions.txt"
+    newFileName = new_filename
     file = open(filename, "r", encoding='utf-8')
     newFile = open(newFileName, "w", encoding='utf-8')
 
@@ -178,20 +221,35 @@ def getDefinitions(filename, number_of_definitions_to_add):
 
     for i in range(length):
 
-        file.readline()
+        lineToAdd = file.readline().strip('\n')
+
+        lineChars = lineToAdd.strip().split('&')[0]
+        # print(lineChars)
+        if lineChars and lineChars in definitionsDict:
+            if definitionsDict[lineChars]:
+                print('Found a match')
+                lineToAdd += str("&definition:" + definitionsDict[lineChars])
+
+        lineToAdd += '\n'
+        print('Line to add: ' + lineToAdd)
+
+        newFile.write(lineToAdd)
+
+
+
 
 
 
 def getAudio(filename):
     '''
-    Takes a file with 1 word + pinyin per line, and downloads definitions for each
-        filename: the file to be read from. The files downloaded will be in the audio file
-
+    Downloads the pinyin audio clips based off a file with a list of pinyin. Downloading all audio is 2049 files. Some downloaded files will be invalid
+    because some sounds like bang5 do not exist.
     '''
+    print('getAudio()')
     pinyinToDownload = open(filename, "r", encoding='utf-8')
     length = general_functions.file_len(filename)
 
-    for i in range(410):
+    for i in range(length):
 
         line = pinyinToDownload.readline().strip('\n').strip()
 
@@ -207,8 +265,11 @@ def getAudio(filename):
             if(fileExists[i+1] == False):
                 requesters[i+1] = requests.get(str('https://r.yellowbridge.com/sounds/py-cbr/' + line + str(i+1) + '.mp3'), allow_redirects=True)
                 time.sleep(1)
+
                 open(str('audio\\' + line + str(i+1) + '.mp3'), 'wb').write(requesters[i+1].content)
+    print('getAudio() done')
 
 def getImages(filename):
 
+    #FIXME Finish image grabber
     return "Get definitions is a WIP"

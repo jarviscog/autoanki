@@ -1,0 +1,19 @@
+Metadata-Version: 2.1
+Name: genanki
+Version: 0.11.0
+Summary: Generate Anki decks programmatically
+Home-page: http://github.com/kerrickstaley/genanki
+Author: Kerrick Staley
+Author-email: k@kerrickstaley.com
+License: MIT
+Keywords: anki,flashcards,memorization
+Platform: UNKNOWN
+Requires-Python: >=3.6
+Requires-Dist: cached-property
+Requires-Dist: frozendict
+Requires-Dist: pystache
+Requires-Dist: pyyaml
+
+UNKNOWN
+
+

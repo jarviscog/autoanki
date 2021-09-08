@@ -5,3 +5,5 @@ venv/
 __pycache__/
 venv/Lib/site-packages/urllib3/util/__pycache__/proxy.cpython-38.pyc
 venv/Lib/site-packages/urllib3/util/__pycache__/request.cpython-38.pyc
+.idea/AutoAnki.iml
+.idea/misc.xml

@@ -12,3 +12,22 @@ def file_exists(filename):
         return True
     else:
         return False
+
+def cut(filename, extention='_cut.txt'):
+
+    newFilename = os.path.splitext(filename)[0] + extention
+
+    file = open(filename, "r", encoding='utf-8')
+
+    cutFile = open(newFilename, "w", encoding='utf-8')
+
+    length = file_len(filename)
+
+    for i in range(length):
+
+        chars = file.readline().split('&')[0]
+        cutFile.write(chars + '\n')
+
+    print('Cut file: ' + filename)
+    print('New file: ' + newFilename)
+    return newFilename

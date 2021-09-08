@@ -6,10 +6,9 @@ def containsAny(str, set):
     """ Check whether sequence str contains ANY of the items in set. """
     return 1 in [c in str for c in set]
 
-NEW_FILE_EXTENTION = "_word_list.txt"
 
 
-def convert(filename="full_book_with_pinyin.txt", sort_by_frequency = False, has_pinyin = True, write_frequency = True):
+def convert(filename="maze_runner_pinyin.txt", sort_by_frequency = False, has_pinyin = True, write_frequency = True, extention="_word_list.txt"):
 
 
     if(has_pinyin):
@@ -35,13 +34,13 @@ def convert(filename="full_book_with_pinyin.txt", sort_by_frequency = False, has
 
         # Sometimes the pinyin and the characters from the chars to pinyin website do not line up.
         # The characters are taken from the
-        if(len(lineChars) != len(linePinyin)):
+        if(linePinyin and len(lineChars) != len(linePinyin)):
 
             missMatch.append([lineNum,linePinyin,lineChars])
-            missMatchCount +=1
+            missMatchCount += 1
 
             for i in range(len(lineChars)-1):
-                if not containsAny(lineChars[i], "。，？！…、·"):
+                if not containsAny(lineChars[i], "。，？！…、·&"):
                     # print(lineChars[i] + "  " + linePinyin[i])
                     if lineChars[i] in freqDict:
                         # print("Key found: " + str(freqDict[lineChars[i]]))
@@ -71,7 +70,7 @@ def convert(filename="full_book_with_pinyin.txt", sort_by_frequency = False, has
     # file -> ['file','']
     newFileName = os.path.splitext(filename)[0]
 
-    newFileName = newFileName + NEW_FILE_EXTENTION
+    newFileName = newFileName + extention
 
     file = open(newFileName, "w", encoding='utf-8')
 
