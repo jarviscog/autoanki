@@ -1,49 +1,50 @@
 import genanki
 from genanki import Model
-import random
+# import random
 import general_functions
 
 chinese_card_model = Model(
-  1559383145,
-  'Chinese Card (AutoAnki)',
-  fields=[
-    {
-      'name': 'Front',
-      'font': 'Arial',
-    },
-      {
-          'name': 'Pinyin',
-          'font': 'Arial',
-      },
-    {
-      'name': 'Back',
-      'font': 'Arial',
-    },
-  ],
-  templates=[
-    {
-      'name': 'Card 1',
-      'qfmt': '{{Front}}',
-      'afmt': '{{FrontSide}}\n\n<hr id=answer>\n{{Pinyin}}\n{{Back}}',
-    },
-    # {
-      # 'name': 'Card 2',
-      # 'qfmt': '{{FrontSide}}\n\n<hr id=answer>\n{{Pinyin}}\n{{Back}}',
-      # 'afmt': '{{Front}}',
-    # },
-  ],
-  css='.card {\n font-family: arial;\n font-size: 20px;\n text-align: center;\n color: black;\n background-color: white;\n}\n',
+    1559383145,
+    'Chinese Card (AutoAnki)',
+    fields=[
+        {
+            'name': 'Front',
+            'font': 'Arial',
+        },
+        {
+            'name': 'Pinyin',
+            'font': 'Arial',
+        },
+        {
+            'name': 'Back',
+            'font': 'Arial',
+        },
+    ],
+    templates=[
+        {
+            'name': 'Card 1',
+            'qfmt': '{{Front}}',
+            'afmt': '{{FrontSide}}\n\n<hr id=answer>\n{{Pinyin}}<br>\n{{Back}}',
+        },
+        # {
+        # 'name': 'Card 2',
+        # 'qfmt': '{{FrontSide}}\n\n<hr id=answer>\n{{Pinyin}}\n{{Back}}',
+        # 'afmt': '{{Front}}',
+        # },
+    ],
+    css='.card {\n font-family: arial;\n font-size: 30px;\n text-align: center;\n color: black;\n background-color: white;\n}\n',
 )
 
-def createTestDeck():
-    '''
+
+def create_test_deck():
+    """
     Used for testing
     :return:
-    '''
+    """
 
     print("Generating card")
     my_note = genanki.Note(
-        model = chinese_card_model,
+        model=chinese_card_model,
         fields=['Capital of Canada', 'Ottawa'],
         sort_field=1
     )
@@ -55,73 +56,85 @@ def createTestDeck():
     my_deck.add_note(my_note)
     genanki.Package(my_deck).write_to_file('output.apkg')
 
-def generate_note(character, pinyin, definition):
 
+def generate_note(character, pinyin, definition):
     note = None
 
     note = genanki.Note(
-        model = chinese_card_model,
+        model=chinese_card_model,
         fields=[character, pinyin, definition],
         # sort_field can be used to sort when the cards appear.
         # By default they are shown in the order they are addeed, so this is not currently used
-        sort_field=1
+        sort_field=1,
+
+
 
     )
 
     return note
 
+
 # Generates an anki file based off of a txt file of definitions
 def generate_file(deck_name, definitions_filename):
+    """
 
+    :param deck_name:
+    :param definitions_filename:
+    :return:
+    """
     # Number of valid cards that have been added to the deck
-    numOfValidCards = 0
+    num_of_valid_cards_added = 0
 
     my_deck = genanki.Deck(
         2020000110,
         deck_name
     )
 
-    run = True
-
     length = general_functions.file_len(definitions_filename)
-
     file = open(definitions_filename, "r", encoding='utf-8')
 
-    # while run:
+    # Iterate all lines in the definitions file
     for i in range(length):
 
-        line = file.readline().replace('\n','')
-        lineArr = line.split('&')
-        char = lineArr[0]
-        appearances = lineArr[1].split(':')[1]
-        pinyin = lineArr[2].split(':')[1]
-        pinyinNum = lineArr[3].split(':')[1]
+        line = file.readline().replace('\n', '')
+        line_arr = line.split('&')
+        char = line_arr[0]
+        appearances = line_arr[1].split(':')[1]
+        pinyin = line_arr[2].split(':')[1]
+        pinyin_num = line_arr[3].split(':')[1]
 
         # print(char)
-        fourExists = False
         try:
             # tries index of 5. If there is no definition then this will fail
             # p is a dummy variable
-            p = lineArr[4]
-            p = lineArr[4].split(':')[1]
-            fourExists = True
+            p = line_arr[4]
+            p = line_arr[4].split(':')[1]
+            definitions_exist = True
 
         except IndexError:
-            fourExists = False
+            definitions_exist = False
 
-        if fourExists:
+        if definitions_exist:
 
-            definition = lineArr[4].split(':')[1]
+            definitions = line_arr[4].split(':')[1]
             # print('Generating note: ' + char + ' ' + pinyin)
-            if definition != 'null' and definition != '(Not available);':
-                note = generate_note(char, pinyin, definition)
+            if definitions != 'null' and definitions != '(Not available);':
+
+                definition_string = '<br>'
+
+                for definition in definitions.split(';'):
+
+                    # Anki uses html to format cards
+                    definition_string += definition
+                    definition_string += "<br>"
+
+                note = generate_note(char, pinyin, definition_string)
                 my_deck.add_note(note)
-                numOfValidCards +=1
+                num_of_valid_cards_added += 1
 
     genanki.Package(my_deck).write_to_file('output.apkg')
-    print("Deck " + deck_name + " created with " + str(numOfValidCards) + " cards")
+    print("Deck " + deck_name + " created with " + str(num_of_valid_cards_added) + " cards")
 
 
 if __name__ == '__main__':
-
-    generate_file('maze_runner_definitions.txt')
+    generate_file('maze_runner_definitions.txt', 'example.txt')
