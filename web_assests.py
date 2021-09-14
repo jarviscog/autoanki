@@ -24,8 +24,8 @@ def getPinyin(filename):
         print("File already downloaded")
     else:
         options = Options()
-        prefs = {"download.default_directory": "/some/path"}
-        options.add_experimental_option("prefs", prefs)
+        # prefs = {"download.default_directory": "/some/path"}
+        # options.add_experimental_option("prefs", prefs)
         options.headless = False
         url = 'https://www.purpleculture.net/chinese-pinyin-converter/'
         driver = webdriver.Chrome(options=options, executable_path=str(os.getcwd() + "\\" + 'chromedriver.exe'))
@@ -134,7 +134,6 @@ def getPinyinNumbers(filename):
 
     return newFileName
 
-
 def getDefinitions(filename, new_filename, number_of_definitions_to_add):
     '''
     Takes a file with 1 definition per line, and downloads definitions for each
@@ -192,27 +191,6 @@ def getDefinitions(filename, new_filename, number_of_definitions_to_add):
 
         driver.quit()
 
-    # print("Definitions dict")
-    # print(definitionsDict)
-
-    # charLineDict = {}
-    #
-    # for key, value in definitionsDict.items():
-    #     print(key, '->', value)
-    #
-    #     file = open(filename, "r", encoding='utf-8')
-    #     fileLength = general_functions.file_len(filename)
-    #     for i in range(fileLength):
-    #
-    #         line = file.readline()
-    #         chars = line.split("&")[0]
-    #
-    #         if (key == chars):
-    #
-    #             print("Found a match on line " + str(i))
-    #
-    #             charLineDict[chars] = i
-
     newFileName = new_filename
     file = open(filename, "r", encoding='utf-8')
     newFile = open(newFileName, "w", encoding='utf-8')
@@ -227,11 +205,11 @@ def getDefinitions(filename, new_filename, number_of_definitions_to_add):
         # print(lineChars)
         if lineChars and lineChars in definitionsDict:
             if definitionsDict[lineChars]:
-                print('Found a match')
+                # print('Found a match')
                 lineToAdd += str("&definition:" + definitionsDict[lineChars])
 
         lineToAdd += '\n'
-        print('Line to add: ' + lineToAdd)
+        # print('Line to add: ' + lineToAdd)
 
         newFile.write(lineToAdd)
 

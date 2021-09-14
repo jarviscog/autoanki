@@ -570,362 +570,362 @@
 仍然 & number_of_appearances : 18&pinyin:réngrán&pinyinNum:reng2ran2&definition:still; yet;
 有些 & number_of_appearances : 109&pinyin:yǒuxiē&pinyinNum:you3xie1&definition:some; somewhat;
 眩晕 & number_of_appearances : 5&pinyin:xuànyùn&pinyinNum:xuan4yun4&definition:vertigo; dizziness; fainting; feeling of swaying, head spinning, lack of balance or floating (e.g. from a stroke);
-踉跄 & number_of_appearances : 5&pinyin:liàngqiàng&pinyinNum:liang4qiang4
-充满 & number_of_appearances : 25&pinyin:chōngmǎn&pinyinNum:chong1man3
-不适 & number_of_appearances : 5&pinyin:bùshì&pinyinNum:bu4shi4
-看 & number_of_appearances : 255&pinyin:kàn&pinyinNum:kan4
-仔细 & number_of_appearances : 14&pinyin:zǐxì&pinyinNum:zi3xi4
-四下 & number_of_appearances : 10&pinyin:sìxià&pinyinNum:si4xia4
-转动 & number_of_appearances : 16&pinyin:zhuàndòng&pinyinNum:zhuan3dong4
-脑袋 & number_of_appearances : 28&pinyin:nǎodai&pinyinNum:nao3dai5
-懂 & number_of_appearances : 19&pinyin:dǒng&pinyinNum:dong3
-怎么回事 & number_of_appearances : 21&pinyin:zěnmehuíshì&pinyinNum:zen3me5hui2shi4
-新 & number_of_appearances : 30&pinyin:xīn&pinyinNum:xin1
-伙伴 & number_of_appearances : 7&pinyin:huǒbàn&pinyinNum:huo3ban4
-们 & number_of_appearances : 60&pinyin:men&pinyinNum:men5
-一言不发 & number_of_appearances : 12&pinyin:yīyánbùfā&pinyinNum:yi1yan2bu4fa1
-缓缓 & number_of_appearances : 6&pinyin:huǎnhuǎn&pinyinNum:huan3huan3
-转 & number_of_appearances : 27&pinyin:zhuàn&pinyinNum:zhuan4
-圈 & number_of_appearances : 12&pinyin:quān&pinyinNum:juan1
-孩子们 & number_of_appearances : 5&pinyin:háizimen&pinyinNum:hai2zi5men5
-窃笑 & number_of_appearances : 4&pinyin:qièxiào&pinyinNum:qie4xiao4
-目不转睛 & number_of_appearances : 3&pinyin:mùbùzhuǎnjīng&pinyinNum:mu4bu4zhuan3jing1
-盯住 & number_of_appearances : 18&pinyin:dīngzhù&pinyinNum:ding1zhu4
-伸出 & number_of_appearances : 24&pinyin:shēnchū&pinyinNum:shen1chu1
-手指 & number_of_appearances : 16&pinyin:shǒuzhǐ&pinyinNum:shou3zhi3
-戳 & number_of_appearances : 8&pinyin:chuō&pinyinNum:chuo1
-地方 & number_of_appearances : 178&pinyin:dìfang&pinyinNum:di4fang1
-至 & number_of_appearances : 7&pinyin:zhì&pinyinNum:zhi4
-少有 & number_of_appearances : 4&pinyin:shǎoyǒu&pinyinNum:shao3you3
-五 & number_of_appearances : 12&pinyin:wǔ&pinyinNum:wu3
-十个人 & number_of_appearances : 2&pinyin:shí gè rén&pinyinNum:shi2 ge4 ren2
-一个个 & number_of_appearances : 8&pinyin:yīgègè&pinyinNum:yi1ge4ge4
-沾满 & number_of_appearances : 6&pinyin:zhānmǎn&pinyinNum:zhan1man3
-污渍 & number_of_appearances : 3&pinyin:wūzì&pinyinNum:wu1zi4
-浑身 & number_of_appearances : 17&pinyin:húnshēn&pinyinNum:hun2shen1
-散发 & number_of_appearances : 8&pinyin:sànfā&pinyinNum:san4fa1
-所有人 & number_of_appearances : 62&pinyin:suǒ yǒu rén&pinyinNum:suo3 you3 ren2
-辛苦 & number_of_appearances : 1&pinyin:xīnkǔ&pinyinNum:xin1ku3
-劳作 & number_of_appearances : 2&pinyin:láozuò&pinyinNum:lao2zuo4
-外貌 & number_of_appearances : 2&pinyin:wàimào&pinyinNum:wai4mao4
-体形 & number_of_appearances : 2&pinyin:tǐxíng&pinyinNum:ti3xing2
-种族 & number_of_appearances : 1&pinyin:zhǒngzú&pinyinNum:zhong3zu2
-各不相同 & number_of_appearances : 1&pinyin:gèbùxiāngtóng&pinyinNum:ge4bu4xiang1tong2
-头发 & number_of_appearances : 20&pinyin:tóufa&pinyinNum:tou2fa5
-长短 & number_of_appearances : 1&pinyin:chángduǎn&pinyinNum:chang2duan3
-不一 & number_of_appearances : 1&pinyin:bùyī&pinyinNum:bu4yi1
-忽然 & number_of_appearances : 25&pinyin:hūrán&pinyinNum:hu1ran2
-头晕 & number_of_appearances : 2&pinyin:tóuyūn&pinyinNum:tou2yun1
-目光 & number_of_appearances : 53&pinyin:mùguāng&pinyinNum:mu4guang1
-男孩子 & number_of_appearances : 7&pinyin:nánháizi&pinyinNum:nan2hai2zi5
-这个 & number_of_appearances : 190&pinyin:zhège&pinyinNum:zhe4ge5
-古怪 & number_of_appearances : 6&pinyin:gǔguài&pinyinNum:gu3guai4
-之间 & number_of_appearances : 28&pinyin:zhījiān&pinyinNum:zhi1jian1
-闪烁 & number_of_appearances : 5&pinyin:shǎnshuò&pinyinNum:shan3shuo4
-宽大 & number_of_appearances : 2&pinyin:kuāndà&pinyinNum:kuan1da4
-庭院 & number_of_appearances : 19&pinyin:tíngyuàn&pinyinNum:ting2yuan4
-之中 & number_of_appearances : 30&pinyin:zhīzhōng&pinyinNum:zhi1zhong1
-大小 & number_of_appearances : 7&pinyin:dàxiǎo&pinyinNum:da4xiao3
-足球场 & number_of_appearances : 1&pinyin:zúqiúchǎng&pinyinNum:zu2qiu2chang3
-大 & number_of_appearances : 65&pinyin:dà&pinyinNum:da4
-耸 & number_of_appearances : 4&pinyin:sǒng&pinyinNum:song3
-立起 & number_of_appearances : 1&pinyin:lì qǐ&pinyinNum:li4 qi3
-高大 & number_of_appearances : 5&pinyin:gāodà&pinyinNum:gao1da4
-灰色 & number_of_appearances : 25&pinyin:huīsè&pinyinNum:hui1se4
-石墙 & number_of_appearances : 18&pinyin:dàn qiáng&pinyinNum:shi2 qiang2
-墙上 & number_of_appearances : 36&pinyin:qiáng shàng&pinyinNum:qiang2 shang4
-点缀 & number_of_appearances : 1&pinyin:diǎnzhuì&pinyinNum:dian3zhui4
-茂盛 & number_of_appearances : 6&pinyin:màoshèng&pinyinNum:mao4sheng4
-常春藤 & number_of_appearances : 24&pinyin:chángchūnténg&pinyinNum:chang2chun1teng2
-一定 & number_of_appearances : 86&pinyin:yīdìng&pinyinNum:yi1ding4
-几百 & number_of_appearances : 1&pinyin:jǐbǎi&pinyinNum:ji3bai3
-英尺 & number_of_appearances : 46&pinyin:yīngchǐ&pinyinNum:ying1chi3
-高 & number_of_appearances : 17&pinyin:gāo&pinyinNum:gao1
-完美 & number_of_appearances : 4&pinyin:wánměi&pinyinNum:wan2mei3
-正方形 & number_of_appearances : 5&pinyin:zhèngfāngxíng&pinyinNum:zheng4fang1xing2
-正中间 & number_of_appearances : 3&pinyin:zhèng zhòng jiān&pinyinNum:zheng4 zhong4 jian1
-一般 & number_of_appearances : 24&pinyin:yībān&pinyinNum:yi1ban1
-缺口 & number_of_appearances : 16&pinyin:quēkǒu&pinyinNum:que1kou3
-发现 & number_of_appearances : 114&pinyin:fāxiàn&pinyinNum:fa1xian4
-通道 & number_of_appearances : 18&pinyin:tōngdào&pinyinNum:tong1dao4
-相连 & number_of_appearances : 1&pinyin:xiānglián&pinyinNum:xiang1lian2
-通向 & number_of_appearances : 9&pinyin:tōngxiàng&pinyinNum:tong1xiang4
-外部 & number_of_appearances : 2&pinyin:wàibù&pinyinNum:wai4bu4
-长长 & number_of_appearances : 18&pinyin:cháng cháng&pinyinNum:chang2 chang2
-走廊 & number_of_appearances : 30&pinyin:zǒuláng&pinyinNum:zou3lang2
-沙哑 & number_of_appearances : 1&pinyin:shāyǎ&pinyinNum:sha1ya3
-住 & number_of_appearances : 36&pinyin:zhù&pinyinNum:zhu4
-住所 & number_of_appearances : 1&pinyin:zhùsuǒ&pinyinNum:zhu4suo3
-我会 & number_of_appearances : 31&pinyin:wǒ huì&pinyinNum:wo3 hui4
-给 & number_of_appearances : 83&pinyin:gěi&pinyinNum:gei3
-好看 & number_of_appearances : 2&pinyin:hǎokàn&pinyinNum:hao3kan4
-笑 & number_of_appearances : 44&pinyin:xiào&pinyinNum:xiao4
-闭上 & number_of_appearances : 47&pinyin:bìshang&pinyinNum:bi4shang5
-你的 & number_of_appearances : 84&pinyin:nǐde&pinyinNum:ni3de5
-臭 & number_of_appearances : 6&pinyin:chòu&pinyinNum:chou4
-嘴 & number_of_appearances : 45&pinyin:zuǐ&pinyinNum:zui3
-盖里 & number_of_appearances : 161&pinyin:gài lǐ&pinyinNum:gai4 li3
-深沉 & number_of_appearances : 1&pinyin:shēnchén&pinyinNum:shen1chen2
-回答 & number_of_appearances : 77&pinyin:huídá&pinyinNum:hui2da2
-围 & number_of_appearances : 5&pinyin:wéi&pinyinNum:wei2
-几十 & number_of_appearances : 10&pinyin:jǐ shí&pinyinNum:ji3 shi2
-陌生人 & number_of_appearances : 4&pinyin:mòshēngrén&pinyinNum:mo4sheng1ren2
-身上 & number_of_appearances : 65&pinyin:shēnshang&pinyinNum:shen1shang5
-必须 & number_of_appearances : 74&pinyin:bìxū&pinyinNum:bi4xu1
-谨慎 & number_of_appearances : 3&pinyin:jǐnshèn&pinyinNum:jin3shen4
-药 & number_of_appearances : 2&pinyin:yào&pinyinNum:yao4
-高个子 & number_of_appearances : 6&pinyin:gāo gè zǐ&pinyinNum:gao1 ge4 zi3
-方 & number_of_appearances : 4&pinyin:fāng&pinyinNum:fang1
-下巴 & number_of_appearances : 4&pinyin:xiàba&pinyinNum:xia4ba5
-金发 & number_of_appearances : 2&pinyin:jīnfà&pinyinNum:jin1fa4
-对 & number_of_appearances : 239&pinyin:duì&pinyinNum:dui4
-不屑 & number_of_appearances : 3&pinyin:bùxiè&pinyinNum:bu4xie4
-脸上 & number_of_appearances : 53&pinyin:liǎn shàng&pinyinNum:lian3 shang4
-不带 & number_of_appearances : 3&pinyin:bùdài&pinyinNum:bu4dai4
-表情 & number_of_appearances : 42&pinyin:biǎoqíng&pinyinNum:biao3qing2
-胖乎乎 & number_of_appearances : 2&pinyin:pànghūhū&pinyinNum:pang4hu1hu1
-矮个子 & number_of_appearances : 4&pinyin:ǎi gè zǐ&pinyinNum:ai3 ge4 zi3
-烦躁 & number_of_appearances : 1&pinyin:fánzào&pinyinNum:fan2zao4
-走来 & number_of_appearances : 8&pinyin:zǒu lái&pinyinNum:zou3 lai2
-走去 & number_of_appearances : 41&pinyin:zǒuqù&pinyinNum:zou3qu4
-大大 & number_of_appearances : 6&pinyin:dàdà&pinyinNum:da4da4
-上下 & number_of_appearances : 8&pinyin:shàngxià&pinyinNum:shang4xia4
-打量 & number_of_appearances : 17&pinyin:dǎliang&pinyinNum:da3liang5
-身材 & number_of_appearances : 5&pinyin:shēncái&pinyinNum:shen1cai2
-结实 & number_of_appearances : 7&pinyin:jiēshi&pinyinNum:jie1shi2
-肌肉 & number_of_appearances : 10&pinyin:jīròu&pinyinNum:ji1rou4
-亚洲 & number_of_appearances : 2&pinyin:yàzhōu&pinyinNum:ya4zhou1
-抱 & number_of_appearances : 29&pinyin:bào&pinyinNum:bao4
-胳膊 & number_of_appearances : 86&pinyin:gēbo&pinyinNum:ge1bo5
-观察 & number_of_appearances : 31&pinyin:guānchá&pinyinNum:guan1cha2
-紧绷 & number_of_appearances : 6&pinyin:jǐnbēng&pinyinNum:jin3beng1
-袖子 & number_of_appearances : 2&pinyin:xiùzi&pinyinNum:xiu4zi5
-上卷 & number_of_appearances : 1&pinyin:shàng juǎn&pinyinNum:shang4 juan3
-众人 & number_of_appearances : 6&pinyin:zhòngrén&pinyinNum:zhong4ren2
-炫耀 & number_of_appearances : 1&pinyin:xuànyào&pinyinNum:xuan4yao4
-二头肌 & number_of_appearances : 1&pinyin:èrtóujī&pinyinNum:er4tou2ji1
-皮肤 & number_of_appearances : 46&pinyin:pífū&pinyinNum:pi2fu1
-眉头 & number_of_appearances : 18&pinyin:méitóu&pinyinNum:mei2tou2
-紧 & number_of_appearances : 21&pinyin:jǐn&pinyinNum:jin3
-蹙 & number_of_appearances : 4&pinyin:cù&pinyinNum:cu4
-刚才 & number_of_appearances : 60&pinyin:gāngcái&pinyinNum:gang1cai2
-同一 & number_of_appearances : 7&pinyin:tóngyī&pinyinNum:tong2yi1
-还有 & number_of_appearances : 96&pinyin:háiyǒu&pinyinNum:hai2you3
-关注 & number_of_appearances : 7&pinyin:guānzhù&pinyinNum:guan1zhu4
-是在 & number_of_appearances : 73&pinyin:shì zài&pinyinNum:shi4 zai4
-哪儿 & number_of_appearances : 29&pinyin:nǎr&pinyinNum:na3r5
-问 & number_of_appearances : 144&pinyin:wèn&pinyinNum:wen4
-残缺不全 & number_of_appearances : 1&pinyin:cánquēbùquán&pinyinNum:can2que1bu4quan2
-头一 & number_of_appearances : 7&pinyin:tóuyī&pinyinNum:tou2yi1
-次 & number_of_appearances : 30&pinyin:cì&pinyinNum:ci4
-令 & number_of_appearances : 37&pinyin:lìng&pinyinNum:ling4
-吃惊 & number_of_appearances : 40&pinyin:chījīng&pinyinNum:chi1jing1
-听起来 & number_of_appearances : 21&pinyin:tīngqilai&pinyinNum:ting1qi5lai5
-不大 & number_of_appearances : 11&pinyin:bùdà&pinyinNum:bu4da4
-对劲 & number_of_appearances : 1&pinyin:duìjìn&pinyinNum:dui4jin4
-声调 & number_of_appearances : 1&pinyin:shēngdiào&pinyinNum:sheng1diao4
-比 & number_of_appearances : 523&pinyin:bǐ&pinyinNum:bi3
-想象 & number_of_appearances : 40&pinyin:xiǎngxiàng&pinyinNum:xiang3xiang4
-要 & number_of_appearances : 172&pinyin:yào&pinyinNum:yao4
-不是 & number_of_appearances : 124&pinyin:bùshì&pinyinNum:bu2shi5
-是从 & number_of_appearances : 27&pinyin:shì zòng&pinyinNum:shi4 zong4
-黑 & number_of_appearances : 8&pinyin:hēi&pinyinNum:hei1
-口中 & number_of_appearances : 5&pinyin:kǒu zhòng&pinyinNum:kou3 zhong4
-只要 & number_of_appearances : 24&pinyin:zhǐyào&pinyinNum:zhi3yao4
-你自己 & number_of_appearances : 3&pinyin:nǐzìjǐ&pinyinNum:ni3zi4ji3
-开心 & number_of_appearances : 12&pinyin:kāixīn&pinyinNum:kai1xin1
-冷静 & number_of_appearances : 4&pinyin:lěngjìng&pinyinNum:leng3jing4
-会 & number_of_appearances : 355&pinyin:huì&pinyinNum:hui4
-摊 & number_of_appearances : 2&pinyin:tān&pinyinNum:tan1
-哪个 & number_of_appearances : 4&pinyin:nǎge&pinyinNum:na3ge5
-守护人 & number_of_appearances : 62&pinyin:shǒu hù rén&pinyinNum:shou3 hu4 ren2
-人群 & number_of_appearances : 33&pinyin:rénqún&pinyinNum:ren2qun2
-后面 & number_of_appearances : 27&pinyin:hòumiàn&pinyinNum:hou4mian4
-喊声 & number_of_appearances : 7&pinyin:hǎnshēng&pinyinNum:han3sheng1
-告诉 & number_of_appearances : 97&pinyin:gàosu&pinyinNum:gao4su5
-尖尖 & number_of_appearances : 2&pinyin:jiānjiān&pinyinNum:jian1jian1
-所以 & number_of_appearances : 32&pinyin:suǒyǐ&pinyinNum:suo3yi3
-成为 & number_of_appearances : 40&pinyin:chéngwéi&pinyinNum:cheng2wei2
-杂活 & number_of_appearances : 5&pinyin:záhuó&pinyinNum:za2huo2
-毫无疑问 & number_of_appearances : 6&pinyin:háowúyíwèn&pinyinNum:hao2wu2yi2wen4
-咯咯 & number_of_appearances : 3&pinyin:gēgē&pinyinNum:ge1ge1
-刚 & number_of_appearances : 69&pinyin:gāng&pinyinNum:gang1
-讲 & number_of_appearances : 24&pinyin:jiǎng&pinyinNum:jiang3
-一句 & number_of_appearances : 14&pinyin:yījù&pinyinNum:yi1ju4
-天大 & number_of_appearances : 2&pinyin:tiāndà&pinyinNum:tian1da4
-笑话 & number_of_appearances : 4&pinyin:xiàohuà&pinyinNum:xiao4hua4
-带来 & number_of_appearances : 22&pinyin:dàilái&pinyinNum:dai4lai2
-令人 & number_of_appearances : 36&pinyin:lìngrén&pinyinNum:ling4ren2
-压抑 & number_of_appearances : 9&pinyin:yāyì&pinyinNum:ya1yi4
-痛楚 & number_of_appearances : 9&pinyin:tòngchǔ&pinyinNum:tong4chu3
-那么多 & number_of_appearances : 16&pinyin:nàmeduō&pinyinNum:na4me5duo1
-理解 & number_of_appearances : 13&pinyin:lǐjiě&pinyinNum:li3jie3
-言语 & number_of_appearances : 6&pinyin:yányu&pinyinNum:yan2yu3
-嘴里 & number_of_appearances : 22&pinyin:zuǐlǐ&pinyinNum:zui3li3
-脱口而出 & number_of_appearances : 4&pinyin:tuōkǒuérchū&pinyinNum:tuo1kou3er2chu1
-自然 & number_of_appearances : 9&pinyin:zìrán&pinyinNum:zi4ran2
-倒 & number_of_appearances : 29&pinyin:dào&pinyinNum:dao4
-显得 & number_of_appearances : 37&pinyin:xiǎnde&pinyinNum:xian3de5
-件 & number_of_appearances : 29&pinyin:jiàn&pinyinNum:jian4
-怪异 & number_of_appearances : 28&pinyin:guàiyì&pinyinNum:guai4yi4
-事 & number_of_appearances : 81&pinyin:shì&pinyinNum:shi4
-失忆 & number_of_appearances : 8&pinyin:shī yì&pinyinNum:shi1 yi4
-偷走 & number_of_appearances : 2&pinyin:tōu zǒu&pinyinNum:tou1 zou3
-好多 & number_of_appearances : 7&pinyin:hǎoduō&pinyinNum:hao3duo1
-语言 & number_of_appearances : 3&pinyin:yǔyán&pinyinNum:yu3yan2
-无所适从 & number_of_appearances : 1&pinyin:wúsuǒshìcóng&pinyinNum:wu2suo3shi4cong2
-纷繁 & number_of_appearances : 1&pinyin:fēnfán&pinyinNum:fen1fan2
-情感 & number_of_appearances : 9&pinyin:qínggǎn&pinyinNum:qing2gan3
-内心 & number_of_appearances : 37&pinyin:nèixīn&pinyinNum:nei4xin1
-争夺 & number_of_appearances : 1&pinyin:zhēngduó&pinyinNum:zheng1duo2
-控制权 & number_of_appearances : 1&pinyin:kòngzhìquán&pinyinNum:kong4zhi4quan2
-交织 & number_of_appearances : 3&pinyin:jiāozhī&pinyinNum:jiao1zhi1
-在一起 & number_of_appearances : 48&pinyin:zàiyīqǐ&pinyinNum:zai4yi1qi3
-绝望 & number_of_appearances : 23&pinyin:juéwàng&pinyinNum:jue2wang4
-极点 & number_of_appearances : 7&pinyin:jídiǎn&pinyinNum:ji2dian3
-阴暗 & number_of_appearances : 4&pinyin:yīnàn&pinyinNum:yin1an4
-终结 & number_of_appearances : 14&pinyin:zhōngjié&pinyinNum:zhong1jie2
-抹去 & number_of_appearances : 9&pinyin:mǒqù&pinyinNum:mo3qu4
-并用 & number_of_appearances : 1&pinyin:bìng yòng&pinyinNum:bing4 yong4
-可怕 & number_of_appearances : 73&pinyin:kěpà&pinyinNum:ke3pa4
-东西 & number_of_appearances : 154&pinyin:dōngxi&pinyinNum:dong1xi5
-跑 & number_of_appearances : 166&pinyin:pǎo&pinyinNum:pao3
-开 & number_of_appearances : 43&pinyin:kāi&pinyinNum:kai1
-远远 & number_of_appearances : 3&pinyin:yuǎnyuǎn&pinyinNum:yuan3yuan3
-躲开 & number_of_appearances : 2&pinyin:duǒkāi&pinyinNum:duo3kai1
-嘶哑 & number_of_appearances : 6&pinyin:sīyǎ&pinyinNum:si1ya3
-做 & number_of_appearances : 231&pinyin:zuò&pinyinNum:zuo4
-不 & number_of_appearances : 295&pinyin:bù&pinyinNum:bu4
-敢 & number_of_appearances : 18&pinyin:gǎn&pinyinNum:gan3
-性命 & number_of_appearances : 2&pinyin:xìngmìng&pinyinNum:xing4ming4
-打赌 & number_of_appearances : 11&pinyin:dǎdǔ&pinyinNum:da3du3
-嚷嚷 & number_of_appearances : 11&pinyin:rāngrang&pinyinNum:rang1rang5
-再 & number_of_appearances : 126&pinyin:zài&pinyinNum:zai4
-这样 & number_of_appearances : 152&pinyin:zhèyàng&pinyinNum:zhe4yang4
-唠唠叨叨 & number_of_appearances : 1&pinyin:láolaodāodāo&pinyinNum:lao2lao5dao1dao1
-下次 & number_of_appearances : 3&pinyin:xiàcì&pinyinNum:xia4ci4
-休息 & number_of_appearances : 16&pinyin:xiūxi&pinyinNum:xiu1xi5
-时间 & number_of_appearances : 103&pinyin:shíjiān&pinyinNum:shi2jian1
-减半 & number_of_appearances : 1&pinyin:jiǎnbàn&pinyinNum:jian3ban4
-明白 & number_of_appearances : 62&pinyin:míngbai&pinyinNum:ming2bai5
-头儿 & number_of_appearances : 5&pinyin:tóur&pinyinNum:tou2r5
-众目睽睽 & number_of_appearances : 2&pinyin:zhòngmùkuíkuí&pinyinNum:zhong4mu4kui2kui2
-集中 & number_of_appearances : 11&pinyin:jízhōng&pinyinNum:ji2zhong1
-精神 & number_of_appearances : 10&pinyin:jīngshen&pinyinNum:jing1shen2
-称为 & number_of_appearances : 9&pinyin:chēngwéi&pinyinNum:cheng1wei2
-看来 & number_of_appearances : 30&pinyin:kànlai&pinyinNum:kan4lai5
-巨大 & number_of_appearances : 32&pinyin:jùdà&pinyinNum:ju4da4
-石块 & number_of_appearances : 9&pinyin:shíkuài&pinyinNum:shi2kuai4
-堆砌 & number_of_appearances : 1&pinyin:duīqì&pinyinNum:dui1qi4
-已 & number_of_appearances : 42&pinyin:yǐ&pinyinNum:yi3
-裂开 & number_of_appearances : 2&pinyin:lièkāi&pinyinNum:lie4kai1
-缝 & number_of_appearances : 2&pinyin:fèng&pinyinNum:feng4
-从中 & number_of_appearances : 7&pinyin:cóngzhōng&pinyinNum:cong2zhong1
-探 & number_of_appearances : 26&pinyin:tàn&pinyinNum:tan4
-高高 & number_of_appearances : 5&pinyin:gāogāo&pinyinNum:gao1gao1
-野草 & number_of_appearances : 3&pinyin:yěcǎo&pinyinNum:ye3cao3
-幢 & number_of_appearances : 6&pinyin:zhuàng&pinyinNum:zhuang4
-破旧 & number_of_appearances : 5&pinyin:pòjiù&pinyinNum:po4jiu4
-木头 & number_of_appearances : 27&pinyin:mùtou&pinyinNum:mu4tou5
-房子 & number_of_appearances : 29&pinyin:fángzi&pinyinNum:fang2zi5
-矗立 & number_of_appearances : 2&pinyin:chùlì&pinyinNum:chu4li4
-石头 & number_of_appearances : 48&pinyin:shítou&pinyinNum:shi2tou5
-形成 & number_of_appearances : 10&pinyin:xíngchéng&pinyinNum:xing2cheng2
-鲜明 & number_of_appearances : 3&pinyin:xiānmíng&pinyinNum:xian1ming2
-反差 & number_of_appearances : 2&pinyin:fǎnchā&pinyinNum:fan3cha1
-棵 & number_of_appearances : 10&pinyin:kē&pinyinNum:ke1
-树 & number_of_appearances : 6&pinyin:shù&pinyinNum:shu4
-环绕 & number_of_appearances : 2&pinyin:huánrào&pinyinNum:huan2rao4
-树根 & number_of_appearances : 1&pinyin:shùgēn&pinyinNum:shu4gen1
-长满 & number_of_appearances : 6&pinyin:zhǎngmǎn&pinyinNum:zhang3man3
-节瘤 & number_of_appearances : 1&pinyin:jiéliú&pinyinNum:jie2liu2
-入 & number_of_appearances : 7&pinyin:rù&pinyinNum:ru4
-菜园 & number_of_appearances : 13&pinyin:càiyuán&pinyinNum:cai4yuan2
-种 & number_of_appearances : 10&pinyin:zhòng&pinyinNum:zhong4
-玉米 & number_of_appearances : 2&pinyin:yùmǐ&pinyinNum:yu4mi3
-番茄 & number_of_appearances : 2&pinyin:fānqié&pinyinNum:fan1qie2
-果树 & number_of_appearances : 2&pinyin:guǒshù&pinyinNum:guo3shu4
-围栏 & number_of_appearances : 5&pinyin:wéilán&pinyinNum:wei2lan2
-养 & number_of_appearances : 4&pinyin:yǎng&pinyinNum:yang3
-猪 & number_of_appearances : 14&pinyin:zhū&pinyinNum:zhu1
-奶牛 & number_of_appearances : 5&pinyin:nǎiniú&pinyinNum:nai3niu2
-大片 & number_of_appearances : 2&pinyin:dàpiàn&pinyinNum:da4pian4
-树木 & number_of_appearances : 6&pinyin:shùmù&pinyinNum:shu4mu4
-最近 & number_of_appearances : 12&pinyin:zuìjìn&pinyinNum:zui4jin4
-处 & number_of_appearances : 27&pinyin:chù&pinyinNum:chu4
-东倒西歪 & number_of_appearances : 3&pinyin:dōngdǎoxīwāi&pinyinNum:dong1dao3xi1wai1
-濒临 & number_of_appearances : 1&pinyin:bīnlín&pinyinNum:bin1lin2
-天空 & number_of_appearances : 49&pinyin:tiānkōng&pinyinNum:tian1kong1
-湛蓝 & number_of_appearances : 1&pinyin:zhànlán&pinyinNum:zhan4lan2
-一丝 & number_of_appearances : 33&pinyin:yī sī&pinyinNum:yi1 si1
-云彩 & number_of_appearances : 1&pinyin:yúncai&pinyinNum:yun2cai5
-虽是 & number_of_appearances : 1&pinyin:suīshì&pinyinNum:sui1shi4
-明亮 & number_of_appearances : 5&pinyin:míngliàng&pinyinNum:ming2liang4
-白昼 & number_of_appearances : 1&pinyin:báizhòu&pinyinNum:bai2zhou4
-找不到 & number_of_appearances : 3&pinyin:zhǎobudào&pinyinNum:zhao3bu5dao4
-太阳 & number_of_appearances : 28&pinyin:tàiyang&pinyinNum:tai4yang5
-踪影 & number_of_appearances : 9&pinyin:zōngyǐng&pinyinNum:zong1ying3
-高墙 & number_of_appearances : 58&pinyin:gāo qiáng&pinyinNum:gao1 qiang2
-清时 & number_of_appearances : 1&pinyin:qīng shí&pinyinNum:qing1 shi2
-清晨 & number_of_appearances : 8&pinyin:qīngchén&pinyinNum:qing1chen2
-午后 & number_of_appearances : 2&pinyin:wǔhòu&pinyinNum:wu3hou4
-深呼吸 & number_of_appearances : 2&pinyin:shēn hū xī&pinyinNum:shen1 hu1 xi1
-口 & number_of_appearances : 12&pinyin:kǒu&pinyinNum:kou3
-试着 & number_of_appearances : 6&pinyin:shìzhe&pinyinNum:shi4zhe5
-放松 & number_of_appearances : 13&pinyin:fàngsōng&pinyinNum:fang4song1
-混合 & number_of_appearances : 6&pinyin:hùnhé&pinyinNum:hun4he2
-味道 & number_of_appearances : 16&pinyin:wèidao&pinyinNum:wei4dao5
-迎面 & number_of_appearances : 4&pinyin:yíngmiàn&pinyinNum:ying2mian4
-扑 & number_of_appearances : 6&pinyin:pū&pinyinNum:pu1
-翻过 & number_of_appearances : 4&pinyin:fānguò&pinyinNum:fan1guo4
-泥土 & number_of_appearances : 3&pinyin:nítǔ&pinyinNum:ni2tu3
-肥料 & number_of_appearances : 1&pinyin:féiliào&pinyinNum:fei2liao4
-松枝 & number_of_appearances : 1&pinyin:sōng zhī&pinyinNum:song1 zhi1
-腐烂 & number_of_appearances : 5&pinyin:fǔlàn&pinyinNum:fu3lan4
-发 & number_of_appearances : 12&pinyin:fā&pinyinNum:fa1
-甜 & number_of_appearances : 1&pinyin:tián&pinyinNum:tian2
-农场 & number_of_appearances : 4&pinyin:nóngchǎng&pinyinNum:nong2chang3
-回头 & number_of_appearances : 25&pinyin:huítóu&pinyinNum:hui2tou2
-局促 & number_of_appearances : 2&pinyin:júcù&pinyinNum:ju2cu4
-按捺不住 & number_of_appearances : 2&pinyin:ànnàbuzhù&pinyinNum:an4na4bu5zhu4
-疑问 & number_of_appearances : 11&pinyin:yíwèn&pinyinNum:yi2wen4
-俘虏 & number_of_appearances : 1&pinyin:fúlǔ&pinyinNum:fu2lu3
-为什么 & number_of_appearances : 92&pinyin:wèishénme&pinyinNum:wei4shen2me5
-脑子 & number_of_appearances : 35&pinyin:nǎozi&pinyinNum:nao3zi5
-词 & number_of_appearances : 34&pinyin:cí&pinyinNum:ci2
-领会 & number_of_appearances : 1&pinyin:lǐnghuì&pinyinNum:ling3hui4
-神情 & number_of_appearances : 12&pinyin:shénqíng&pinyinNum:shen2qing2
-借此 & number_of_appearances : 3&pinyin:jiècǐ&pinyinNum:jie4ci3
-评判 & number_of_appearances : 1&pinyin:píngpàn&pinyinNum:ping2pan4
-仇恨 & number_of_appearances : 6&pinyin:chóuhèn&pinyinNum:chou2hen4
-燃烧 & number_of_appearances : 5&pinyin:ránshāo&pinyinNum:ran2shao1
-刺骨 & number_of_appearances : 2&pinyin:cìgǔ&pinyinNum:ci4gu3
-冰冷 & number_of_appearances : 13&pinyin:bīnglěng&pinyinNum:bing1leng3
-愤怒 & number_of_appearances : 27&pinyin:fènnù&pinyinNum:fen4nu4
-至极 & number_of_appearances : 6&pinyin:zhìjí&pinyinNum:zhi4ji2
-要是 & number_of_appearances : 35&pinyin:yàoshi&pinyinNum:yao4shi5
-拿 & number_of_appearances : 26&pinyin:ná&pinyinNum:na2
-刀 & number_of_appearances : 17&pinyin:dāo&pinyinNum:dao1
-走上 & number_of_appearances : 19&pinyin:zǒu shàng&pinyinNum:zou3 shang4
-不会 & number_of_appearances : 73&pinyin:bùhuì&pinyinNum:bu4hui4
-意外 & number_of_appearances : 3&pinyin:yìwài&pinyinNum:yi4wai4
-一头 & number_of_appearances : 56&pinyin:yītóu&pinyinNum:yi1tou2
-黑发 & number_of_appearances : 5&pinyin:hēifà&pinyinNum:hei1fa4
-相遇 & number_of_appearances : 1&pinyin:xiāngyù&pinyinNum:xiang1yu4
-摇 & number_of_appearances : 20&pinyin:yáo&pinyinNum:yao2
-摇头 & number_of_appearances : 20&pinyin:yáotóu&pinyinNum:yao2tou2
-身 & number_of_appearances : 30&pinyin:shēn&pinyinNum:shen1
-油腻腻 & number_of_appearances : 2&pinyin:yóu nì nì&pinyinNum:you2 ni4 ni4
-铁杆 & number_of_appearances : 3&pinyin:tiěgǎn&pinyinNum:tie3gan1
-旁 & number_of_appearances : 7&pinyin:páng&pinyinNum:pang2
-板凳 & number_of_appearances : 2&pinyin:bǎndèng&pinyinNum:ban3deng4
-顶上 & number_of_appearances : 3&pinyin:dǐngshàng&pinyinNum:ding3shang4
-无力 & number_of_appearances : 8&pinyin:wúlì&pinyinNum:wu2li4
-垂下 & number_of_appearances : 2&pinyin:chuíxià&pinyinNum:chui2xia4
-彩旗 & number_of_appearances : 1&pinyin:cǎiqí&pinyinNum:cai3qi2
-风 & number_of_appearances : 4&pinyin:fēng&pinyinNum:feng1
-旗帜 & number_of_appearances : 2&pinyin:qízhì&pinyinNum:qi2zhi4
-面的 & number_of_appearances : 17&pinyin:miàndī&pinyinNum:mian4di1
+踉跄 & number_of_appearances : 5&pinyin:liàngqiàng&pinyinNum:liang4qiang4&definition:to stagger; to stumble;
+充满 & number_of_appearances : 25&pinyin:chōngmǎn&pinyinNum:chong1man3&definition:to be brimming with; very full; permeated;
+不适 & number_of_appearances : 5&pinyin:bùshì&pinyinNum:bu4shi4&definition:unwell; indisposed; out of sorts;
+看 & number_of_appearances : 255&pinyin:kàn&pinyinNum:kan4&definition:null
+仔细 & number_of_appearances : 14&pinyin:zǐxì&pinyinNum:zi3xi4&definition:careful; attentive; cautious;
+四下 & number_of_appearances : 10&pinyin:sìxià&pinyinNum:si4xia4&definition:everywhere;
+转动 & number_of_appearances : 16&pinyin:zhuàndòng&pinyinNum:zhuan3dong4&definition:null
+脑袋 & number_of_appearances : 28&pinyin:nǎodai&pinyinNum:nao3dai5&definition:head; skull; brains; mental capability;
+懂 & number_of_appearances : 19&pinyin:dǒng&pinyinNum:dong3&definition:to understand; to comprehend;
+怎么回事 & number_of_appearances : 21&pinyin:zěnmehuíshì&pinyinNum:zen3me5hui2shi4&definition:what's the matter?; what's going on?; how could that be?; how did that come about?; what's it all about?;
+新 & number_of_appearances : 30&pinyin:xīn&pinyinNum:xin1&definition:new; newly; meso- (chemistry); abbr. for Xinjiang 新疆 or Singapore 新加坡; (Chinese surname);
+伙伴 & number_of_appearances : 7&pinyin:huǒbàn&pinyinNum:huo3ban4&definition:partner; companion; comrade;
+们 & number_of_appearances : 60&pinyin:men&pinyinNum:men5&definition:plural marker for pronouns, and nouns referring to individuals;
+一言不发 & number_of_appearances : 12&pinyin:yīyánbùfā&pinyinNum:yi1yan2bu4fa1&definition:to not say a word (idiom);
+缓缓 & number_of_appearances : 6&pinyin:huǎnhuǎn&pinyinNum:huan3huan3&definition:slowly; unhurriedly; little by little;
+转 & number_of_appearances : 27&pinyin:zhuàn&pinyinNum:zhuan4&definition:null
+圈 & number_of_appearances : 12&pinyin:quān&pinyinNum:juan1&definition:null
+孩子们 & number_of_appearances : 5&pinyin:háizimen&pinyinNum:hai2zi5men5&definition:children;
+窃笑 & number_of_appearances : 4&pinyin:qièxiào&pinyinNum:qie4xiao4&definition:to snigger; to titter;
+目不转睛 & number_of_appearances : 3&pinyin:mùbùzhuǎnjīng&pinyinNum:mu4bu4zhuan3jing1&definition:unable to take one's eyes off (idiom); to gaze steadily; to stare;
+盯住 & number_of_appearances : 18&pinyin:dīngzhù&pinyinNum:ding1zhu4&definition:to watch somebody closely; to breathe down somebody's neck; to mark (sports);
+伸出 & number_of_appearances : 24&pinyin:shēnchū&pinyinNum:shen1chu1&definition:to extend;
+手指 & number_of_appearances : 16&pinyin:shǒuzhǐ&pinyinNum:shou3zhi3&definition:finger;
+戳 & number_of_appearances : 8&pinyin:chuō&pinyinNum:chuo1&definition:to jab; to poke; to stab; to sprain; to blunt; to fuck (vulgar); to stand something upright;
+地方 & number_of_appearances : 178&pinyin:dìfang&pinyinNum:di4fang1&definition:null
+至 & number_of_appearances : 7&pinyin:zhì&pinyinNum:zhi4&definition:to arrive; most; to; until;
+少有 & number_of_appearances : 4&pinyin:shǎoyǒu&pinyinNum:shao3you3&definition:null
+五 & number_of_appearances : 12&pinyin:wǔ&pinyinNum:wu3&definition:five; 5;
+十个人 & number_of_appearances : 2&pinyin:shí gè rén&pinyinNum:shi2 ge4 ren2&definition:(Not available);
+一个个 & number_of_appearances : 8&pinyin:yīgègè&pinyinNum:yi1ge4ge4&definition:each and every one;
+沾满 & number_of_appearances : 6&pinyin:zhānmǎn&pinyinNum:zhan1man3&definition:muddy; covered in (mud, dust, sweat, blood etc); daubed in;
+污渍 & number_of_appearances : 3&pinyin:wūzì&pinyinNum:wu1zi4&definition:stain;
+浑身 & number_of_appearances : 17&pinyin:húnshēn&pinyinNum:hun2shen1&definition:all over; from head to foot;
+散发 & number_of_appearances : 8&pinyin:sànfā&pinyinNum:san4fa1&definition:to distribute; to emit; to issue;
+所有人 & number_of_appearances : 62&pinyin:suǒ yǒu rén&pinyinNum:suo3 you3 ren2&definition:owner; proprietor; keeper; everyone; everybody;
+辛苦 & number_of_appearances : 1&pinyin:xīnkǔ&pinyinNum:xin1ku3&definition:exhausting; hard; tough; arduous; to work hard; to go to a lot of trouble; hardship(s);
+劳作 & number_of_appearances : 2&pinyin:láozuò&pinyinNum:lao2zuo4&definition:work; manual labor;
+外貌 & number_of_appearances : 2&pinyin:wàimào&pinyinNum:wai4mao4&definition:profile; appearance;
+体形 & number_of_appearances : 2&pinyin:tǐxíng&pinyinNum:ti3xing2&definition:figure; bodily form;
+种族 & number_of_appearances : 1&pinyin:zhǒngzú&pinyinNum:zhong3zu2&definition:race; ethnicity;
+各不相同 & number_of_appearances : 1&pinyin:gèbùxiāngtóng&pinyinNum:ge4bu4xiang1tong2&definition:to have nothing in common with each other (idiom);
+头发 & number_of_appearances : 20&pinyin:tóufa&pinyinNum:tou2fa5&definition:hair (on the head);
+长短 & number_of_appearances : 1&pinyin:chángduǎn&pinyinNum:chang2duan3&definition:length; duration; accident; right and wrong; good and bad; long and short;
+不一 & number_of_appearances : 1&pinyin:bùyī&pinyinNum:bu4yi1&definition:to vary; to differ;
+忽然 & number_of_appearances : 25&pinyin:hūrán&pinyinNum:hu1ran2&definition:suddenly; all of a sudden;
+头晕 & number_of_appearances : 2&pinyin:tóuyūn&pinyinNum:tou2yun1&definition:dizzy;
+目光 & number_of_appearances : 53&pinyin:mùguāng&pinyinNum:mu4guang1&definition:sight; vision; view; gaze; look;
+男孩子 & number_of_appearances : 7&pinyin:nánháizi&pinyinNum:nan2hai2zi5&definition:boy;
+这个 & number_of_appearances : 190&pinyin:zhège&pinyinNum:zhe4ge5&definition:this; this one;
+古怪 & number_of_appearances : 6&pinyin:gǔguài&pinyinNum:gu3guai4&definition:strange; weird; eccentric; bizarre;
+之间 & number_of_appearances : 28&pinyin:zhījiān&pinyinNum:zhi1jian1&definition:between; among; inter-;
+闪烁 & number_of_appearances : 5&pinyin:shǎnshuò&pinyinNum:shan3shuo4&definition:flickering; twinkling; evasive; vague (of speech);
+宽大 & number_of_appearances : 2&pinyin:kuāndà&pinyinNum:kuan1da4&definition:spacious; wide; lenient;
+庭院 & number_of_appearances : 19&pinyin:tíngyuàn&pinyinNum:ting2yuan4&definition:courtyard;
+之中 & number_of_appearances : 30&pinyin:zhīzhōng&pinyinNum:zhi1zhong1&definition:inside; among; in the midst of (doing something); during;
+大小 & number_of_appearances : 7&pinyin:dàxiǎo&pinyinNum:da4xiao3&definition:dimension; magnitude; size; measurement; large and small; at any rate; adults and children; consideration of seniority;
+足球场 & number_of_appearances : 1&pinyin:zúqiúchǎng&pinyinNum:zu2qiu2chang3&definition:football field; soccer field;
+大 & number_of_appearances : 65&pinyin:dà&pinyinNum:da4&definition:null
+耸 & number_of_appearances : 4&pinyin:sǒng&pinyinNum:song3&definition:to excite; to raise up; to shrug; high; lofty; towering;
+立起 & number_of_appearances : 1&pinyin:lì qǐ&pinyinNum:li4 qi3&definition:null
+高大 & number_of_appearances : 5&pinyin:gāodà&pinyinNum:gao1da4&definition:tall; lofty;
+灰色 & number_of_appearances : 25&pinyin:huīsè&pinyinNum:hui1se4&definition:gray; ash gray; grizzly; pessimistic; gloomy; dispirited; ambiguous;
+石墙 & number_of_appearances : 18&pinyin:dàn qiáng&pinyinNum:shi2 qiang2&definition:stone wall;
+墙上 & number_of_appearances : 36&pinyin:qiáng shàng&pinyinNum:qiang2 shang4&definition:(Not available);
+点缀 & number_of_appearances : 1&pinyin:diǎnzhuì&pinyinNum:dian3zhui4&definition:to decorate; to adorn; sprinkled; studded; only for show;
+茂盛 & number_of_appearances : 6&pinyin:màoshèng&pinyinNum:mao4sheng4&definition:lush;
+常春藤 & number_of_appearances : 24&pinyin:chángchūnténg&pinyinNum:chang2chun1teng2&definition:ivy;
+一定 & number_of_appearances : 86&pinyin:yīdìng&pinyinNum:yi1ding4&definition:surely; certainly; necessarily; fixed; a certain (extent etc); given; particular; must;
+几百 & number_of_appearances : 1&pinyin:jǐbǎi&pinyinNum:ji3bai3&definition:several hundred;
+英尺 & number_of_appearances : 46&pinyin:yīngchǐ&pinyinNum:ying1chi3&definition:foot (unit of length equal to 0.3048 m);
+高 & number_of_appearances : 17&pinyin:gāo&pinyinNum:gao1&definition:high; tall; above average; loud; your (honorific); (Chinese surname);
+完美 & number_of_appearances : 4&pinyin:wánměi&pinyinNum:wan2mei3&definition:perfect; perfection; perfectly;
+正方形 & number_of_appearances : 5&pinyin:zhèngfāngxíng&pinyinNum:zheng4fang1xing2&definition:square;
+正中间 & number_of_appearances : 3&pinyin:zhèng zhòng jiān&pinyinNum:zheng4 zhong4 jian1&definition:(Not available);
+一般 & number_of_appearances : 24&pinyin:yībān&pinyinNum:yi1ban1&definition:same; ordinary; so-so; common; general; generally; in general;
+缺口 & number_of_appearances : 16&pinyin:quēkǒu&pinyinNum:que1kou3&definition:nick; jag; gap; shortfall;
+发现 & number_of_appearances : 114&pinyin:fāxiàn&pinyinNum:fa1xian4&definition:to find; to discover;
+通道 & number_of_appearances : 18&pinyin:tōngdào&pinyinNum:tong1dao4&definition:(communications) channel; thoroughfare; passage; Tongdao Dong autonomous county in Huaihua 怀化, Hunan;
+相连 & number_of_appearances : 1&pinyin:xiānglián&pinyinNum:xiang1lian2&definition:to link; to join; link; connection;
+通向 & number_of_appearances : 9&pinyin:tōngxiàng&pinyinNum:tong1xiang4&definition:to lead to;
+外部 & number_of_appearances : 2&pinyin:wàibù&pinyinNum:wai4bu4&definition:external part; external;
+长长 & number_of_appearances : 18&pinyin:cháng cháng&pinyinNum:chang2 chang2&definition:long;
+走廊 & number_of_appearances : 30&pinyin:zǒuláng&pinyinNum:zou3lang2&definition:corridor; aisle; hallway; passageway; veranda;
+沙哑 & number_of_appearances : 1&pinyin:shāyǎ&pinyinNum:sha1ya3&definition:hoarse; rough;
+住 & number_of_appearances : 36&pinyin:zhù&pinyinNum:zhu4&definition:to live; to dwell; to stay; to reside; to stop; (suffix indicating firmness, steadiness, or coming to a halt);
+住所 & number_of_appearances : 1&pinyin:zhùsuǒ&pinyinNum:zhu4suo3&definition:habitation; dwelling place; residence;
+我会 & number_of_appearances : 31&pinyin:wǒ huì&pinyinNum:wo3 hui4&definition:(Not available);
+给 & number_of_appearances : 83&pinyin:gěi&pinyinNum:gei3&definition:null
+好看 & number_of_appearances : 2&pinyin:hǎokàn&pinyinNum:hao3kan4&definition:good-looking; nice-looking; good (of a movie, book, TV show etc); embarrassed; humiliated;
+笑 & number_of_appearances : 44&pinyin:xiào&pinyinNum:xiao4&definition:null
+闭上 & number_of_appearances : 47&pinyin:bìshang&pinyinNum:bi4shang5&definition:to close; to shut up;
+你的 & number_of_appearances : 84&pinyin:nǐde&pinyinNum:ni3de5&definition:your; yours;
+臭 & number_of_appearances : 6&pinyin:chòu&pinyinNum:chou4&definition:null
+嘴 & number_of_appearances : 45&pinyin:zuǐ&pinyinNum:zui3&definition:mouth; beak; nozzle; spout (of teapot etc);
+盖里 & number_of_appearances : 161&pinyin:gài lǐ&pinyinNum:gai4 li3&definition:null
+深沉 & number_of_appearances : 1&pinyin:shēnchén&pinyinNum:shen1chen2&definition:null
+回答 & number_of_appearances : 77&pinyin:huídá&pinyinNum:hui2da2&definition:to reply; to answer; the answer;
+围 & number_of_appearances : 5&pinyin:wéi&pinyinNum:wei2&definition:to encircle; to surround; all around; to wear by wrapping around (scarf, shawl); (Chinese surname);
+几十 & number_of_appearances : 10&pinyin:jǐ shí&pinyinNum:ji3 shi2&definition:dozens of; tens of;
+陌生人 & number_of_appearances : 4&pinyin:mòshēngrén&pinyinNum:mo4sheng1ren2&definition:stranger;
+身上 & number_of_appearances : 65&pinyin:shēnshang&pinyinNum:shen1shang5&definition:on the body; at hand; among;
+必须 & number_of_appearances : 74&pinyin:bìxū&pinyinNum:bi4xu1&definition:to have to; must; compulsory; necessarily;
+谨慎 & number_of_appearances : 3&pinyin:jǐnshèn&pinyinNum:jin3shen4&definition:cautious; prudent;
+药 & number_of_appearances : 2&pinyin:yào&pinyinNum:yao4&definition:null
+高个子 & number_of_appearances : 6&pinyin:gāo gè zǐ&pinyinNum:gao1 ge4 zi3&definition:tall body;
+方 & number_of_appearances : 4&pinyin:fāng&pinyinNum:fang1&definition:square; power or involution (math.); upright; honest; fair and square; direction; side; party (to a contract, dispute etc); place; method; prescription (medicine); just when; only or just; measure word for square things; abbr. for square or cubic meter; (Chinese surname);
+下巴 & number_of_appearances : 4&pinyin:xiàba&pinyinNum:xia4ba5&definition:chin;
+金发 & number_of_appearances : 2&pinyin:jīnfà&pinyinNum:jin1fa4&definition:blond; blonde; fair-haired;
+对 & number_of_appearances : 239&pinyin:duì&pinyinNum:dui4&definition:right; correct; couple; pair; towards; at; for; to face; opposite; to treat (somebody a certain way); to match together; to adjust; to fit; to suit; to answer; to reply; classifier: couple;
+不屑 & number_of_appearances : 3&pinyin:bùxiè&pinyinNum:bu4xie4&definition:to disdain to do something; to think something not worth doing; to feel it beneath one's dignity;
+脸上 & number_of_appearances : 53&pinyin:liǎn shàng&pinyinNum:lian3 shang4&definition:(Not available);
+不带 & number_of_appearances : 3&pinyin:bùdài&pinyinNum:bu4dai4&definition:not to have; without; un-;
+表情 & number_of_appearances : 42&pinyin:biǎoqíng&pinyinNum:biao3qing2&definition:(facial) expression; to express one's feelings;
+胖乎乎 & number_of_appearances : 2&pinyin:pànghūhū&pinyinNum:pang4hu1hu1&definition:chubby;
+矮个子 & number_of_appearances : 4&pinyin:ǎi gè zǐ&pinyinNum:ai3 ge4 zi3&definition:shorty;
+烦躁 & number_of_appearances : 1&pinyin:fánzào&pinyinNum:fan2zao4&definition:jittery; twitchy; fidgety;
+走来 & number_of_appearances : 8&pinyin:zǒu lái&pinyinNum:zou3 lai2&definition:to come and go;
+走去 & number_of_appearances : 41&pinyin:zǒuqù&pinyinNum:zou3qu4&definition:to walk over (to);
+大大 & number_of_appearances : 6&pinyin:dàdà&pinyinNum:da4da4&definition:greatly; enormously; (dialect) dad; uncle;
+上下 & number_of_appearances : 8&pinyin:shàngxià&pinyinNum:shang4xia4&definition:up and down; top and bottom; old and new; length; about;
+打量 & number_of_appearances : 17&pinyin:dǎliang&pinyinNum:da3liang5&definition:to size somebody up; to look somebody up and down; to take the measure of; to suppose; to reckon;
+身材 & number_of_appearances : 5&pinyin:shēncái&pinyinNum:shen1cai2&definition:stature; build (height and weight); figure;
+结实 & number_of_appearances : 7&pinyin:jiēshi&pinyinNum:jie1shi2&definition:null
+肌肉 & number_of_appearances : 10&pinyin:jīròu&pinyinNum:ji1rou4&definition:muscle; flesh;
+亚洲 & number_of_appearances : 2&pinyin:yàzhōu&pinyinNum:ya4zhou1&definition:Asia; abbr. for 亚细亚洲;
+抱 & number_of_appearances : 29&pinyin:bào&pinyinNum:bao4&definition:to hold; to carry (in one's arms); to hug; to embrace; to surround; to cherish;
+胳膊 & number_of_appearances : 86&pinyin:gēbo&pinyinNum:ge1bo5&definition:arm;
+观察 & number_of_appearances : 31&pinyin:guānchá&pinyinNum:guan1cha2&definition:to observe; to watch; to survey; to examine; observation; view; perspective;
+紧绷 & number_of_appearances : 6&pinyin:jǐnbēng&pinyinNum:jin3beng1&definition:to stretch taut; (of muscles etc) taut; strained; tense;
+袖子 & number_of_appearances : 2&pinyin:xiùzi&pinyinNum:xiu4zi5&definition:sleeve;
+上卷 & number_of_appearances : 1&pinyin:shàng juǎn&pinyinNum:shang4 juan3&definition:(Not available);
+众人 & number_of_appearances : 6&pinyin:zhòngrén&pinyinNum:zhong4ren2&definition:everyone;
+炫耀 & number_of_appearances : 1&pinyin:xuànyào&pinyinNum:xuan4yao4&definition:dazzling; to show off; to flaunt;
+二头肌 & number_of_appearances : 1&pinyin:èrtóujī&pinyinNum:er4tou2ji1&definition:biceps muscle;
+皮肤 & number_of_appearances : 46&pinyin:pífū&pinyinNum:pi2fu1&definition:skin;
+眉头 & number_of_appearances : 18&pinyin:méitóu&pinyinNum:mei2tou2&definition:brows;
+紧 & number_of_appearances : 21&pinyin:jǐn&pinyinNum:jin3&definition:tight; strict; close at hand; near; urgent; tense; hard up; short of money; to tighten;
+蹙 & number_of_appearances : 4&pinyin:cù&pinyinNum:cu4&definition:to knit (one's brows); wrinkled (of brows); to hesitate; distressed;
+刚才 & number_of_appearances : 60&pinyin:gāngcái&pinyinNum:gang1cai2&definition:null
+同一 & number_of_appearances : 7&pinyin:tóngyī&pinyinNum:tong2yi1&definition:identical; the same;
+还有 & number_of_appearances : 96&pinyin:háiyǒu&pinyinNum:hai2you3&definition:furthermore; in addition; still; also;
+关注 & number_of_appearances : 7&pinyin:guānzhù&pinyinNum:guan1zhu4&definition:to pay attention to; to follow something closely; to follow (on social media); concern; interest; attention;
+是在 & number_of_appearances : 73&pinyin:shì zài&pinyinNum:shi4 zai4&definition:(Not available);
+哪儿 & number_of_appearances : 29&pinyin:nǎr&pinyinNum:na3r5&definition:(华) where?; wherever; anywhere;
+问 & number_of_appearances : 144&pinyin:wèn&pinyinNum:wen4&definition:to ask; to inquire;
+残缺不全 & number_of_appearances : 1&pinyin:cánquēbùquán&pinyinNum:can2que1bu4quan2&definition:incomplete; fragmentary;
+头一 & number_of_appearances : 7&pinyin:tóuyī&pinyinNum:tou2yi1&definition:the first;
+次 & number_of_appearances : 30&pinyin:cì&pinyinNum:ci4&definition:next in sequence; second; the second (day, time etc); secondary; vice-; sub-; infra-; inferior quality; substandard; order; sequence; hypo- (chemistry); measure word for enumerated events: time;
+令 & number_of_appearances : 37&pinyin:lìng&pinyinNum:ling4&definition:null
+吃惊 & number_of_appearances : 40&pinyin:chījīng&pinyinNum:chi1jing1&definition:to be startled; to be shocked; to be amazed;
+听起来 & number_of_appearances : 21&pinyin:tīngqilai&pinyinNum:ting1qi5lai5&definition:to sound like;
+不大 & number_of_appearances : 11&pinyin:bùdà&pinyinNum:bu4da4&definition:not very; not too; not often;
+对劲 & number_of_appearances : 1&pinyin:duìjìn&pinyinNum:dui4jin4&definition:suitable; to one's liking; to get along together;
+声调 & number_of_appearances : 1&pinyin:shēngdiào&pinyinNum:sheng1diao4&definition:tone; note; a tone (on a Chinese syllable);
+比 & number_of_appearances : 523&pinyin:bǐ&pinyinNum:bi3&definition:null
+想象 & number_of_appearances : 40&pinyin:xiǎngxiàng&pinyinNum:xiang3xiang4&definition:to imagine; to fancy; imagination;
+要 & number_of_appearances : 172&pinyin:yào&pinyinNum:yao4&definition:null
+不是 & number_of_appearances : 124&pinyin:bùshì&pinyinNum:bu2shi5&definition:null
+是从 & number_of_appearances : 27&pinyin:shì zòng&pinyinNum:shi4 zong4&definition:(Not available);
+黑 & number_of_appearances : 8&pinyin:hēi&pinyinNum:hei1&definition:black; dark; sinister; secret; shady; illegal; to hide (something) away; to vilify; (loanword) to hack (computing); abbr. for Heilongjiang province 黑龙江;
+口中 & number_of_appearances : 5&pinyin:kǒu zhòng&pinyinNum:kou3 zhong4&definition:(Not available);
+只要 & number_of_appearances : 24&pinyin:zhǐyào&pinyinNum:zhi3yao4&definition:if only; so long as;
+你自己 & number_of_appearances : 3&pinyin:nǐzìjǐ&pinyinNum:ni3zi4ji3&definition:you yourself; on your own;
+开心 & number_of_appearances : 12&pinyin:kāixīn&pinyinNum:kai1xin1&definition:to feel happy; to rejoice; to have a great time; to make fun of somebody;
+冷静 & number_of_appearances : 4&pinyin:lěngjìng&pinyinNum:leng3jing4&definition:calm; cool-headed;
+会 & number_of_appearances : 355&pinyin:huì&pinyinNum:hui4&definition:null
+摊 & number_of_appearances : 2&pinyin:tān&pinyinNum:tan1&definition:to spread out; vendor's stand;
+哪个 & number_of_appearances : 4&pinyin:nǎge&pinyinNum:na3ge5&definition:which; who;
+守护人 & number_of_appearances : 62&pinyin:shǒu hù rén&pinyinNum:shou3 hu4 ren2&definition:(Not available);
+人群 & number_of_appearances : 33&pinyin:rénqún&pinyinNum:ren2qun2&definition:crowd;
+后面 & number_of_appearances : 27&pinyin:hòumiàn&pinyinNum:hou4mian4&definition:rear; back; behind; later; afterwards;
+喊声 & number_of_appearances : 7&pinyin:hǎnshēng&pinyinNum:han3sheng1&definition:to yell; hubbub;
+告诉 & number_of_appearances : 97&pinyin:gàosu&pinyinNum:gao4su5&definition:null
+尖尖 & number_of_appearances : 2&pinyin:jiānjiān&pinyinNum:jian1jian1&definition:sharp; pointed;
+所以 & number_of_appearances : 32&pinyin:suǒyǐ&pinyinNum:suo3yi3&definition:therefore; as a result; so; the reason why;
+成为 & number_of_appearances : 40&pinyin:chéngwéi&pinyinNum:cheng2wei2&definition:to become; to turn into;
+杂活 & number_of_appearances : 5&pinyin:záhuó&pinyinNum:za2huo2&definition:odd jobs;
+毫无疑问 & number_of_appearances : 6&pinyin:háowúyíwèn&pinyinNum:hao2wu2yi2wen4&definition:certainty; without a doubt;
+咯咯 & number_of_appearances : 3&pinyin:gēgē&pinyinNum:ge1ge1&definition:(onom.) gurgle;
+刚 & number_of_appearances : 69&pinyin:gāng&pinyinNum:gang1&definition:hard; firm; strong; just; barely; exactly;
+讲 & number_of_appearances : 24&pinyin:jiǎng&pinyinNum:jiang3&definition:to speak; to explain; to negotiate; to emphasise; to be particular about; as far as something is concerned; speech; lecture;
+一句 & number_of_appearances : 14&pinyin:yījù&pinyinNum:yi1ju4&definition:a line of verse; a sentence;
+天大 & number_of_appearances : 2&pinyin:tiāndà&pinyinNum:tian1da4&definition:gargantuan; as big as the sky; enormous;
+笑话 & number_of_appearances : 4&pinyin:xiàohuà&pinyinNum:xiao4hua4&definition:joke; jest; to laugh at; to mock;
+带来 & number_of_appearances : 22&pinyin:dàilái&pinyinNum:dai4lai2&definition:to bring; to bring about; to produce;
+令人 & number_of_appearances : 36&pinyin:lìngrén&pinyinNum:ling4ren2&definition:to cause one (to do something); to make one (angry, delighted etc);
+压抑 & number_of_appearances : 9&pinyin:yāyì&pinyinNum:ya1yi4&definition:to constrain or repress emotions; oppressive; stifling; depressing; repression;
+痛楚 & number_of_appearances : 9&pinyin:tòngchǔ&pinyinNum:tong4chu3&definition:pain; anguish; suffering;
+那么多 & number_of_appearances : 16&pinyin:nàmeduō&pinyinNum:na4me5duo1&definition:that many;
+理解 & number_of_appearances : 13&pinyin:lǐjiě&pinyinNum:li3jie3&definition:to comprehend; to understand; comprehension; understanding;
+言语 & number_of_appearances : 6&pinyin:yányu&pinyinNum:yan2yu3&definition:null
+嘴里 & number_of_appearances : 22&pinyin:zuǐlǐ&pinyinNum:zui3li3&definition:mouth; in the mouth; on one's lips; speech; words;
+脱口而出 & number_of_appearances : 4&pinyin:tuōkǒuérchū&pinyinNum:tuo1kou3er2chu1&definition:to blurt out; to let slip (an indiscreet remark);
+自然 & number_of_appearances : 9&pinyin:zìrán&pinyinNum:zi4ran2&definition:nature; natural; naturally;
+倒 & number_of_appearances : 29&pinyin:dào&pinyinNum:dao4&definition:null
+显得 & number_of_appearances : 37&pinyin:xiǎnde&pinyinNum:xian3de5&definition:to seem; to look; to appear;
+件 & number_of_appearances : 29&pinyin:jiàn&pinyinNum:jian4&definition:item; component; measure word for events, things, clothes etc;
+怪异 & number_of_appearances : 28&pinyin:guàiyì&pinyinNum:guai4yi4&definition:monstrous; strange; strange phenomenon;
+事 & number_of_appearances : 81&pinyin:shì&pinyinNum:shi4&definition:matter; thing; item; work; affair;
+失忆 & number_of_appearances : 8&pinyin:shī yì&pinyinNum:shi1 yi4&definition:amnesia;
+偷走 & number_of_appearances : 2&pinyin:tōu zǒu&pinyinNum:tou1 zou3&definition:to escape; to run off;
+好多 & number_of_appearances : 7&pinyin:hǎoduō&pinyinNum:hao3duo1&definition:many; quite a lot; much better;
+语言 & number_of_appearances : 3&pinyin:yǔyán&pinyinNum:yu3yan2&definition:language;
+无所适从 & number_of_appearances : 1&pinyin:wúsuǒshìcóng&pinyinNum:wu2suo3shi4cong2&definition:not knowing which course to follow (idiom); at a loss what to do;
+纷繁 & number_of_appearances : 1&pinyin:fēnfán&pinyinNum:fen1fan2&definition:numerous and complicated;
+情感 & number_of_appearances : 9&pinyin:qínggǎn&pinyinNum:qing2gan3&definition:feeling; emotion; to move (emotionally);
+内心 & number_of_appearances : 37&pinyin:nèixīn&pinyinNum:nei4xin1&definition:heart; innermost being; (math.) incenter;
+争夺 & number_of_appearances : 1&pinyin:zhēngduó&pinyinNum:zheng1duo2&definition:to fight over; to contest; to vie over;
+控制权 & number_of_appearances : 1&pinyin:kòngzhìquán&pinyinNum:kong4zhi4quan2&definition:control (as in "to win control");
+交织 & number_of_appearances : 3&pinyin:jiāozhī&pinyinNum:jiao1zhi1&definition:to interweave;
+在一起 & number_of_appearances : 48&pinyin:zàiyīqǐ&pinyinNum:zai4yi1qi3&definition:together;
+绝望 & number_of_appearances : 23&pinyin:juéwàng&pinyinNum:jue2wang4&definition:to despair; to give up all hope; desperate; desperation;
+极点 & number_of_appearances : 7&pinyin:jídiǎn&pinyinNum:ji2dian3&definition:extreme point; pole; the origin (in polar coordinates);
+阴暗 & number_of_appearances : 4&pinyin:yīnàn&pinyinNum:yin1an4&definition:dim; dark; overcast; darkness; shadow; (fig.) dismal; gloomy; somber; murky; shadowy (side);
+终结 & number_of_appearances : 14&pinyin:zhōngjié&pinyinNum:zhong1jie2&definition:end; conclusion; to come to an end; to terminate (something);
+抹去 & number_of_appearances : 9&pinyin:mǒqù&pinyinNum:mo3qu4&definition:to erase;
+并用 & number_of_appearances : 1&pinyin:bìng yòng&pinyinNum:bing4 yong4&definition:(Not available);
+可怕 & number_of_appearances : 73&pinyin:kěpà&pinyinNum:ke3pa4&definition:awful; dreadful; fearful; formidable; frightful; scary; hideous; horrible; terrible; terribly;
+东西 & number_of_appearances : 154&pinyin:dōngxi&pinyinNum:dong1xi5&definition:null
+跑 & number_of_appearances : 166&pinyin:pǎo&pinyinNum:pao3&definition:null
+开 & number_of_appearances : 43&pinyin:kāi&pinyinNum:kai1&definition:to open; to start; to turn on; to boil; to write out (a prescription, check, invoice etc); to operate (a vehicle); carat (gold); abbr. for Kelvin, 开尔文; abbr. for 开本, book format;
+远远 & number_of_appearances : 3&pinyin:yuǎnyuǎn&pinyinNum:yuan3yuan3&definition:distant; by far;
+躲开 & number_of_appearances : 2&pinyin:duǒkāi&pinyinNum:duo3kai1&definition:to stay out of (hot water, trouble, awkward situation etc); to avoid (somebody);
+嘶哑 & number_of_appearances : 6&pinyin:sīyǎ&pinyinNum:si1ya3&definition:(onom.) coarse crowing; hoarse; husky;
+做 & number_of_appearances : 231&pinyin:zuò&pinyinNum:zuo4&definition:to do; to make; to produce; to write; to compose; to act as; to engage in; to hold (a party); to be; to become; to function (in some capacity); to serve as; to be used for; to form (a bond or relationship); to pretend; to feign; to act a part; to put on appearance;
+不 & number_of_appearances : 295&pinyin:bù&pinyinNum:bu4&definition:(negative prefix); not; no;
+敢 & number_of_appearances : 18&pinyin:gǎn&pinyinNum:gan3&definition:to dare; daring; (polite) may I venture;
+性命 & number_of_appearances : 2&pinyin:xìngmìng&pinyinNum:xing4ming4&definition:life;
+打赌 & number_of_appearances : 11&pinyin:dǎdǔ&pinyinNum:da3du3&definition:to bet; to make a bet; a wager;
+嚷嚷 & number_of_appearances : 11&pinyin:rāngrang&pinyinNum:rang1rang5&definition:to argue noisily; to shout; to make widely known; to reproach;
+再 & number_of_appearances : 126&pinyin:zài&pinyinNum:zai4&definition:again; once more; re-; second; another; then (after something, and not until then); no matter how ... (followed by an adjective or verb, and then (usually) 也 or 都 for emphasis);
+这样 & number_of_appearances : 152&pinyin:zhèyàng&pinyinNum:zhe4yang4&definition:this kind of; so; this way; like this; such;
+唠唠叨叨 & number_of_appearances : 1&pinyin:láolaodāodāo&pinyinNum:lao2lao5dao1dao1&definition:to chatter; to babble;
+下次 & number_of_appearances : 3&pinyin:xiàcì&pinyinNum:xia4ci4&definition:next time;
+休息 & number_of_appearances : 16&pinyin:xiūxi&pinyinNum:xiu1xi5&definition:rest; to rest;
+时间 & number_of_appearances : 103&pinyin:shíjiān&pinyinNum:shi2jian1&definition:time; period;
+减半 & number_of_appearances : 1&pinyin:jiǎnbàn&pinyinNum:jian3ban4&definition:to reduce by half;
+明白 & number_of_appearances : 62&pinyin:míngbai&pinyinNum:ming2bai5&definition:clear; obvious; unequivocal; to understand; to realize;
+头儿 & number_of_appearances : 5&pinyin:tóur&pinyinNum:tou2r5&definition:(华) leader;
+众目睽睽 & number_of_appearances : 2&pinyin:zhòngmùkuíkuí&pinyinNum:zhong4mu4kui2kui2&definition:see 万目睽睽;
+集中 & number_of_appearances : 11&pinyin:jízhōng&pinyinNum:ji2zhong1&definition:to concentrate; to centralize; to focus; centralized; concentrated; to put together;
+精神 & number_of_appearances : 10&pinyin:jīngshen&pinyinNum:jing1shen2&definition:null
+称为 & number_of_appearances : 9&pinyin:chēngwéi&pinyinNum:cheng1wei2&definition:called; to call something (by a name); to name;
+看来 & number_of_appearances : 30&pinyin:kànlai&pinyinNum:kan4lai5&definition:apparently; it seems that;
+巨大 & number_of_appearances : 32&pinyin:jùdà&pinyinNum:ju4da4&definition:huge; immense; very large; tremendous; gigantic; enormous;
+石块 & number_of_appearances : 9&pinyin:shíkuài&pinyinNum:shi2kuai4&definition:stone; rock;
+堆砌 & number_of_appearances : 1&pinyin:duīqì&pinyinNum:dui1qi4&definition:lit. to pile up (bricks); to pack; fig. to pad out (writing with fancy phrases); ornate rhetoric;
+已 & number_of_appearances : 42&pinyin:yǐ&pinyinNum:yi3&definition:already; to stop; then; afterwards;
+裂开 & number_of_appearances : 2&pinyin:lièkāi&pinyinNum:lie4kai1&definition:to split open;
+缝 & number_of_appearances : 2&pinyin:fèng&pinyinNum:feng4&definition:null
+从中 & number_of_appearances : 7&pinyin:cóngzhōng&pinyinNum:cong2zhong1&definition:from within; therefrom;
+探 & number_of_appearances : 26&pinyin:tàn&pinyinNum:tan4&definition:to explore; to search out; to scout; to visit; to stretch forward;
+高高 & number_of_appearances : 5&pinyin:gāogāo&pinyinNum:gao1gao1&definition:tall;
+野草 & number_of_appearances : 3&pinyin:yěcǎo&pinyinNum:ye3cao3&definition:weeds; mistress or prostitute (old);
+幢 & number_of_appearances : 6&pinyin:zhuàng&pinyinNum:zhuang4&definition:null
+破旧 & number_of_appearances : 5&pinyin:pòjiù&pinyinNum:po4jiu4&definition:shabby;
+木头 & number_of_appearances : 27&pinyin:mùtou&pinyinNum:mu4tou5&definition:slow-witted; blockhead; log (of wood, timber etc);
+房子 & number_of_appearances : 29&pinyin:fángzi&pinyinNum:fang2zi5&definition:house; building (single- or two-story); apartment; room;
+矗立 & number_of_appearances : 2&pinyin:chùlì&pinyinNum:chu4li4&definition:to tower; standing tall and upright (of large building);
+石头 & number_of_appearances : 48&pinyin:shítou&pinyinNum:shi2tou5&definition:stone;
+形成 & number_of_appearances : 10&pinyin:xíngchéng&pinyinNum:xing2cheng2&definition:to form; to take shape;
+鲜明 & number_of_appearances : 3&pinyin:xiānmíng&pinyinNum:xian1ming2&definition:bright; clear-cut; distinct;
+反差 & number_of_appearances : 2&pinyin:fǎnchā&pinyinNum:fan3cha1&definition:contrast; discrepancy;
+棵 & number_of_appearances : 10&pinyin:kē&pinyinNum:ke1&definition:measure word for trees, cabbages, plants etc;
+树 & number_of_appearances : 6&pinyin:shù&pinyinNum:shu4&definition:tree; to cultivate; to set up;
+环绕 & number_of_appearances : 2&pinyin:huánrào&pinyinNum:huan2rao4&definition:to surround; to circle; to revolve around;
+树根 & number_of_appearances : 1&pinyin:shùgēn&pinyinNum:shu4gen1&definition:tree roots;
+长满 & number_of_appearances : 6&pinyin:zhǎngmǎn&pinyinNum:zhang3man3&definition:to grow all over;
+节瘤 & number_of_appearances : 1&pinyin:jiéliú&pinyinNum:jie2liu2&definition:knot (in wood);
+入 & number_of_appearances : 7&pinyin:rù&pinyinNum:ru4&definition:to enter; to go into; to join; to become a member of; to confirm or agree with; abbr. for 入声;
+菜园 & number_of_appearances : 13&pinyin:càiyuán&pinyinNum:cai4yuan2&definition:vegetable garden;
+种 & number_of_appearances : 10&pinyin:zhòng&pinyinNum:zhong4&definition:null
+玉米 & number_of_appearances : 2&pinyin:yùmǐ&pinyinNum:yu4mi3&definition:corn; maize;
+番茄 & number_of_appearances : 2&pinyin:fānqié&pinyinNum:fan1qie2&definition:tomato;
+果树 & number_of_appearances : 2&pinyin:guǒshù&pinyinNum:guo3shu4&definition:fruit tree;
+围栏 & number_of_appearances : 5&pinyin:wéilán&pinyinNum:wei2lan2&definition:fencing; railings; fence;
+养 & number_of_appearances : 4&pinyin:yǎng&pinyinNum:yang3&definition:to raise (animals); to bring up (children); to keep (pets); to support; to give birth;
+猪 & number_of_appearances : 14&pinyin:zhū&pinyinNum:zhu1&definition:hog; pig; swine;
+奶牛 & number_of_appearances : 5&pinyin:nǎiniú&pinyinNum:nai3niu2&definition:milk cow; dairy cow;
+大片 & number_of_appearances : 2&pinyin:dàpiàn&pinyinNum:da4pian4&definition:wide expanse; large area; vast stretch; extending widely; blockbuster movie;
+树木 & number_of_appearances : 6&pinyin:shùmù&pinyinNum:shu4mu4&definition:tree;
+最近 & number_of_appearances : 12&pinyin:zuìjìn&pinyinNum:zui4jin4&definition:recently; soon; nearest;
+处 & number_of_appearances : 27&pinyin:chù&pinyinNum:chu4&definition:null
+东倒西歪 & number_of_appearances : 3&pinyin:dōngdǎoxīwāi&pinyinNum:dong1dao3xi1wai1&definition:to lean unsteadily from side to side (idiom); to sway; (of buildings etc) to lean at a crazy angle;
+濒临 & number_of_appearances : 1&pinyin:bīnlín&pinyinNum:bin1lin2&definition:on the edge of; (fig.) on the verge of; close to;
+天空 & number_of_appearances : 49&pinyin:tiānkōng&pinyinNum:tian1kong1&definition:sky;
+湛蓝 & number_of_appearances : 1&pinyin:zhànlán&pinyinNum:zhan4lan2&definition:azure;
+一丝 & number_of_appearances : 33&pinyin:yī sī&pinyinNum:yi1 si1&definition:(Not available);
+云彩 & number_of_appearances : 1&pinyin:yúncai&pinyinNum:yun2cai5&definition:(coll.) cloud;
+虽是 & number_of_appearances : 1&pinyin:suīshì&pinyinNum:sui1shi4&definition:although; even though; even if;
+明亮 & number_of_appearances : 5&pinyin:míngliàng&pinyinNum:ming2liang4&definition:bright; shining; glittering; to become clear;
+白昼 & number_of_appearances : 1&pinyin:báizhòu&pinyinNum:bai2zhou4&definition:daytime;
+找不到 & number_of_appearances : 3&pinyin:zhǎobudào&pinyinNum:zhao3bu5dao4&definition:can't find;
+太阳 & number_of_appearances : 28&pinyin:tàiyang&pinyinNum:tai4yang5&definition:sun; abbr. for 太阳穴;
+踪影 & number_of_appearances : 9&pinyin:zōngyǐng&pinyinNum:zong1ying3&definition:trace; vestige; presence;
+高墙 & number_of_appearances : 58&pinyin:gāo qiáng&pinyinNum:gao1 qiang2&definition:(Not available);
+清时 & number_of_appearances : 1&pinyin:qīng shí&pinyinNum:qing1 shi2&definition:(Not available);
+清晨 & number_of_appearances : 8&pinyin:qīngchén&pinyinNum:qing1chen2&definition:early morning;
+午后 & number_of_appearances : 2&pinyin:wǔhòu&pinyinNum:wu3hou4&definition:afternoon;
+深呼吸 & number_of_appearances : 2&pinyin:shēn hū xī&pinyinNum:shen1 hu1 xi1&definition:deep breath;
+口 & number_of_appearances : 12&pinyin:kǒu&pinyinNum:kou3&definition:mouth; measure word for things with mouths (people, domestic animals, cannons, wells etc); measure word for bites or mouthfuls;
+试着 & number_of_appearances : 6&pinyin:shìzhe&pinyinNum:shi4zhe5&definition:(coll.) to try to;
+放松 & number_of_appearances : 13&pinyin:fàngsōng&pinyinNum:fang4song1&definition:to loosen; to relax;
+混合 & number_of_appearances : 6&pinyin:hùnhé&pinyinNum:hun4he2&definition:to mix; to blend; hybrid; composite;
+味道 & number_of_appearances : 16&pinyin:wèidao&pinyinNum:wei4dao5&definition:flavor; smell; hint of;
+迎面 & number_of_appearances : 4&pinyin:yíngmiàn&pinyinNum:ying2mian4&definition:directly; head-on (collision); in one's face (of wind);
+扑 & number_of_appearances : 6&pinyin:pū&pinyinNum:pu1&definition:to throw oneself at; to pounce on; to devote one's energies; to flap; to flutter; to dab; to pat; to bend over;
+翻过 & number_of_appearances : 4&pinyin:fānguò&pinyinNum:fan1guo4&definition:to turn over; to transform;
+泥土 & number_of_appearances : 3&pinyin:nítǔ&pinyinNum:ni2tu3&definition:earth; soil; mud; clay;
+肥料 & number_of_appearances : 1&pinyin:féiliào&pinyinNum:fei2liao4&definition:fertilizer; manure;
+松枝 & number_of_appearances : 1&pinyin:sōng zhī&pinyinNum:song1 zhi1&definition:(Not available);
+腐烂 & number_of_appearances : 5&pinyin:fǔlàn&pinyinNum:fu3lan4&definition:to rot; to putrefy; (fig.) corrupt;
+发 & number_of_appearances : 12&pinyin:fā&pinyinNum:fa1&definition:null
+甜 & number_of_appearances : 1&pinyin:tián&pinyinNum:tian2&definition:sweet;
+农场 & number_of_appearances : 4&pinyin:nóngchǎng&pinyinNum:nong2chang3&definition:farm;
+回头 & number_of_appearances : 25&pinyin:huítóu&pinyinNum:hui2tou2&definition:to turn round; to turn one's head; later; by and by;
+局促 & number_of_appearances : 2&pinyin:júcù&pinyinNum:ju2cu4&definition:null
+按捺不住 & number_of_appearances : 2&pinyin:ànnàbuzhù&pinyinNum:an4na4bu5zhu4&definition:to be unable to hold back;
+疑问 & number_of_appearances : 11&pinyin:yíwèn&pinyinNum:yi2wen4&definition:question; interrogation; doubt;
+俘虏 & number_of_appearances : 1&pinyin:fúlǔ&pinyinNum:fu2lu3&definition:captive; to capture;
+为什么 & number_of_appearances : 92&pinyin:wèishénme&pinyinNum:wei4shen2me5&definition:why?; for what reason?;
+脑子 & number_of_appearances : 35&pinyin:nǎozi&pinyinNum:nao3zi5&definition:brains; mind;
+词 & number_of_appearances : 34&pinyin:cí&pinyinNum:ci2&definition:null
+领会 & number_of_appearances : 1&pinyin:lǐnghuì&pinyinNum:ling3hui4&definition:to understand; to comprehend; to grasp;
+神情 & number_of_appearances : 12&pinyin:shénqíng&pinyinNum:shen2qing2&definition:look; expression;
+借此 & number_of_appearances : 3&pinyin:jiècǐ&pinyinNum:jie4ci3&definition:using this as a pretext; thereby;
+评判 & number_of_appearances : 1&pinyin:píngpàn&pinyinNum:ping2pan4&definition:to judge (a competition); to appraise;
+仇恨 & number_of_appearances : 6&pinyin:chóuhèn&pinyinNum:chou2hen4&definition:to hate; hatred; enmity; hostility;
+燃烧 & number_of_appearances : 5&pinyin:ránshāo&pinyinNum:ran2shao1&definition:to ignite; to combust; to burn; combustion; flaming;
+刺骨 & number_of_appearances : 2&pinyin:cìgǔ&pinyinNum:ci4gu3&definition:piercing; cutting; bone-chilling; penetrating (cold);
+冰冷 & number_of_appearances : 13&pinyin:bīnglěng&pinyinNum:bing1leng3&definition:ice-cold;
+愤怒 & number_of_appearances : 27&pinyin:fènnù&pinyinNum:fen4nu4&definition:angry; indignant; wrath; ire;
+至极 & number_of_appearances : 6&pinyin:zhìjí&pinyinNum:zhi4ji2&definition:very; extremely;
+要是 & number_of_appearances : 35&pinyin:yàoshi&pinyinNum:yao4shi5&definition:(coll.) if;
+拿 & number_of_appearances : 26&pinyin:ná&pinyinNum:na2&definition:null
+刀 & number_of_appearances : 17&pinyin:dāo&pinyinNum:dao1&definition:knife; blade; single-edged sword; cutlass; (slang) dollar (loanword); measure word for sets of one hundred sheets (of paper); measure word for knife cuts or stabs; (Chinese surname);
+走上 & number_of_appearances : 19&pinyin:zǒu shàng&pinyinNum:zou3 shang4&definition:to walk on;
+不会 & number_of_appearances : 73&pinyin:bùhuì&pinyinNum:bu4hui4&definition:improbable; unlikely; will not (act, happen etc); not able; not having learned to do something; (coll.) (Tw) don't mention it; not at all;
+意外 & number_of_appearances : 3&pinyin:yìwài&pinyinNum:yi4wai4&definition:unexpected; accident; mishap;
+一头 & number_of_appearances : 56&pinyin:yītóu&pinyinNum:yi1tou2&definition:one head; a head full of something; one end (of a stick); one side; headlong; directly; rapidly; simultaneously;
+黑发 & number_of_appearances : 5&pinyin:hēifà&pinyinNum:hei1fa4&definition:black hair;
+相遇 & number_of_appearances : 1&pinyin:xiāngyù&pinyinNum:xiang1yu4&definition:to meet; to encounter; to come across;
+摇 & number_of_appearances : 20&pinyin:yáo&pinyinNum:yao2&definition:to shake; to rock; to row; to crank; (Chinese surname);
+摇头 & number_of_appearances : 20&pinyin:yáotóu&pinyinNum:yao2tou2&definition:to shake one's head;
+身 & number_of_appearances : 30&pinyin:shēn&pinyinNum:shen1&definition:body; life; oneself; personally; one's morality and conduct; the main part of a structure or body; pregnant; measure word for sets of clothes: suit, twinset; Kangxi radical 158;
+油腻腻 & number_of_appearances : 2&pinyin:yóu nì nì&pinyinNum:you2 ni4 ni4&definition:greasily;
+铁杆 & number_of_appearances : 3&pinyin:tiěgǎn&pinyinNum:tie3gan1&definition:null
+旁 & number_of_appearances : 7&pinyin:páng&pinyinNum:pang2&definition:one side; other; different; lateral component of a Chinese character (such as 刂, 亻 etc);
+板凳 & number_of_appearances : 2&pinyin:bǎndèng&pinyinNum:ban3deng4&definition:wooden bench or stool;
+顶上 & number_of_appearances : 3&pinyin:dǐngshàng&pinyinNum:ding3shang4&definition:on top of; at the summit;
+无力 & number_of_appearances : 8&pinyin:wúlì&pinyinNum:wu2li4&definition:powerless; lacking strength;
+垂下 & number_of_appearances : 2&pinyin:chuíxià&pinyinNum:chui2xia4&definition:to hang down;
+彩旗 & number_of_appearances : 1&pinyin:cǎiqí&pinyinNum:cai3qi2&definition:colored flag;
+风 & number_of_appearances : 4&pinyin:fēng&pinyinNum:feng1&definition:wind; news; style; custom; manner;
+旗帜 & number_of_appearances : 2&pinyin:qízhì&pinyinNum:qi2zhi4&definition:ensign; flag;
+面的 & number_of_appearances : 17&pinyin:miàndī&pinyinNum:mian4di1&definition:abbr. of 面包车的士; minivan taxi;
 图案 & number_of_appearances : 4&pinyin:túàn&pinyinNum:tu2an4
 战战兢兢 & number_of_appearances : 1&pinyin:zhànzhànjīngjīng&pinyinNum:zhan4zhan4jing1jing1
 望 & number_of_appearances : 46&pinyin:wàng&pinyinNum:wang4

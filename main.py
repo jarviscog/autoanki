@@ -20,11 +20,9 @@ if __name__ == "__main__":
     # word_list_w_pinyin_numbers = web_assests.getPinyinNumbers(word_list_w_pinyin)
     #
     # web_assests.getDefinitions(word_list_w_pinyin_numbers, 'maze_runner_definitions.txt', 500)
+    # web_assests.getDefinitions('maze_runner_definition.txt', 'maze_runner_definition1.txt', 50)
 
-
-
-
-    card_generator.createTestCard()
+    card_generator.generate_file('Maze Runner','maze_runner_definition1.txt')
 
 
 
