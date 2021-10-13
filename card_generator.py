@@ -52,6 +52,7 @@ def create_test_deck():
         2023480110,
         'Country Capitals'
     )
+    
 
     my_deck.add_note(my_note)
     genanki.Package(my_deck).write_to_file('output.apkg')
@@ -78,8 +79,8 @@ def generate_note(character, pinyin, definition):
 def generate_file(deck_name, definitions_filename):
     """
 
-    :param deck_name:
-    :param definitions_filename:
+    :param deck_name: The name of the deck to be created
+    :param definitions_filename: The name of the file containing the definitions.
     :return:
     """
     # Number of valid cards that have been added to the deck
