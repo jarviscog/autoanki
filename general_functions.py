@@ -31,3 +31,11 @@ def cut(filename, extention='_cut.txt'):
     print('Cut file: ' + filename)
     print('New file: ' + newFilename)
     return newFilename
+
+def split_filename(filename):
+    """
+    Removes the file extension from a filename
+    :return: An array with the name and the extension
+    """
+
+    return os.path.splitext(filename)

@@ -1,27 +1,28 @@
 # AutoAnki
  Auto-Generate Anki Flashcards from a text file.
  
- Converts a text file containing Chinese characters into flash cards for Anki, containing definitions and images
+ Converts Chinese books from a few online libraries into flash cards for Anki, containing definitions and images
  
- Additionally, AutoAnki is able to sort the cards based on the most frequently used characters in the text, as well as ignore words that have already been uploded in a previous file.
+Additionally, AutoAnki is able to sort the cards based on the most frequently used characters in the text, as well as ignore words that have already been uploaded from a previous book.
  
-AutoAnki was created to help Chinese learners get into more advanced texts.
+AutoAnki was created to help Chinese learners get into more advanced texts. It can be hard transitioning from graded readers to full books, and this tool was designed to help.
 
-# Details
+## Usage
 
 AutoAnki scrapes definitions and pinyin from two websites using selenium for chrome.
-Check your version of chrome, and put the same version driver in the same directory as main.
+Check your version of Chrome, and put the same version driver in the same directory as main.
 Drivers can be found here ---> https://chromedriver.chromium.org/downloads
+
+![book on website](https://github.com/timmy6figures/AutoAnki/blob/[branch]/bookex.png?raw=true)
+
 ##Files
-- card_generator.py - Takes the example_definitions.txt and creates an anki deck out of it.
-Use `generate_file()` to make an anki file
-- web_assets.py - uses selenium to collect various assets for the cards, like pinyin, definitions, and audio clips
-Any `headless=False` can be used in any file to see it in action
+
+See `code_outline.md` for more info on the files and how they are used.
+
 
 # Limitations
 
-- Some of the websites used have a limit to the file size uploded. Currently AutoAnki only supports files up to 300kb in size. Some automatic splitting and re-joining of files are planned.
-- Only mandarin texts have been tested so far, support for Cantonese is a possibility, but not a priority.
-- If used too much, websites will block traffic coming from your computer. To fix this use a proxy
+- Only mandarin texts have been tested so far, This tool probbably works for traditional characters, but it has not been tested.
+- If used too much, websites will block traffic coming from your computer. To fix this proxies will be needed, but this feature has not been added yet.
 
  
