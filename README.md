@@ -13,7 +13,7 @@ AutoAnki scrapes definitions and pinyin from two websites using selenium for chr
 Check your version of Chrome, and put the same version driver in the same directory as main.
 Drivers can be found here ---> https://chromedriver.chromium.org/downloads
 
-![book on website](https://github.com/timmy6figures/AutoAnki/blob/[branch]/bookex.png?raw=true)
+![book on website](https://github.com/timmy6figures/AutoAnki/blob/main/bookex.PNG?raw=true)
 
 ##Files
 
