@@ -1,24 +1,25 @@
 ##Database structure:
 
-    dictionary:
-        -word_id
-        -word
-        -traditional
-        -word_type (noun, verb, etc.)
-        -pinyin
-        -pinyin_numbers
-        -number_of_strokes
-        -sub_components
-        -frequency
-        -hsk_level
-        -top_level
-        -audio_path
-        -image_path
-        -definition
-    book_name
-        -id
-        -word
-        -number_of_appearances
+dictionary:
+- word_id
+- word
+- traditional
+- word_type (noun, verb, etc.)
+- pinyin
+- pinyin_numbers
+- number_of_strokes
+- sub_components
+- frequency
+- hsk_level
+- top_level
+- audio_path
+- image_path
+- definition
+------
+book_name
+ - id
+ - word
+ - number_of_appearances
 
 
 ##PageScraper: Scrape library websites for segments of book
