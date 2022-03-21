@@ -91,9 +91,6 @@ def convert_book_to_database(book_filename):
 
 def check_database():
 
-    connection = sqlite3.connect('AutoAnki.db')
-    cursor = connection.cursor()
-
     while True:
 
         cursor.execute('''SELECT name FROM sqlite_master WHERE type='table';''')
@@ -116,25 +113,3 @@ def check_database():
             return
 
         print("\nDone.")
-
-def print_table(data):
-
-    if(not data):
-
-        print("Table is empty")
-    # insert
-    # into
-    # books(table_name, has_pinyin, has_pinyinNumbers, has_definition, has_audio, has_image)
-    # values('test', True, True, True, True, True)
-
-    else:
-        try:
-            for row in data:
-                print(row)
-                print(type(row))
-        except:
-            print("Error printing data")
-if __name__ == "__main__":
-
-    print("book_to_database.py as main")
-    check_database()

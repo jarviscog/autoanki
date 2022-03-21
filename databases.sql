@@ -22,5 +22,6 @@ CREATE TABLE IF NOT EXISTS dictionary(
 	definition VARCHAR(255),
 )
 
+
 ALTER TABLE definitions
 ADD CONSTRAINT UQ_word_pinyin UNIQUE(word, pinyin)
