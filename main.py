@@ -1,20 +1,21 @@
 import sys
 from PageScraper import csw_page_scraper, xyyuedu_page_scraper
-from DatabaseManager.DatabaseManager import DatabaseManager, create_autoanki_database, is_database
+from DatabaseManager.DatabaseManager import DatabaseManager, create_autoanki_database, is_database, is_valid_database_filename
 import datetime
+import flask_server
+from multiprocessing import Process
 import pyfiglet
 import os
+from PageScraper.PageScraper import PageScraper, is_scrapable_link
 
-def load_database(database_filename):
+def dummy_function(database_filename):
 
     # db_manager.compact_pages()
     # db_manager.add_to_database()
-    #
     # csw_page_scraper.scrape_book("https://www.99csw.com/book/8831/index.htm")
     # xyyuedu_page_scraper.scrape_book("https://m.xyyuedu.com/kehuanxs/yidongmigong1_zhaochuzhenxiang/index.html")
     # xyyuedu_page_scraper.scrape_book("https://m.xyyuedu.com/guowaizuojia/jier_buleiqiaofu/shijiansharenqi/index.html")
-    #
-    # dictionary_maintainer.complete_unfinished_dictionary_records()
+
     return 0
 
 def terminal_interface(database_filename):
@@ -29,11 +30,9 @@ def terminal_interface(database_filename):
     print("---------------------------------")
 
     db_manager = DatabaseManager(database_filename)
-    # Use this when testing
+    # Use this when testing:
     input_string = ''
-
     while 1:
-
         if input_string == 'h':
             print("-------------Options-------------")
             print("(P)rint list of books in the database")
@@ -57,9 +56,16 @@ def terminal_interface(database_filename):
         elif input_string == 'd':
             db_manager.print_database_status()
         elif input_string == 'l':
-            link = input("Enter the url of the book to load")
+            link = input("Enter the url of the book to load:\n")
             # TODO Load book from link
-            db_manager.add_book_from_link(link)
+            # TODO Current work
+            if is_scrapable_link(link):
+                parent_directory = "pages/"
+                scraper = PageScraper(link, parent_directory)
+                bookpath = scraper.scrape()
+                db_manager.add_book_from_directory(bookpath)
+            else:
+                print("Page is not scrapeable. Please try another link")
         elif input_string == 'f':
             link = input("Enter the url of the book to load")
             # TODO Load from file
@@ -71,6 +77,10 @@ def terminal_interface(database_filename):
 
 
 def main():
+    # # Main will run both the flask server as well as a terminal ui
+    # server_process = Process(target=flask_server.main(), args=('',))
+    # server_process.daemon = True
+    # server_process.start()
 
     # Check if the first argument was a database file
     if(len(sys.argv) > 0):
@@ -93,8 +103,11 @@ def main():
                     database_name = datetime.datetime.now().strftime("AutoAnki_%d-%m-%y.db")
                 else:
                     database_name = input_string
-                print("Creating new database with name: " + database_name)
-                create_autoanki_database(database_name)
+                if is_valid_database_filename(database_name):
+                    print("Creating new database` with name: " + database_name)
+                    create_autoanki_database(database_name)
+                else:
+                    print("Sorry, that filename is not valid.")
             else:
                 if is_database(database_name):
                     print("Loading database: ", database_name)
@@ -103,7 +116,7 @@ def main():
 
         # Once a valid database has been loaded (or created), then load the terminal interface
         terminal_interface(database_name)
-        # If the user quits, this will reset and loop
+        # If the user quits, this will reset and let the user choose another database
         database_name = ""
         print("")
 

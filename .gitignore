@@ -1,9 +1,9 @@
 .idea
 venv
 __pycache__
-audio
-books
+media/audio
+media/books
 pages
 temp
-legacyFiles
+media/legacyFiles
 Lib

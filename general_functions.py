@@ -1,4 +1,11 @@
 import os
+import re
+
+GARBAGE_SENTENCES = {
+    "\n",
+    "",
+    "。"
+}
 
 def file_len(fname):
     with open(fname, encoding='utf-8') as f:
@@ -6,6 +13,12 @@ def file_len(fname):
             pass
     return i + 1
 
+def is_valid_filename(filename):
+    # TODO Valid filename
+
+    if re.findall(r'[^.A-Za-z0-9_\-\\]',filename):
+        return 0
+    return 1
 
 def file_exists(filename):
     if os.path.exists(filename):

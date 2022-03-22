@@ -1,5 +1,6 @@
 import math
 import general_functions
+from general_functions import GARBAGE_SENTENCES
 import os
 import time
 import sqlite3
@@ -27,10 +28,17 @@ def is_database(database_name):
         return 0
     return 1
 
+def is_valid_database_filename(filename : str):
+
+    if not general_functions.is_valid_filename(filename):
+        return 0
+    if(filename.split('.')[-1] != 'db'):
+        return 0
+    return 1
+
 
 def create_autoanki_database(database_name):
     if not is_database(database_name):
-        # TODO Verify the database_name is a valid filename. Some of this code can be stolen from is_database
         print("Creating database: " + database_name)
 
         connection = sqlite3.connect(database_name)
@@ -70,20 +78,11 @@ class DatabaseManager:
         self.connection = sqlite3.connect(self.database_name)
         self.cursor = self.connection.cursor()
 
-    def add_book_from_text_file(self):
-        filename = input("Enter filename:")
-        # TODO add from file
-
-    def add_book_from_link(self, link):
-        link_string = input()
-        # TODO add from link
-        # TODO Current job
+    def add_book_from_directory(self, bookpath):
+        # TODO Add book from directory
+        link_string = input("Enter the link to add to AutoAnki")
         print("Adding book from link...")
-        # 1 - Scrape book from website and return filepath to book (bookpath)
-
-        bookpath = "pages/99csw/test_tkamb"
-
-        # 2 - Make a BookCleaner to clean book
+        # 1 - Make a BookCleaner to clean book
         if not is_bookpath(bookpath):
             print("Unable to find path to book. Quitting")
             return 0
@@ -92,15 +91,6 @@ class DatabaseManager:
             book_cleaner.clean()
         # 3 - Add the cleaned book to the database
         self._add_cleaned_book_to_database(bookpath)
-
-    def _add_cleaned_book_to_database(self, bookpath):
-        """
-        Helper function to add a cleaned book to the database. This will both create the table for the book,
-        as well as add all new words to the dictionary table :return:
-        """
-        print("Adding " + bookpath + " to database")
-        self._add_pinyin_pages_to_book_table(bookpath)
-        self._add_book_table_to_definitions_table()
 
     def _add_pinyin_pages_to_book_table(self, bookpath):
         """
@@ -209,6 +199,15 @@ class DatabaseManager:
                 print("Entry not present. Adding...")
                 self.cursor.execute(f"INSERT INTO dictionary (word) VALUES (?)", [book_table_word])
                 self.connection.commit()
+
+    def _add_cleaned_book_to_database(self, bookpath):
+        """
+        Helper function to add a cleaned book to the database. This will both create the table for the book,
+        as well as add all new words to the dictionary table :return:
+        """
+        print("Adding " + bookpath + " to database")
+        self._add_pinyin_pages_to_book_table(bookpath)
+        self._add_book_table_to_definitions_table()
 
     def _save_yellowbridge_data(self, word, cache_number=None):
         '''
