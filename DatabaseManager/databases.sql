@@ -2,7 +2,7 @@ CREATE TABLE IF NOT EXISTS demo_book_name (
 	word_id INTEGER PRIMARY KEY AUTOINCREMENT,
 	word VARCHAR(255) NOT NULL UNIQUE,
 	number_of_appearances INT,
-	CONSTRAINT UQ_word_pinyin UNIQUE(word, pinyin)
+	CONSTRAINT UQ_word_pinyin UNIQUE(word)
 )
 
 CREATE TABLE IF NOT EXISTS dictionary(
@@ -10,7 +10,7 @@ CREATE TABLE IF NOT EXISTS dictionary(
 	word VARCHAR(255) NOT NULL UNIQUE,
 	word_traditional VARCHAR(255),
 	word_type VARCHAR(255),
-	pinyin VARCHAR(255) NOT NULL,
+	pinyin VARCHAR(255),
 	pinyin_numbers VARCHAR(255),
 	number_of_strokes INTEGER,
 	sub_components VARCHAR(255),

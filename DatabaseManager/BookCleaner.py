@@ -1,4 +1,9 @@
 import os
+from pathlib import Path
+
+from selenium.webdriver import ActionChains
+from selenium.webdriver.common.by import By
+
 import general_functions
 from selenium import webdriver
 from os.path import isfile, join
@@ -45,6 +50,11 @@ class BookCleaner:
     2 - compact pages (_compact_pages())
     3 - Grab pinyin for pages (_get_pinyin_of_pages())
     """
+
+    # In bytes. One utf-8 character is 3 bytes. One ASCII character is 1 byte
+    # This could be a more exact number (1024b not 1000b), but better to be on the low end then the website refuse.
+    MAX_TXT_TO_PINYIN_SIZE = 270000
+
     def __init__(self, bookpath):
         """
 
@@ -53,15 +63,8 @@ class BookCleaner:
         """
         self.bookpath = bookpath
         self.compacted_pages_directory = self.bookpath + "\\" + "compacted_pages"
-        self.pinyin_pages_directory = self.bookpath + "\\" + "pinyin_pages"
-        # self.pages = [f for f in os.listdir(self.directory) if (isfile(join(self.directory, f)) and f.endswith(".txt"))]
-        #     self.database_table_name = self.directory.split("\\")[-1]
-        #     cursor.execute(f'''
-        #         CREATE TABLE IF NOT EXISTS {self.database_table_name} (
-        #             word_id INTEGER PRIMARY KEY AUTOINCREMENT,
-        #             word VARCHAR(255) NOT NULL UNIQUE,
-        #             number_of_appearances INT
-        #         )''')
+        self.pinyin_pages_directory = self.bookpath + "" + "pinyin_pages"
+        self.pages = [f for f in os.listdir(self.bookpath) if (isfile(join(self.bookpath, f)) and f.endswith(".txt"))]
 
     def _compact_pages(self):
         """
@@ -70,24 +73,24 @@ class BookCleaner:
         # Some websites used have a free limit of 300kb, for example. Rather then pass all of these pages through one by
         # one, it is more efficient to compact these into 299kb files and send those.
         # :return: True if successful
-
         """
-        print("Compacting files in " + self.directory + "...")
+
+        print("Compacting files in " + self.bookpath + "...")
         try:
-            os.mkdir(self.directory + "\\" + "compacted_pages")
+            os.mkdir(self.bookpath + "\\" + "compacted_pages")
         except FileExistsError:
             pass
         # This is all of the lines from all text files in the directory
         all_pages_text = ""
 
         for page_path in self.pages:
-            page = open(self.directory + "\\" + page_path, "r", encoding="utf-8")
-            for i in range(general_functions.file_len(self.directory + "\\" + page_path)):
+            page = open(self.bookpath + "\\" + page_path, "r", encoding="utf-8")
+            for i in range(general_functions.file_len(self.bookpath + "\\" + page_path)):
                 all_pages_text += page.readline()
 
-        print("Found " + str(len(self.pages)) + " pages totalling " + str(len(all_pages_text)))
+        print("Found " + str(len(self.pages)) + " pages totalling " + str(len(all_pages_text)) + " characters.")
 
-        # Splits the all_pages_text into smaller parts and saves it to the compacted_pages directory
+        # Splits the all_pages_text into smaller parts and saves it to the compacted_pages directory.
         i, current_compacted_filename_number = 0, 0
         all_pages_sentences = all_pages_text.split("\n")
         current_compacted_file_size = 0
@@ -131,8 +134,8 @@ class BookCleaner:
 
     def _get_pinyin_of_pages(self, headless=True):
         """
-
-        :param headless: If headless is false Selenium will be visible
+        Downloads the pinyin of the characters, and stores that with the original characters in pinyin_pages
+        :param headless: If headless is true Selenium will be invisible
         :return:
         """
         try:
@@ -141,28 +144,48 @@ class BookCleaner:
             pass
         filenames_to_convert = [f for f in os.listdir(self.compacted_pages_directory) if
                                 isfile(join(self.compacted_pages_directory, f))]
+
+
+
         for filename_to_convert in filenames_to_convert:
             if os.path.exists(self.pinyin_pages_directory + "\\" + filename_to_convert):
                 print('getPinyin() already done')
             else:
                 chrome_options = webdriver.ChromeOptions()
                 chrome_options.headless = headless
-                path = os.path.dirname(os.path.abspath(__file__))
-                prefs = {"download.default_directory": path + "\\" + self.pinyin_pages_directory}
+
+                # The path required for chrome is pretty finicky
+                # TODO Make this more reliable
+                path = str(Path(Path.cwd())) + "\\" + str(Path(self.pinyin_pages_directory))
+                prefs = {"profile.default_content_settings.popups" : 0,
+                         "download.default_directory": path}
+
                 # print("Download path: " + path + "\\" + self.pinyin_pages_directory)
                 chrome_options.add_experimental_option("prefs", prefs)
+
+
                 url = 'https://www.purpleculture.net/chinese-pinyin-converter/'
                 driver = webdriver.Chrome(chrome_options=chrome_options,
                                           executable_path=str(os.getcwd() + "\\" + 'chromedriver.exe'))
                 driver.get(url)
+                driver.maximize_window()
                 # Grabs the definition part of the screen
                 file_tab = driver.find_element_by_xpath('//*[@id="columnCenter"]/div[4]/div[1]/ul/li[2]/a')
                 file_tab.click()
                 upload_box = driver.find_element_by_id('txtfile')
                 upload_box.send_keys(os.getcwd() + "\\" + self.compacted_pages_directory + "\\"
                                      + filename_to_convert)
-                convert_button = driver.find_element_by_xpath('//*[@id="fileuploadform"]/div[2]/div/button[1]')
+                convert_button = driver.find_element_by_xpath("//*[@id='fileuploadform']/div[2]/div/button[1]")
+
+                # Scroll to this element so ads are not covering it
+                desired_y = (convert_button.size['height'] / 2) + convert_button.location['y']
+                current_y = (driver.execute_script('return window.innerHeight') / 2) + driver.execute_script(
+                    'return window.pageYOffset')
+                scroll_y_by = desired_y - current_y
+                driver.execute_script("window.scrollBy(0, arguments[0]);", scroll_y_by)
+
                 convert_button.click()
+
                 # Wait until file is in downloads file. Times out after 15 seconds
                 for i in range(30):
                     if os.path.exists(self.pinyin_pages_directory + "\\" + filename_to_convert):
@@ -172,12 +195,12 @@ class BookCleaner:
                         print("getPinyin File not downloaded correctly")
                 driver.quit()
 
+
     def _clean_pages(self):
         for page in self.pages:
             clean_page(self.directory + page)
 
     def clean(self):
-
-        # self.clean_pages()
+        # self._clean_pages()
         self._compact_pages()
-        self._get_pinyin_of_pages(headless=False)
+        self._get_pinyin_of_pages(headless=True)

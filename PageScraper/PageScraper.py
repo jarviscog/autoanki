@@ -1,5 +1,6 @@
 from PageScraper import xyyuedu_page_scraper, csw_page_scraper
 
+# TODO Make a more general page scraper. The current scrapers could extend this new class
 
 def is_scrapable_link(url):
     """
@@ -38,6 +39,7 @@ class PageScraper:
             if self.domain == "xyyuedu":
                 print("Scraping an xyyuedu book...")
                 # TODO xyyuedu scaper
+                xyyuedu_page_scraper.scrape_book(self.url, self.parent_directory)
             elif self.domain == "99csw":
                 print("Scraping an 99csw book...")
                 # TODO 99csw scraper

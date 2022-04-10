@@ -12,7 +12,6 @@ AutoAnki was created to help Chinese learners get into more advanced texts. It c
 AutoAnki scrapes definitions and pinyin from two websites using selenium for chrome.
 Check your version of Chrome, and put the same version driver in the same directory as main.
 Drivers can be found here ---> https://chromedriver.chromium.org/downloads
-
 Install requirements.txt and run main.py
 
 ![book on website](https://github.com/timmy6figures/AutoAnki/blob/main/bookex.PNG?raw=true)
