@@ -9,7 +9,7 @@ from multiprocessing import Process
 import pyfiglet
 import os
 from PageScraper.PageScraper import PageScraper, is_scrapable_link
-from DeckMaker.DeckMaker import DeckMaker
+from DeckMaker.DeckManager import DeckManager
 
 # csw_page_scraper.scrape_book("https://www.99csw.com/book/8831/index.htm")
 # xyyuedu_page_scraper.scrape_book("https://m.xyyuedu.com/kehuanxs/yidongmigong1_zhaochuzhenxiang/index.html")
@@ -50,7 +50,7 @@ def terminal_interface(database_filename:str="AutoAnki.db"):
             db_manager.complete_unfinished_dictionary_records()
         elif input_string == 'm':
             print("Opening deck maker...")
-            # TODO Make deck maker
+            deckmaker_terminal_interface(database_filename)
         elif input_string == 'd':
             db_manager.print_database_status()
         elif input_string == 'l':
@@ -79,35 +79,39 @@ def terminal_interface(database_filename:str="AutoAnki.db"):
         input_string = input(">").lower()
 
 def deckmaker_terminal_interface(database_filename:str="AutoAnki.db"):
+
     print("---------------------------------")
-    print("--- Welcome to the Deck Maker! --")
+    print("--- Welcome to the Deck Manager! --")
     print("---------------------------------")
     print("---------Type h for help---------")
     print("---------------------------------")
     print("Current loaded database: " + str(database_filename))
     print("---------------------------------")
 
-    deckmaker = DeckMaker(database_filename)
-    manager = DatabaseManager(database_filename)
+    deck_manager = DeckManager(database_filename)
+    db_manager = DatabaseManager(database_filename)
     while(True):
-        input_string = input(">>").lower()
+        input_string = input(">>").lowera2()
         if input_string == "h":
             print("(L)ist the books that can be added to the deck")
             print("(A)dd all books to the deck")
             print("(G)enerate the deck file. ")
+            print("(Q)uit")
         elif input_string == "l":
-            book_list = manager.book_list
+            book_list = db_manager.book_list
             for book in book_list:
                 print(book)
         elif input_string == "a":
-            book_list = manager.book_list
+            book_list = db_manager.book_list
             for book in book_list:
-                deckmaker.add_book(book)
+                deck_manager.add_book(book)
             print("Added all books to deck")
         elif input_string == "g":
-            # TODO Make deck file
-            output_file_path = deckmaker.generate_deck_file()
+            # TODO Make deck file function
+            output_file_path = deck_manager.generate_deck_file()
             print("Created deck file! File is in: " + output_file_path)
+        elif input_string == "q":
+            return 0
 
 
 

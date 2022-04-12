@@ -1,6 +1,5 @@
 import genanki
 from genanki import Model
-# import random
 import general_functions
 
 chinese_card_model = Model(
@@ -36,7 +35,7 @@ chinese_card_model = Model(
 )
 
 
-def create_test_deck():
+def _create_test_deck():
     """
     Used for testing
     :return:
@@ -69,15 +68,32 @@ def generate_note(character, pinyin, definition):
 
     return note
 
-class DeckMaker:
+class DeckManager:
+    """
+    The class to make anki decks. Add books to table, then create the file using generate_deck_file()
+    One of the most important concepts is the id. No matter what deck the word is in, it should have the same id so the
+    same card in different decks can be remembered.
+    This class makes extensive use of genanki, so understanding how genanki works is pretty important for understanding this.
+    """
 
-    def __int__(self):
+    def __int__(self, database_filename):
         # TODO __init__()
+        # TODO Added books @property
+        # This can be used to check books before they are added to the deck
+        self.deck = genanki.Deck(
+            2020000110,
+            database_filename
+        )
+
+
+        self.database_filename = database_filename
         self.book_list = None
 
-    def add_book(self):
+    def add_book(self, book_name:str):
         # TODO Add book
-        print("Adding book")
+        # TODO Make this accept a list of books, and do some fancy SQL to reduce the number of calls.
+        # Otherwise, the, to, and, i... are guaranteed to be called 200 times. Way too inefficient
+        print("Adding book: " + book_name)
 
     def generate_deck_file(deck_name, definitions_filename):
         """
@@ -90,10 +106,7 @@ class DeckMaker:
         # Number of valid cards that have been added to the deck
         num_of_valid_cards_added = 0
 
-        my_deck = genanki.Deck(
-            2020000110,
-            deck_name
-        )
+
 
         length = general_functions.file_len(definitions_filename)
         file = open(definitions_filename, "r", encoding='utf-8')
@@ -142,5 +155,5 @@ class DeckMaker:
 
 
 if __name__ == '__main__':
-    maker = DeckMaker()
+    maker = DeckManager()
     maker.generate_deck_file('AutoAnki.apkg', 'example.txt')
