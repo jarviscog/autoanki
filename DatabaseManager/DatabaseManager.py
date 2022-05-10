@@ -28,13 +28,14 @@ def is_database(database_name):
         return 0
     return 1
 
+
 def is_valid_database_filename(filename : str):
 
-    if not general_functions.is_valid_filename(filename):
-        return 0
+    filename = general_functions.slugify(filename)
+
     if(filename.split('.')[-1] != 'db'):
         return 0
-    return 1
+    return filename
 
 
 def create_autoanki_database(database_name):
@@ -74,7 +75,11 @@ class DatabaseManager:
         self.cursor = self.connection.cursor()
 
     def add_book_from_directory(self, bookpath):
-        # TODO Add book from directory
+        """
+
+        :param bookpath: The filepath to the book
+        :return: None
+        """
         # 1 - Make a BookCleaner to clean book
         if not is_bookpath(bookpath):
             print("Unable to find path to book. Quitting")
@@ -82,12 +87,13 @@ class DatabaseManager:
         else:
             book_cleaner = BookCleaner(bookpath)
             book_cleaner.clean()
-        # 3 - Add the cleaned book to the database
+        # 2 - Add the cleaned book to the database
         self._add_cleaned_book_to_database(bookpath)
 
-    def _add_pinyin_pages_to_book_table(self, bookpath):
+    def _create_book_table_from_pinyin_pages(self, bookpath):
         """
         A helper function to take all of the cleaned files and add them to the database as a book table
+        FIRST YOU MUST ADD THEM TO THE DICTIONARY TABLE
         :param bookpath: the filepath to the book
         :return:
         """
@@ -96,13 +102,6 @@ class DatabaseManager:
         pinyin_pages_directory = str(Path(bookpath)) + "\\" + "pinyin_pages"
 
         book_table_name = bookpath.split("/")[-2]
-
-        self.cursor.execute(f''' CREATE TABLE IF NOT EXISTS {book_table_name} (
-                    word_id INTEGER PRIMARY KEY AUTOINCREMENT,
-                    word VARCHAR(255) NOT NULL UNIQUE,
-                    number_of_appearances INT,
-                    CONSTRAINT UQ_word_pinyin UNIQUE(word)
-                )''')
 
         filenames_to_add = [f for f in os.listdir(pinyin_pages_directory) if
                             isfile(join(pinyin_pages_directory, f))]
@@ -115,6 +114,7 @@ class DatabaseManager:
             file_to_add_length = general_functions.file_len(pinyin_pages_directory + "\\" + filename_to_add)
             page = open(pinyin_pages_directory + "\\" + filename_to_add, "r", encoding="utf-8")
             for i in range(math.ceil(file_to_add_length / 2)):
+                # The first line is the pinyin, the second line is the characters
                 pinyin = page.readline() \
                     .replace("\n", "") \
                     .replace("。", "") \
@@ -144,11 +144,36 @@ class DatabaseManager:
                     for j in range(len(chars)):
                         number_of_words_not_added += 1
 
-            print("For: " + filename_to_add)
-            print("Valid lines: " + str(valid_rows_num))
-            print("Invalid lines: " + str(invalid_rows_num))
-            print("")
+            # print("For: " + filename_to_add)
+            # print("Valid lines: " + str(valid_rows_num))
+            # print("Invalid lines: " + str(invalid_rows_num))
+            # print("")
+
+        # Add the words to the dictionary table
+        print("Adding rows from " + book_table_name + " to dictionary...")
+        for word, appearances in number_of_appearances_dict.items():
+            # print("Current row: " + str(word) + " " + str(appearances))
+            self.cursor.execute("SELECT * FROM dictionary WHERE word = ?", [word])
+            response = self.cursor.fetchall()
+            # print("Response: " + str(response))
+            # print("Response length: " + str(len(response)))
+            if len(response) <= 0:
+                # print("Entry not present. Adding...")
+                self.cursor.execute(f"INSERT INTO dictionary (word) VALUES (?)", [word])
+                # self.cursor.execute(f"INSERT INTO dictionary (word) VALUES (\"他\")")
+                self.connection.commit()
+
+        # Add the words to the book table
+        self.cursor.execute(f'''CREATE TABLE IF NOT EXISTS {book_table_name} (
+            book_table_word_id INTEGER PRIMARY KEY AUTOINCREMENT,
+            dictionary_word_id INTEGER,
+            word VARCHAR(255) NOT NULL UNIQUE,
+            number_of_appearances INT,
+            FOREIGN KEY (dictionary_word_id) REFERENCES dictionary(word_id)
+        )''')
+
         # TODO This is a bit too slow, and not scalable. Fix this.
+        # TODO The dictionary_word_id should reference the dictionary table
         print("Adding files to book table...this may take a while...")
         # Take the number_of_appearances_dict dict and add all items to the database
         # print("Number of words in number_of_appearances_dict: " + str(len(number_of_appearances_dict)))
@@ -159,7 +184,7 @@ class DatabaseManager:
                 if len(response) > 0:
                     # If a word has been found in the dictionary, add
                     # print("Word " + word + " is already in db")
-                    response_word_id, response_word, response_word_appearances = response[0]
+                    response_word_id, dictionary_word_id, response_word, response_word_appearances = response[0]
                     combined_appearances = appearances + response_word_appearances
                     self.cursor.execute(
                         f"UPDATE {book_table_name} SET number_of_appearances = ? WHERE word = ?",
@@ -167,9 +192,14 @@ class DatabaseManager:
                     self.connection.commit()
                 else:
                     # print("Word " + word + " is not in db")
+                    self.cursor.execute("SELECT word_id FROM dictionary WHERE word = ?", [word])
+                    foreign_word_id = self.cursor.fetchall()[0][0]
+                    # print(foreign_word_id)
+                    # print(type(foreign_word_id))
+
                     self.cursor.execute(
-                        f"INSERT INTO {book_table_name} (word, number_of_appearances) VALUES (?, ?)",
-                        [word, appearances])
+                        f"INSERT INTO {book_table_name} (dictionary_word_id, word, number_of_appearances) VALUES (?, ?, ?)",
+                        [foreign_word_id, word, appearances])
                     self.connection.commit()
 
         print("---Done adding new table to database!---")
@@ -212,18 +242,22 @@ class DatabaseManager:
         as well as add all new words to the dictionary table :return:
         """
         print("Adding " + bookpath + " to database")
-        print("HERE1")
-        self._add_pinyin_pages_to_book_table(bookpath)
-        self._add_book_table_to_definitions_table(bookpath)
+        self._create_book_table_from_pinyin_pages(bookpath)
 
     def _save_yellowbridge_data(self, word, cache_number=None):
         '''
         Helper function for complete_unfinished_dictionary_records() Takes a word (one or more characters),
-        finds them on yellowbridge, and adds them to the dictionary :param word: The word to find on yellowbridge.
+        finds them on yellowbridge, and adds them to the dictionary
+        :param word: The word to find on yellowbridge.
         :param cache_number: The secondary page number for a word with multiple definitions. (See comments in body of
         function)
         :return:
         '''
+        print(repr(word))
+        if word == None or word == '':
+            print("There is no page on Yellowbridge page for null")
+            return
+
         self.cursor.execute("SELECT word, definition FROM dictionary WHERE word = ?", [word])
         response = self.cursor.fetchall()
         if len(response) == 0:
@@ -327,6 +361,24 @@ class DatabaseManager:
 
             self._save_yellowbridge_data(word, cache_number_from_href)
 
+    def get_book_definitions(self, book_name:str):
+        self.cursor.execute(
+            f"""
+            Select 
+                b.dictionary_word_id, 
+                d.word, 
+                d.word_traditional, 
+                d.word_type, 
+                d.pinyin, 
+                d.pinyin_numbers, 
+                d.hsk_level, 
+                d.definition 
+            FROM {book_name} b
+            INNER JOIN dictionary d ON b.dictionary_word_id = d.word_id
+            """
+        )
+        return self.cursor.fetchall()
+
     def complete_unfinished_dictionary_records(self):
         '''
         Scans through the database table called dictionary for rows that do not currently have a definition
@@ -342,7 +394,10 @@ class DatabaseManager:
                 print("Adding " + str(len(response_rows)) + " rows to dictionary table")
                 for row in response_rows:
                     word = row[0]
-                    self._save_yellowbridge_data(word)
+                    try:
+                        self._save_yellowbridge_data(word)
+                    except:
+                        print(f"Error adding [{word}] to the database.")
             else:
                 print("No new rows to complete in dictionary table")
             time.sleep(2)

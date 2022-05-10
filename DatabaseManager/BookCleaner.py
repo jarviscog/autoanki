@@ -163,7 +163,6 @@ class BookCleaner:
                 # print("Download path: " + path + "\\" + self.pinyin_pages_directory)
                 chrome_options.add_experimental_option("prefs", prefs)
 
-
                 url = 'https://www.purpleculture.net/chinese-pinyin-converter/'
                 driver = webdriver.Chrome(chrome_options=chrome_options,
                                           executable_path=str(os.getcwd() + "\\" + 'chromedriver.exe'))

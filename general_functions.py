@@ -1,5 +1,7 @@
 import os
 import re
+import unicodedata
+from numpy import unicode
 
 GARBAGE_SENTENCES = {
     "\n",
@@ -13,12 +15,16 @@ def file_len(fname):
             pass
     return i + 1
 
-def is_valid_filename(filename):
-    # TODO Valid filename
-
-    if re.findall(r'[^.A-Za-z0-9_\-\\]',filename):
-        return 0
-    return 1
+def slugify(value):
+    """
+    Normalizes string, converts to lowercase, removes non-alpha characters,
+    and converts spaces to hyphens.
+    """
+    value = unicodedata.normalize('NFKD', value).encode('ascii', 'ignore')
+    value = unicode(re.sub('[^\w\s-]', '', value).strip().lower())
+    value = unicode(re.sub('[-\s]+', '-', value))
+    # ...
+    return value
 
 def file_exists(filename):
     if os.path.exists(filename):
@@ -52,3 +58,11 @@ def split_filename(filename):
     """
 
     return os.path.splitext(filename)
+
+# TODO Make a debug print function
+
+if __name__ == "__main__":
+
+    in_string = input("Enter a filename: ")
+    new_string = slugify(in_string)
+    print(new_string)

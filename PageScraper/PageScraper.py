@@ -24,12 +24,17 @@ class PageScraper:
         self.url = url_to_scrape
 
         # TODO Check if user has write permission in this directory (This is really extra. DON'T DO THIS FOR V1 JARVIS)
-        # TODO Check if book has already been scraped (Maybe do this one)
+        # TODO Check if book has already been scraped/directory exists (Maybe do this one)
+        # print("parent: ", parent_directory)
         self.parent_directory = parent_directory
 
         self.domain = ""
 
     def scrape(self):
+        """
+
+        :return: Returns the filepath of the book that was scraped. This is where all of the chapter .txt files have been downloaded to.
+        """
 
         if not is_scrapable_link(self.url):
             print("Link is not valid. Please change the url to a valid link")
@@ -59,3 +64,7 @@ class PageScraper:
     @domain.setter
     def book_list(self, value):
         self.domain = value
+
+    @domain.setter
+    def domain(self, value):
+        self._domain = value

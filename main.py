@@ -9,7 +9,7 @@ from multiprocessing import Process
 import pyfiglet
 import os
 from PageScraper.PageScraper import PageScraper, is_scrapable_link
-from DeckMaker.DeckManager import DeckManager
+from DeckManager.DeckManager import DeckManager
 
 # csw_page_scraper.scrape_book("https://www.99csw.com/book/8831/index.htm")
 # xyyuedu_page_scraper.scrape_book("https://m.xyyuedu.com/kehuanxs/yidongmigong1_zhaochuzhenxiang/index.html")
@@ -17,7 +17,6 @@ from DeckMaker.DeckManager import DeckManager
 
 def terminal_interface(database_filename:str="AutoAnki.db"):
 
-    # TODO Use pyfiglet or similar to make the UI nice
     print("---------------------------------")
     print("------ Welcome to AutoAnki! -----")
     print("---------------------------------")
@@ -58,10 +57,10 @@ def terminal_interface(database_filename:str="AutoAnki.db"):
             # TODO Load book from link
             # TODO Current work
             if is_scrapable_link(link):
-                parent_directory = "media\books"
+                parent_directory = "media\\books"
                 scraper = PageScraper(link, parent_directory)
                 bookpath = scraper.scrape()
-                db_manager.add_book_from_directory(bookpath)
+                # db_manager.add_book_from_directory(bookpath)
             else:
                 print("Page is not scrapeable. Please try another link")
         elif input_string == 'f':
@@ -70,7 +69,8 @@ def terminal_interface(database_filename:str="AutoAnki.db"):
             path = input()
             # TODO Load from file
             path = str(Path(path))
-            db_manager.add_book_from_directory("media/books/test/")
+            # db_manager.add_book_from_directory("media/books/test/")
+            db_manager.add_book_from_directory(path)
         elif input_string == 'q':
             print("Exiting " + database_filename + "...")
             return 0
@@ -81,7 +81,7 @@ def terminal_interface(database_filename:str="AutoAnki.db"):
 def deckmaker_terminal_interface(database_filename:str="AutoAnki.db"):
 
     print("---------------------------------")
-    print("--- Welcome to the Deck Manager! --")
+    print("-- Welcome to the Deck Manager! --")
     print("---------------------------------")
     print("---------Type h for help---------")
     print("---------------------------------")
@@ -89,20 +89,19 @@ def deckmaker_terminal_interface(database_filename:str="AutoAnki.db"):
     print("---------------------------------")
 
     deck_manager = DeckManager(database_filename)
-    db_manager = DatabaseManager(database_filename)
     while(True):
-        input_string = input(">>").lowera2()
+        input_string = input(">>").lower()
         if input_string == "h":
             print("(L)ist the books that can be added to the deck")
             print("(A)dd all books to the deck")
             print("(G)enerate the deck file. ")
             print("(Q)uit")
         elif input_string == "l":
-            book_list = db_manager.book_list
+            book_list = deck_manager.books_in_db
             for book in book_list:
-                print(book)
+                print(" - ", book)
         elif input_string == "a":
-            book_list = db_manager.book_list
+            book_list = deck_manager.books_in_db
             for book in book_list:
                 deck_manager.add_book(book)
             print("Added all books to deck")

@@ -1,4 +1,5 @@
-from flask import Flask
+from flask import Flask, request
+from werkzeug.utils import secure_filename
 
 app = Flask(__name__)
 
@@ -7,6 +8,15 @@ def index():
   return "Hello world!" #if you want to render a .html file,
                         # import render_template from flask and use
                         #render_template("index.html") here.
+
+@app.route('/uploader', methods = ['GET', 'POST'])
+def upload_file():
+   if request.method == 'POST':
+      f = request.files['file']
+      f.save(secure_filename(f.filename))
+      return 'file uploaded successfully'
+   else:
+       return "Upload file"
 
 def main():
     app.debug = True

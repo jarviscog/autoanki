@@ -1,8 +1,10 @@
+
 CREATE TABLE IF NOT EXISTS demo_book_name (
-	word_id INTEGER PRIMARY KEY AUTOINCREMENT,
-	word VARCHAR(255) NOT NULL UNIQUE,
-	number_of_appearances INT,
-	CONSTRAINT UQ_word_pinyin UNIQUE(word)
+    book_table_word_id INTEGER PRIMARY KEY AUTOINCREMENT,
+    dictionary_word_id INTEGER,
+    word VARCHAR(255) NOT NULL UNIQUE,
+    number_of_appearances INT,
+    FOREIGN KEY (dictionary_word_id) REFERENCES dictionary(word_id)
 )
 
 CREATE TABLE IF NOT EXISTS dictionary(
@@ -22,6 +24,10 @@ CREATE TABLE IF NOT EXISTS dictionary(
 	definition VARCHAR(255),
 )
 
-
 ALTER TABLE definitions
 ADD CONSTRAINT UQ_word_pinyin UNIQUE(word, pinyin)
+
+
+Select b.dictionary_word_id, d.word, d.word_traditional, d.word_type, d.pinyin, d.pinyin_numbers, d.hsk_level, d.definition
+FROM book_table b
+INNER JOIN dictionary d ON b.dictionary_word_id = d.word_id
