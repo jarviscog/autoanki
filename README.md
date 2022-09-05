@@ -16,7 +16,7 @@ Install requirements.txt and run main.py
 
 ![book on website](https://github.com/timmy6figures/AutoAnki/blob/main/bookex.PNG?raw=true)
 
-##Files
+## Files
 
 See `code_outline.md` for more info on the files and how they are used.
 
