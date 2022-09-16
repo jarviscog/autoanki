@@ -1,20 +1,23 @@
-# auto-anki
+> **Note** <br>
+Massive refactoring in progress! Will be finished Nov 13!
+
+# AutoAnki
  Auto-Generate Anki Flashcards from a text file.
  
  Converts Chinese books from a few online libraries into flash cards for Anki, containing definitions and images
  
-Additionally, auto-anki is able to sort the cards based on the most frequently used characters in the text, as well as ignore words that have already been uploaded from a previous book.
+Additionally, AutoAnki is able to sort the cards based on the most frequently used characters in the text, as well as ignore words that have already been uploaded from a previous book.
  
-auto-anki was created to help Chinese learners get into more advanced texts. It can be hard transitioning from graded readers to full books, and this tool was designed to help.
+AutoAnki was created to help Chinese learners get into more advanced texts. It can be hard transitioning from graded readers to full books, and this tool was designed to help.
 
 ## Usage
 
-auto-anki scrapes definitions and pinyin from two websites using selenium for chrome.
+AutoAnki scrapes definitions and pinyin from two websites using selenium for chrome.
 Check your version of Chrome, and put the same version driver in the same directory as main.
 Drivers can be found here ---> https://chromedriver.chromium.org/downloads
 Install requirements.txt and run main.py
 
-![book on website](./media/images/bookex.PNG)
+![book on website](https://github.com/timmy6figures/AutoAnki/blob/main/bookex.PNG?raw=true)
 
 ## Files
 
