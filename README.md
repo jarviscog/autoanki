@@ -1,3 +1,6 @@
+> **Note** <br>
+Massive refactoring in progress! Will be finished Nov 13!
+
 # AutoAnki
  Auto-Generate Anki Flashcards from a text file.
  
