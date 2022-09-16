@@ -13,7 +13,7 @@ def convert_book_to_database(book_filename):
 
     book_filepath = BOOK_DIRECTORY + book_filename
 
-    connection = sqlite3.connect('AutoAnki.db')
+    connection = sqlite3.connect('auto-anki.db')
     cursor = connection.cursor()
     table_name = general_functions.split_filename(book_filename)[0]
     # table_name = "test"
