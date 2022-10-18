@@ -8,3 +8,4 @@ pages
 temp
 Lib
 .codetogether.ignore
+.DS_Store

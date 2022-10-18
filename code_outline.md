@@ -19,7 +19,7 @@ the definitions and other information
 ### dictionary:
 - word_id
 - word
-- traditional
+- word_traditional
 - word_type (noun, verb, etc.)
 - pinyin
 - pinyin_numbers
@@ -31,13 +31,14 @@ the definitions and other information
 - audio_path
 - image_path
 - definition
----
+
 
 ### book_list:
 - book_name
 - book_table_name
+- language
 
-------
+
 ### book_example
  - id
  - word

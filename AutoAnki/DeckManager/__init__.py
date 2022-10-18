@@ -1,6 +1,5 @@
 import genanki
 from genanki import Model
-from .. import general_functions
 from ..DatabaseManager import DatabaseManager
 from pprint import pprint
 
