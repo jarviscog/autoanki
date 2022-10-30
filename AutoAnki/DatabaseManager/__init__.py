@@ -1,4 +1,5 @@
 import os
+import pprint
 import time
 import sqlite3
 import warnings
@@ -22,7 +23,7 @@ def convert_to_tablename(value):
     value = str(value)
     value = unicodedata.normalize('NFKC', value)
     # value.replace("：",":")
-    value = value.replace("：", "--")
+    value = value.replace("：", "__")
     value = re.sub(r'[^\w\s-]', '', value.lower())
     return re.sub(r'[-\s]+', '_', value).strip('-_')
 
@@ -54,8 +55,9 @@ def is_database(database_name):
 #     return filename
 
 
-def create_autoanki_database(database_path):
+def create_autoanki_db(database_path):
 
+    # TODO: Make method not function
     print("DatabaseManager: Creating database [" + database_path + "]")
     path = os.path.join(os.path.dirname(__file__), 'databases_init.sql')
     with open(path, 'r') as sql_file:
@@ -64,7 +66,18 @@ def create_autoanki_database(database_path):
     cursor = connection.cursor()
     cursor.executescript(sql_script)
     connection.commit()
-    print("DatabaseManager: Done creating database!")
+
+    # # Create book_table
+    # path = os.path.join(os.path.dirname(__file__), 'databases_init.sql')
+    # with open(path, 'r') as sql_file:
+    #     sql_script = sql_file.read()
+    # connection = sqlite3.connect(database_path)
+    # cursor = connection.cursor()
+    # cursor.executescript(sql_script)
+    # connection.commit()
+
+
+print("DatabaseManager: Done creating database!")
 
 
 class DatabaseManager:
@@ -73,13 +86,13 @@ class DatabaseManager:
 
         if not os.path.exists(database_path):
             warnings.warn("This database does not exist yet. Creating a new one...")
-            create_autoanki_database(database_path)
-
+            create_autoanki_db(database_path)
         self.database_name = database_path
         self.book_list = []
         path = os.path.join(os.getcwd(), self.database_name)
         self.connection = sqlite3.connect(path)
         self.cursor = self.connection.cursor()
+
 
     def add_book(self, bookpath: str, book_name: str = "Unknown"):
         """
@@ -99,7 +112,7 @@ class DatabaseManager:
 
         # Gets a 'table name' clean version of the book name
         table_book_name = convert_to_tablename(book_name)
-        print(table_book_name)
+        # print("Table book name: ", table_book_name)
 
         # Add the name of the book to the book_list table
         success = self._add_to_book_list_table(book_name, table_book_name)
@@ -131,6 +144,9 @@ class DatabaseManager:
             # print("Inserting")
             self.cursor.execute(f"INSERT INTO book_list VALUES(\"{book_name}\",\"{table_name}\",'cn')")
             self.connection.commit()
+        else:
+            print("The book is already in database. Not adding")
+            return False
         return True
         # except:
         #     return False
@@ -146,7 +162,7 @@ class DatabaseManager:
         :param table_name: The name of the table to create for the book
         :return:
         """
-        print("Making table...")
+        # print("Making table...")
         # Collect list of all words in the book to put in the dictionary and book table
         files = []
         for r, d, f in os.walk(bookpath):
@@ -167,18 +183,19 @@ class DatabaseManager:
                         # TODO Use Language processing to get the words in the line.
                         for i in range(0,len(line)):
                             char = line[i]
-                            # print("Word: ",char)
-                            if number_of_appearances.get(char) == None:
-                                number_of_appearances[char] = 0
-                            else:
-                                number_of_appearances[char] += 1
+                            if char != '\n':
+                                print("Word: ",char)
+                                if number_of_appearances.get(char) == None:
+                                    number_of_appearances[char] = 1
+                                else:
+                                    number_of_appearances[char] += 1
                 # pprint.pprint(number_of_appearances)
 
         # Add all words to the dictionary if they are not already there
-        # I'm doing it this way to reduce the number of db calls
+        # I'm doing it this way to reduce the number of db calls, rather than checking if they are in the db one by one
+        # Yes, this can create errors if 2 people are working on the same db, but this is sqlite
         self.cursor.execute(f"SELECT word FROM dictionary")
         dictionary_words = self.cursor.fetchall()
-        print(dictionary_words)
 
         for word, appearances in number_of_appearances.items():
             if (word,) not in dictionary_words:
@@ -186,26 +203,29 @@ class DatabaseManager:
                 self.cursor.execute(f"INSERT INTO dictionary (word) VALUES (?)", [word])
                 self.connection.commit()
 
+        # TODO Grab this from the SQL file rather than a string here
         # Create the new table
-        # TODO Grab this from the SQL file
-        # TODO The dictionary_word_id should reference the dictionary table
-        # TODO Current work
-        # TODO Database is locked?
         self.cursor.execute(f'''CREATE TABLE IF NOT EXISTS "{table_name}" (
                     book_table_word_id INTEGER PRIMARY KEY AUTOINCREMENT,
                     dictionary_word_id INTEGER,
-                    word VARCHAR(255) NOT NULL UNIQUE,
                     number_of_appearances INT,
                     FOREIGN KEY (dictionary_word_id) REFERENCES dictionary(word_id)
                 )''')
         self.connection.commit()
+
+        # Make a dictionary of word ids from dictionary
+        self.cursor.execute(f"SELECT word_id, word FROM dictionary")
+        result = self.cursor.fetchall()
+        word_id_dict = {}
+        for line in result:
+            word_id_dict[line[1]] = line[0]
+
         # Add all words to the book_table
         for word, appearances in number_of_appearances.items():
+            dictionary_word_id = word_id_dict[word]
 
-                # print("Adding word...")
-                # TODO Test that this works
-            self.cursor.execute(f"INSERT INTO {table_name} (dictionary_word_id, word, number_of_appearances) "
-                                f"VALUES (?,?,?)", [id, word, number_of_appearances[word]])
+            self.cursor.execute(f"INSERT INTO {table_name} (dictionary_word_id, number_of_appearances) "
+                                f"VALUES (?,?)", [dictionary_word_id, number_of_appearances[word]])
             self.connection.commit()
 
         return True
@@ -416,11 +436,10 @@ class DatabaseManager:
     def book_list(self):
         connection = sqlite3.connect(self.database_name)
         cursor = connection.cursor()
-        cursor.execute("SELECT name FROM sqlite_master WHERE type='table';")
+        cursor.execute("SELECT book_name FROM book_list")
         return_array = []
         for table in cursor.fetchall():
-            if table[0] != 'dictionary' and table[0] != 'sqlite_sequence':
-                return_array.append(table[0])
+            return_array.append(table[0])
         return return_array
 
     @book_list.setter

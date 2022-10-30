@@ -33,10 +33,15 @@ properties
 class AutoAnki:
 
     def __init__(self, database_filepath='AutoAnki.db'):
+        """
+        The main AutoAnki object
+        :param database_filepath:
+        """
         # print("AutoAnki: Connecting to database...")
         self.book_cleaner = BookCleaner()
         self.database_filepath = database_filepath
         self.database_manager = DatabaseManager(database_filepath)
+        self.database_manager
         # self.deck_manager = DeckManager(path)
         # print("AutoAnki: Connected!")
 
@@ -80,6 +85,7 @@ class AutoAnki:
         Get a list of the books in the database
         :return: list of book names (str)
         """
+
         return self.database_manager.book_list
 
     @book_list.setter

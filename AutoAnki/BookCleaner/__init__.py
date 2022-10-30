@@ -1,6 +1,7 @@
 import os
 import shutil
 import glob
+import warnings
 from pathlib import Path
 
 from selenium.webdriver import ActionChains
@@ -35,22 +36,24 @@ class BookCleaner:
 
         # If the bookpath is a file, make a folder with the same name and move the file in then run the rest of clean()
         if os.path.isfile(bookpath):
-            print("It was a file")
+            warnings.warn("Moved file [" + bookpath + "] to folder with the same name.")
             try:
                 folder = os.path.dirname(bookpath)
                 dir = os.path.splitext(os.path.basename(bookpath))[0]
-                print('dir', dir)
+                # print('dir', dir)
                 file = os.path.basename(bookpath)
                 # Make the new directory, move the file
-                os.mkdir(os.path.join(folder, dir))
                 new_filepath = os.path.join(folder, dir)
+                os.mkdir(new_filepath)
                 shutil.copy(bookpath, new_filepath)
                 bookpath = new_filepath
                 print('new bookpath', bookpath)
+            except FileExistsError:
+                print("[" + new_filepath + "] already exists")
+                return False
             except IOError:
-                print("IOError")
-                # TODO File exists error? Check this
-                print("Cant access this file")
+                # print(e.message)
+                print("Unable to access file")
                 return False
 
         # Get list of files to convert
