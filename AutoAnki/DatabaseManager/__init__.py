@@ -11,6 +11,8 @@ import pinyin as pin_to_num
 from pathlib import Path
 import unicodedata
 import re
+import pynlpir
+pynlpir.open()
 
 
 CLEANED_FILES_DIRECTORY = 'cleaned_files'
@@ -115,13 +117,13 @@ class DatabaseManager:
         # print("Table book name: ", table_book_name)
 
         # Add the name of the book to the book_list table
-        success = self._add_to_book_list_table(book_name, table_book_name)
-        if not success:
-            return
+        # success = self._add_to_book_list_table(book_name, table_book_name)
+        # if not success:
+        #     return
 
         # Add all the words in the bookpath to a new table with the name of the book. If a word is not in definitions,
         #   add it there first
-        self.add_book_table_to_db(bookpath, table_book_name)
+        success = self.add_book_table_to_db(bookpath, table_book_name)
         if success is False:
             return
 
@@ -172,6 +174,7 @@ class DatabaseManager:
         number_of_appearances = {}
         # print("Files to clean")
         # print(files)
+
         for filepath in files:
             with open(filepath,'r',encoding='utf-8') as f:
                 line = " "
@@ -181,14 +184,18 @@ class DatabaseManager:
                     i+=1
                     if line:
                         # TODO Use Language processing to get the words in the line.
-                        for i in range(0,len(line)):
-                            char = line[i]
-                            if char != '\n':
-                                print("Word: ",char)
-                                if number_of_appearances.get(char) == None:
-                                    number_of_appearances[char] = 1
-                                else:
-                                    number_of_appearances[char] += 1
+                        print("Line:", line)
+
+                        segmented = pynlpir.segment(line, pos_tagging=False)
+                        print(segmented)
+                        # for i in range(0,len(line)):
+                        #     char = line[i]
+                        #     if char != '\n':
+                        #         print("Word: ",char)
+                        #         if number_of_appearances.get(char) == None:
+                        #             number_of_appearances[char] = 1
+                        #         else:
+                        #             number_of_appearances[char] += 1
                 # pprint.pprint(number_of_appearances)
 
         # Add all words to the dictionary if they are not already there

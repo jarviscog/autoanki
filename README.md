@@ -26,7 +26,7 @@ See `code_outline.md` for more info on the files and how they are used.
 
 # Limitations
 
-- Only mandarin texts have been tested so far, This tool probbably works for traditional characters, but it has not been tested.
+- Only mandarin texts have been tested so far, This tool probably works for traditional characters, but it has not been tested.
 - If used too much, websites will block traffic coming from your computer. To fix this proxies will be needed, but this feature has not been added yet.
 
  
