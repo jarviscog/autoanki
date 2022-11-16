@@ -36,18 +36,17 @@ class BookCleaner:
 
         # If the bookpath is a file, make a folder with the same name and move the file in then run the rest of clean()
         if os.path.isfile(bookpath):
-            warnings.warn("Moved file [" + bookpath + "] to folder with the same name.")
             try:
                 folder = os.path.dirname(bookpath)
                 dir = os.path.splitext(os.path.basename(bookpath))[0]
-                # print('dir', dir)
-                file = os.path.basename(bookpath)
+
                 # Make the new directory, move the file
                 new_filepath = os.path.join(folder, dir)
                 os.mkdir(new_filepath)
                 shutil.copy(bookpath, new_filepath)
                 bookpath = new_filepath
                 print('new bookpath', bookpath)
+                warnings.warn("Moved file [" + bookpath + "] to [" + new_filepath + "].")
             except FileExistsError:
                 print("[" + new_filepath + "] already exists")
                 return False
@@ -136,6 +135,7 @@ class BookCleaner:
 
     @staticmethod
     def _compact_file(page_path):
+        TODO
         print("Compacting...")
         """
         # Compacts all of the different pages in this directory into a specified size.
@@ -195,70 +195,3 @@ class BookCleaner:
 
         print("Done compacting")
         return True
-
-
-# This is old code, and will be replaced with nlp, and some moved to DatabaseManager
-
-#     # In bytes. One utf-8 character is 3 bytes. One ASCII character is 1 byte
-#     # This could be a more exact number (1024b not 1000b), but better to be on the low end then the website refuse.
-#
-#     def _get_pinyin_of_pages(self, headless=True):
-#         """
-#         Downloads the pinyin of the characters, and stores that with the original characters in pinyin_pages
-#         :param headless: If headless is true Selenium will be invisible
-#         :return:
-#         """
-#         try:
-#             os.mkdir(self.pinyin_pages_directory)
-#         except FileExistsError:
-#             pass
-#         filenames_to_convert = [f for f in os.listdir(self.compacted_pages_directory) if
-#                                 isfile(join(self.compacted_pages_directory, f))]
-#
-#
-#         for filename_to_convert in filenames_to_convert:
-#             if os.path.exists(self.pinyin_pages_directory + "\\" + filename_to_convert):
-#                 print('getPinyin() already done')
-#             else:
-#                 chrome_options = webdriver.ChromeOptions()
-#                 chrome_options.headless = headless
-#
-#                 # The path required for chrome is pretty finicky
-#                 # ODLTODO Make this more reliable
-#                 path = str(Path(Path.cwd())) + "\\" + str(Path(self.pinyin_pages_directory))
-#                 prefs = {"profile.default_content_settings.popups" : 0,
-#                          "download.default_directory": path}
-#
-#                 # print("Download path: " + path + "\\" + self.pinyin_pages_directory)
-#                 chrome_options.add_experimental_option("prefs", prefs)
-#
-#                 url = 'https://www.purpleculture.net/chinese-pinyin-converter/'
-#                 driver = webdriver.Chrome(chrome_options=chrome_options,
-#                                           executable_path=str(os.getcwd() + "\\" + 'chromedriver.exe'))
-#                 driver.get(url)
-#                 driver.maximize_window()
-#                 # Grabs the definition part of the screen
-#                 file_tab = driver.find_element_by_xpath('//*[@id="columnCenter"]/div[4]/div[1]/ul/li[2]/a')
-#                 file_tab.click()
-#                 upload_box = driver.find_element_by_id('txtfile')
-#                 upload_box.send_keys(os.getcwd() + "\\" + self.compacted_pages_directory + "\\"
-#                                      + filename_to_convert)
-#                 convert_button = driver.find_element_by_xpath("//*[@id='fileuploadform']/div[2]/div/button[1]")
-#
-#                 # Scroll to this element so ads are not covering it
-#                 desired_y = (convert_button.size['height'] / 2) + convert_button.location['y']
-#                 current_y = (driver.execute_script('return window.innerHeight') / 2) + driver.execute_script(
-#                     'return window.pageYOffset')
-#                 scroll_y_by = desired_y - current_y
-#                 driver.execute_script("window.scrollBy(0, arguments[0]);", scroll_y_by)
-#
-#                 convert_button.click()
-#
-#                 # Wait until file is in downloads file. Times out after 15 seconds
-#                 for i in range(30):
-#                     if os.path.exists(self.pinyin_pages_directory + "\\" + filename_to_convert):
-#                         break
-#                     time.sleep(0.5)
-#                     if i == 29:
-#                         print("getPinyin File not downloaded correctly")
-#                 driver.quit()

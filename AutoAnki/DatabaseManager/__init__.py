@@ -11,8 +11,7 @@ import pinyin as pin_to_num
 from pathlib import Path
 import unicodedata
 import re
-import pynlpir
-pynlpir.open()
+import jieba
 
 
 CLEANED_FILES_DIRECTORY = 'cleaned_files'
@@ -181,26 +180,24 @@ class DatabaseManager:
                 i = 0
                 while line:
                     line = f.readline()
-                    i+=1
+                    i += 1
                     if line:
-                        # TODO Use Language processing to get the words in the line.
-                        print("Line:", line)
 
-                        segmented = pynlpir.segment(line, pos_tagging=False)
-                        print(segmented)
-                        # for i in range(0,len(line)):
-                        #     char = line[i]
-                        #     if char != '\n':
-                        #         print("Word: ",char)
-                        #         if number_of_appearances.get(char) == None:
-                        #             number_of_appearances[char] = 1
-                        #         else:
-                        #             number_of_appearances[char] += 1
+                        # print("Line: ", line)
+                        tokenized_line = jieba.lcut(line)
+                        # print("Tokenized line: ", tokenized_line)
+                        for word in tokenized_line:
+
+                            if word != '\n':
+                                # print("Word: ",word)
+                                if number_of_appearances.get(word) == None:
+                                    number_of_appearances[word] = 1
+                                else:
+                                    number_of_appearances[word] += 1
                 # pprint.pprint(number_of_appearances)
 
         # Add all words to the dictionary if they are not already there
         # I'm doing it this way to reduce the number of db calls, rather than checking if they are in the db one by one
-        # Yes, this can create errors if 2 people are working on the same db, but this is sqlite
         self.cursor.execute(f"SELECT word FROM dictionary")
         dictionary_words = self.cursor.fetchall()
 
