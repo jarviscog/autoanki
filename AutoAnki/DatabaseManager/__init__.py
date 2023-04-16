@@ -2,50 +2,16 @@ import os
 import pprint
 import time
 import sqlite3
-import warnings
 # import pprint
 import requests
 from bs4 import BeautifulSoup
 import urllib.parse
 import pinyin as pin_to_num
 from pathlib import Path
-import unicodedata
-import re
 import jieba
-
+import logging
 
 CLEANED_FILES_DIRECTORY = 'cleaned_files'
-
-
-def convert_to_tablename(value):
-    # TODO Look more into table name conventions (- vs. _ etc.)
-    #   : in sql table name?
-    #   Drop table??? Why is this not working
-    value = str(value)
-    value = unicodedata.normalize('NFKC', value)
-    # value.replace("：",":")
-    value = value.replace("：", "__")
-    value = re.sub(r'[^\w\s-]', '', value.lower())
-    return re.sub(r'[-\s]+', '_', value).strip('-_')
-
-
-def is_database(database_name):
-    try:
-        if database_name.split(".")[1] != "db":
-            return 0
-        if not os.path.exists(database_name):
-            return 0
-        print("Got here")
-        connection = sqlite3.connect(database_name)
-        print("Got here")
-
-        cursor = connection.cursor()
-        # This will fail if dictionary table does not exist
-        cursor.execute("SELECT word FROM dictionary")
-    except:
-        return 0
-    return 1
-
 
 # def is_valid_database_filename(filename : str):
 #
@@ -55,52 +21,58 @@ def is_database(database_name):
 #         return 0
 #     return filename
 
-
-def create_autoanki_db(database_path):
-
-    # TODO: Make method not function
-    print("DatabaseManager: Creating database [" + database_path + "]")
-    path = os.path.join(os.path.dirname(__file__), 'databases_init.sql')
-    with open(path, 'r') as sql_file:
-        sql_script = sql_file.read()
-    connection = sqlite3.connect(database_path)
-    cursor = connection.cursor()
-    cursor.executescript(sql_script)
-    connection.commit()
-
-    # # Create book_table
-    # path = os.path.join(os.path.dirname(__file__), 'databases_init.sql')
-    # with open(path, 'r') as sql_file:
-    #     sql_script = sql_file.read()
-    # connection = sqlite3.connect(database_path)
-    # cursor = connection.cursor()
-    # cursor.executescript(sql_script)
-    # connection.commit()
-
-
-print("DatabaseManager: Done creating database!")
-
-
 class DatabaseManager:
 
-    def __init__(self, database_path):
+    @staticmethod
+    def is_database(database_name):
+        try:
+            if database_name.split(".")[1] != "db":
+                return 0
+            if not os.path.exists(database_name):
+                return 0
 
-        if not os.path.exists(database_path):
-            warnings.warn("This database does not exist yet. Creating a new one...")
-            create_autoanki_db(database_path)
-        self.database_name = database_path
-        self.book_list = []
-        path = os.path.join(os.getcwd(), self.database_name)
-        self.connection = sqlite3.connect(path)
-        self.cursor = self.connection.cursor()
+            connection = sqlite3.connect(database_name)
 
+            cursor = connection.cursor()
+            # This will fail if dictionary table does not exist
+            cursor.execute("SELECT word FROM dictionary")
+        except:
+            return 0
+        return 1
+
+
+    @staticmethod
+    def create_autoanki_db(database_path):
+        """
+        Creates an AutoAnki database file, including all tables needed for AutoAnki
+        :param database_path: The path to the database to create.
+        :return:
+        """
+        # TODO finish this
+        logging.log("DatabaseManager: Creating database [" + database_path + "]")
+        path = os.path.join(os.path.dirname(__file__), 'databases_init.sql')
+        with open(path, 'r') as sql_file:
+            sql_script = sql_file.read()
+        connection = sqlite3.connect(database_path)
+        cursor = connection.cursor()
+        cursor.executescript(sql_script)
+        connection.commit()
+
+        # # Create book_table
+        # path = os.path.join(os.path.dirname(__file__), 'databases_init.sql')
+        # with open(path, 'r') as sql_file:
+        #     sql_script = sql_file.read()
+        # connection = sqlite3.connect(database_path)
+        # cursor = connection.cursor()
+        # cursor.executescript(sql_script)
+        # connection.commit()
 
     def add_book(self, bookpath: str, book_name: str = "Unknown"):
         """
         Adds a file to the AutoAnki database. This involves:
         1 - Add book name to book_list table
         Find the sql friendly table name
-        2 - Add all of the files in bookpath to the definitions table and book table
+        2 - Add all the files in bookpath to the definitions table and book table
         3 - Add book to book_list property
 
         If given a directory, it will recursively search for all files in the directory and add them.
@@ -402,7 +374,9 @@ class DatabaseManager:
         :return:
         '''
         print("Checking for records...")
-        while True:
+        self.cursor.execute("SELECT word FROM dictionary WHERE definition IS NULL")
+        response_rows = self.cursor.fetchall()
+        while len(response_rows) > 0:
             self.cursor.execute("SELECT word FROM dictionary WHERE definition IS NULL")
             response_rows = self.cursor.fetchall()
             # print(response_rows)

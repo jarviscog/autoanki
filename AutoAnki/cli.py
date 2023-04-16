@@ -1,7 +1,7 @@
 import sys
 from pathlib import Path
 
-from DatabaseManager.DatabaseManager import DatabaseManager, create_autoanki_database, is_database, is_valid_database_filename
+from DatabaseManager.LibraryManager import DatabaseManager, create_autoanki_database, is_database, is_valid_database_filename
 import datetime
 import os
 from PageScraper.PageScraper import PageScraper, is_scrapable_link
@@ -103,8 +103,6 @@ def deckmaker_terminal_interface(database_filename:str="auto-anki.db"):
             print("Created deck file! File is in: " + output_file_path)
         elif input_string == "q":
             return 0
-
-
 
 
 

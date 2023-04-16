@@ -135,7 +135,7 @@ class BookCleaner:
 
     @staticmethod
     def _compact_file(page_path):
-        TODO
+
         print("Compacting...")
         """
         # Compacts all of the different pages in this directory into a specified size.
