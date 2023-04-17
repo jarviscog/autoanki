@@ -1,7 +1,7 @@
 > **❗️** <br>
 Pull requests welcome! If you think you can improve AA in any way, you are welcome to send me a message!
 
-# AutoAnki
+# autoanki
 Auto-Generate Anki Flashcards from a text file.
  
 Converts Chinese books from text files to Anki decks.
