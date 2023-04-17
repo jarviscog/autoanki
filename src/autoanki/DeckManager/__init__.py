@@ -126,7 +126,7 @@ class DeckManager:
     def __init__(self):
         self.deck = genanki.Deck(
             2020000110,
-            "auto-ankiTesting"
+            "autoankiTesting"
         )
         self.include_pinyin_numbers = False
         self.include_number_of_strokes = False

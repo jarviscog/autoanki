@@ -132,7 +132,7 @@
 #             if(database_name.lower().strip() == "new"):
 #                 input_string = input("Enter name of database, or press enter: ")
 #                 if input_string == None:
-#                     database_name = datetime.datetime.now().strftime("auto-anki_%d-%m-%y.db")
+#                     database_name = datetime.datetime.now().strftime("autoanki_%d-%m-%y.db")
 #                 else:
 #                     database_name = input_string
 #                 if is_valid_database_filename(database_name):
