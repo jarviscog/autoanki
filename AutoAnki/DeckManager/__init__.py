@@ -111,21 +111,14 @@ def _create_test_deck():
 
 class DeckManager:
     """
-    The class to make anki decks. Add books to table, then create the file using generate_deck_file()
+    The class to make anki decks. Create the file using generate_deck_file()
     One of the most important concepts is the id. No matter what deck the word is in, it should have the same id so the
     same card in different decks can be remembered.
-    This class makes extensive use of genanki, so understanding how genanki works is pretty important for understanding this.
+    This class makes extensive use of genanki, so understanding how genanki works
+        is pretty significant for understanding this.
     """
 
-    def __init__(self, db_filename:str):
-        """
-
-        :param db_filename: The .db file to load definitions from. The deck manager will create a
-        DatabaseManager to read definitions from the database
-        :param include_pinyin_numbers:  If the cards should include the pin1yin1 numbers or not
-        :param include_number_of_strokes: If the cards should include the number of strokes or not
-        :return:
-        """
+    def __init__(self):
         self.deck = genanki.Deck(
             2020000110,
             "auto-ankiTesting"
@@ -133,17 +126,11 @@ class DeckManager:
         self.include_pinyin_numbers = False
         self.include_number_of_strokes = False
 
-        self.database_filename = db_filename
-        # self.database_manager = DatabaseManager(db_filename)
-        self.books_in_db = self.database_manager.book_list
         self.book_list = []
 
     def add_book(self, book_name:str):
-        # TODO Add book
-        # TODO Make this accept a list of books, and do some fancy SQL to reduce the number of redundant calls.
-        # Otherwise, the, to, and, i... are guaranteed to be called 200 times. Way too inefficient
-        # This can probably be done recursively, adding multiple books
 
+        # TODO Decide what to do with this function
         print("Adding book: " + book_name)
 
         # Check if the book is in the database
@@ -153,7 +140,6 @@ class DeckManager:
         else:
             book_definitions = self.database_manager.get_book_definitions(book_name)
             pprint(book_definitions)
-            print(type(book_definitions))
 
             for row in book_definitions:
 
@@ -179,7 +165,8 @@ class DeckManager:
                 self.deck.add_note(note)
             print(self.deck.write_to_collection_from_addon())
 
-    def generate_deck_file(self, deck_name, definitions_filename):
+    @staticmethod
+    def generate_deck_file(words, deck_name: str):
         """
         Generates a deck file from the database
         :param deck_name: The name of the deck to be created

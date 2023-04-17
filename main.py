@@ -1,21 +1,50 @@
-from AutoAnki import AutoAnki, cli
 import os
+import logging
+
+from AutoAnki import AutoAnki, cli
+# from AutoAnki.BookCleaner import BookCleaner
+# from AutoAnki.DatabaseManager import DatabaseManager
+# from AutoAnki.Dictionary.YellowBridgeDictionary import YellowBridgeDictionary
+
 
 def main():
 
-    print("Running...")
+    # logger = logging.getLogger('AutoAnki')
+    # logger.setLevel(logging.INFO)
+    #
+    # # Test BookCleaner
+    # bc = BookCleaner()
+    # book_path = os.path.join('media', 'test_files', 'test1.txt')
+    # # book_path = os.path.join('media')
+    # cleaned_path = bc.clean(book_path)
+    #
+    # # Test DatabaseManager
+    # db_path = os.path.join('media', 'databases', 'AutoAnki1.db')
+    # if not DatabaseManager.is_database(db_path):
+    #     logger.info("Creating database...")
+    #     DatabaseManager.create_autoanki_db(db_path)
+    #     logger.info("Done creating database.")
+    # db = DatabaseManager(db_path)
+    # db.add_book(cleaned_path, "Test 1")
+    #
+    # dict = YellowBridgeDictionary()
 
-    db_path = os.path.join('media', 'databases', 'AutoAnki.db')
+
+    db_path = os.path.join('media', 'databases', 'AutoAnki1.db')
     aa = AutoAnki(db_path)
 
-    filepath = os.path.join('media', 'hello.txt')
-    aa.add_book(filepath, 'My first book😆')
+    bookpath = os.path.join('media', 'test_files', 'test1.txt')
+    aa.add_book(bookpath, 'My first book😆')
 
-    terminal.terminal_interface("Test")
+    aa.complete_unfinished_definitions()
 
-    print(aa.book_list)
+    aa.create_deck("Auto-Generated-Deck")
 
-    aa.update_definitions()
+    # # terminal.terminal_interface("Test")
+    #
+    # print(aa.book_list)
+
+    # aa.update_definitions()
 
     # aa.create_deck()
 
