@@ -5,11 +5,6 @@ from .DatabaseManager import DatabaseManager
 from .Dictionary import YellowBridgeDictionary
 from .DeckManager import DeckManager
 
-__author__ = "Jarvis Coghlin"
-__all__ = ['AutoAnki']
-__version__ = "1.0.0"
-__status__ = "Development"
-
 logger = logging.getLogger('autoanki')
 logger.setLevel(logging.INFO)
 logging.basicConfig(

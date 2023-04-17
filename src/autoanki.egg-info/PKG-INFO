@@ -1,12 +1,12 @@
 Metadata-Version: 2.1
 Name: autoanki
-Version: 1.0.2
+Version: 1.0.5
 Summary: Automatically make Anki Decks for Chinese text
 Home-page: https://github.com/timmy6figures/autoanki
 Author: Jarvis Coghlin
 Author-email: jarviscoghlin@gmail.com
 Project-URL: Bug Tracker, https://github.com/timmy6figures/autoanki/issues
-Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python 3
 Classifier: License :: OSI Approved :: MIT License
 Classifier: Operating System :: OS Independent
 Requires-Python: >=3.6
@@ -16,7 +16,7 @@ License-File: LICENSE.txt
 > **❗️** <br>
 Pull requests welcome! If you think you can improve AA in any way, you are welcome to send me a message!
 
-# AutoAnki
+# autoanki
 Auto-Generate Anki Flashcards from a text file.
  
 Converts Chinese books from text files to Anki decks.
