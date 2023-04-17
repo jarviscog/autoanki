@@ -42,6 +42,7 @@ This will automatically have the .apkg extension, which Anki uses. Go into Anki,
 
 When getting definitions for words, it uses selenium to scrape definitions
 from a dictionary website
+
 Check your version of Chrome, and put the same version driver in the same directory as main.
 Drivers can be found here ---> https://chromedriver.chromium.org/downloads
 
