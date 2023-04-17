@@ -1,4 +1,4 @@
-.idea
+.idea/
 venv
 __pycache__
 media/audio
@@ -8,3 +8,6 @@ pages
 temp
 Lib
 .codetogether.ignore
+.DS_Store
+.idea/.name
+stanford-segmenter-2020-11-17/data/
