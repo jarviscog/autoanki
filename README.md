@@ -16,7 +16,7 @@ It can be hard transitioning from graded readers to full books, and this tool wa
 AutoAnki is both a library and a terminal tool. 
 To get started, run 
 ```pip install autoanki```
-This should install all the requirements. Then, in a Python file do```from AutoAnki import AutoAnki, cli```
+This should install all the requirements. Then, in a Python file do ```from autoanki import AutoAnki, cli```
 
 To get started, first, create a database for AutoAnki to use 
 ```    
