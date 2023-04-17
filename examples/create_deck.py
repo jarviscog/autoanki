@@ -1,15 +1,13 @@
-import os
-import logging
+from src.autoanki import AutoAnki
 
-from AutoAnki import AutoAnki, cli
-# from AutoAnki.BookCleaner import BookCleaner
-# from AutoAnki.DatabaseManager import DatabaseManager
-# from AutoAnki.Dictionary.YellowBridgeDictionary import YellowBridgeDictionary
+# from autoanki.BookCleaner import BookCleaner
+# from autoanki.DatabaseManager import DatabaseManager
+# from autoanki.Dictionary.YellowBridgeDictionary import YellowBridgeDictionary
 
 
 def main():
 
-    # logger = logging.getLogger('AutoAnki')
+    # logger = logging.getLogger('autoanki')
     # logger.setLevel(logging.INFO)
     #
     # # Test BookCleaner
@@ -28,7 +26,7 @@ def main():
     # dict = YellowBridgeDictionary()
     # bookpath = os.path.join('media', 'test_files', 'short-story.txt')
 
-    db_path = "AutoAnki.db"
+    db_path = "../AutoAnki.db"
     if not AutoAnki.is_database(db_path):
         AutoAnki.create_autoanki_db(db_path)
 
@@ -38,7 +36,7 @@ def main():
     aa.add_book(bookpath, 'My first book😆')
 
     aa.complete_unfinished_definitions()
-    aa.create_deck("AutoAnki Deck", "output")
+    aa.create_deck("autoanki Deck", "output")
 
     # # terminal.terminal_interface("Test")
     #

@@ -10,7 +10,7 @@ from pathlib import Path
 
 import jieba
 
-logger = logging.getLogger('AutoAnki')
+logger = logging.getLogger('autoanki')
 logger.setLevel(logging.INFO)
 
 class DatabaseManager:
@@ -61,7 +61,7 @@ class DatabaseManager:
     @staticmethod
     def create_autoanki_db(database_path):
         """
-        Creates an AutoAnki database file, including all tables needed for AutoAnki
+        Creates an autoanki database file, including all tables needed for autoanki
         :param database_path: The path to the database to create.
         :return:
         """
@@ -208,7 +208,7 @@ class DatabaseManager:
 
     def add_book(self, bookpath: str, book_name: str):
         """
-        Adds a file to the AutoAnki database. This involves the following steps:
+        Adds a file to the autoanki database. This involves the following steps:
         1 - Add book to the book_list table
         2 - Add all the files in bookpath to the definitions table and book table
         3 - Add book to book_list property

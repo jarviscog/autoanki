@@ -1,11 +1,8 @@
-import os
 import logging
-import pprint
-import time
 
 from .BookCleaner import BookCleaner
 from .DatabaseManager import DatabaseManager
-from .Dictionary.YellowBridgeDictionary import YellowBridgeDictionary
+from .Dictionary import YellowBridgeDictionary
 from .DeckManager import DeckManager
 
 __author__ = "Jarvis Coghlin"
@@ -13,7 +10,7 @@ __all__ = ['AutoAnki']
 __version__ = "1.0.0"
 __status__ = "Development"
 
-logger = logging.getLogger('AutoAnki')
+logger = logging.getLogger('autoanki')
 logger.setLevel(logging.INFO)
 logging.basicConfig(
     # filename='HISTORYlistener.log',
@@ -24,13 +21,13 @@ logging.basicConfig(
 
 class AutoAnki:
 
-    def __init__(self, database_filepath='AutoAnki.db'):
+    def __init__(self, database_filepath='autoanki.db'):
         """
-        Creates an instance of AutoAnki.
+        Creates an instance of autoanki.
         This creates a book cleaner, database connection, and deck maker
         :param database_filepath: The filepath for the database
         """
-        logger.info("AutoAnki: Connecting to database...")
+        logger.info("autoanki: Connecting to database...")
 
         self.database_filepath = database_filepath
 
@@ -43,7 +40,7 @@ class AutoAnki:
         self.dictionary = YellowBridgeDictionary()
         self.deck_manager = DeckManager()
 
-        logger.info("AutoAnki: Connected!")
+        logger.info("autoanki: Connected!")
 
     def add_book(self, book_path: str, book_name: str = 'New Book'):
         """
@@ -53,11 +50,11 @@ class AutoAnki:
         :return:
         """
 
-        logger.info(f"AutoAnki: Adding book from [{book_path}]")
+        logger.info(f"autoanki: Adding book from [{book_path}]")
 
         # Clean the book
         if not self.book_cleaner.clean(book_path):
-            logger.warning("AutoAnki: Unable to clean book [" + book_name + "].")
+            logger.warning("autoanki: Unable to clean book [" + book_name + "].")
             return
 
         # Add the book to the database
@@ -65,12 +62,12 @@ class AutoAnki:
             logger.warning("Unable to add [" + book_name + "] to database.")
             return
 
-        logger.info("AutoAnki: Added [" + book_path + "].")
+        logger.info("autoanki: Added [" + book_path + "].")
 
     def complete_unfinished_definitions(self):
         """
-        AutoAnki contains an internal definitions' table that is scraped from the internet. As words are added to
-        AutoAnki, their definitions must be found. This function passively finds definitions and adds them to the table
+        autoanki contains an internal definitions' table that is scraped from the internet. As words are added to
+        autoanki, their definitions must be found. This function passively finds definitions and adds them to the table
         :return: None
         """
 

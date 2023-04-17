@@ -4,15 +4,15 @@
 # import datetime
 # import os
 # # from PageScraper.PageScraper import PageScraper, is_scrapable_link
-# from AutoAnki.AutoAnki import AutoAnki
+# from autoanki.autoanki import autoanki
 #
 # # TODO Fix this file
 #
 #
-# def terminal_interface(database_filename:str="auto-anki.db"):
+# def terminal_interface(database_filename:str="autoanki.db"):
 #
 #     print("---------------------------------")
-#     print("------ Welcome to auto-anki! -----")
+#     print("------ Welcome to autoanki! -----")
 #     print("---------------------------------")
 #     print("---------Type h for help---------")
 #     print("---------------------------------")
@@ -73,7 +73,7 @@
 #         input_string = input(">").lower()
 #
 #
-# def deckmaker_terminal_interface(database_filename:str="auto-anki.db"):
+# def deckmaker_terminal_interface(database_filename:str="autoanki.db"):
 #
 #     print("---------------------------------")
 #     print("-- Welcome to the Deck Manager! --")

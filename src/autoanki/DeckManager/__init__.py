@@ -4,14 +4,14 @@ import genanki
 from genanki import Model
 from pprint import pprint
 
-logger = logging.getLogger('AutoAnki')
+logger = logging.getLogger('autoanki')
 logger.setLevel(logging.INFO)
 
 # TODO Add this somewhere
 # # All the resources for finding the
 #         CHINESE_CARD_MODEL = Model(
 #             1559383145,
-#             'Chinese Card (auto-anki)',
+#             'Chinese Card (autoanki)',
 #             fields=[
 #                 {
 #                     'name': 'word',
@@ -59,7 +59,7 @@ logger.setLevel(logging.INFO)
 
 CHINESE_CARD_MODEL = Model(
     1559383145,
-    'Chinese Card (auto-anki)',
+    'Chinese Card (autoanki)',
     fields=[
         {
             'name': 'word',
@@ -201,4 +201,4 @@ class DeckManager:
 
 if __name__ == '__main__':
     maker = DeckManager()
-    maker.generate_deck_file('auto-anki.apkg', 'example.txt')
+    maker.generate_deck_file('autoanki.apkg', 'example.txt')

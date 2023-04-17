@@ -9,7 +9,7 @@ import pinyin as pin_to_num
 
 from .Dictionary import Dictionary
 
-logger = logging.getLogger('AutoAnki')
+logger = logging.getLogger('autoanki')
 # logger.setLevel()
 
 

@@ -20,7 +20,7 @@ GARBAGE_SENTENCES = ['',
                      "。",
                      "\n"]
 
-logger = logging.getLogger('AutoAnki')
+logger = logging.getLogger('autoanki')
 logger.setLevel(logging.INFO)
 
 
