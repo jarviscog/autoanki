@@ -20,25 +20,25 @@ def main():
     #
     # # Test DatabaseManager
     # db_path = os.path.join('media', 'databases', 'AutoAnki1.db')
-    # if not DatabaseManager.is_database(db_path):
-    #     logger.info("Creating database...")
-    #     DatabaseManager.create_autoanki_db(db_path)
-    #     logger.info("Done creating database.")
+
+    # db_path = os.path.join('media', 'databases', 'AutoAnki1.db')
     # db = DatabaseManager(db_path)
     # db.add_book(cleaned_path, "Test 1")
     #
     # dict = YellowBridgeDictionary()
+    # bookpath = os.path.join('media', 'test_files', 'short-story.txt')
 
+    db_path = "AutoAnki.db"
+    if not AutoAnki.is_database(db_path):
+        AutoAnki.create_autoanki_db(db_path)
 
-    db_path = os.path.join('media', 'databases', 'AutoAnki1.db')
     aa = AutoAnki(db_path)
 
-    bookpath = os.path.join('media', 'test_files', 'test1.txt')
+    bookpath = 'short-story.txt'
     aa.add_book(bookpath, 'My first book😆')
 
     aa.complete_unfinished_definitions()
-
-    aa.create_deck("Auto-Generated-Deck")
+    aa.create_deck("AutoAnki Deck", "output")
 
     # # terminal.terminal_interface("Test")
     #

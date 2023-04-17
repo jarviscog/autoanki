@@ -1,6 +1,11 @@
+import logging
+
 import genanki
 from genanki import Model
 from pprint import pprint
+
+logger = logging.getLogger('AutoAnki')
+logger.setLevel(logging.INFO)
 
 # TODO Add this somewhere
 # # All the resources for finding the
@@ -165,8 +170,7 @@ class DeckManager:
                 self.deck.add_note(note)
             print(self.deck.write_to_collection_from_addon())
 
-    @staticmethod
-    def generate_deck_file(words, deck_name: str):
+    def generate_deck_file(self, words, deck_name: str, filename: str):
         """
         Generates a deck file from the database
         :param deck_name: The name of the deck to be created
@@ -180,12 +184,54 @@ class DeckManager:
         num_of_valid_cards_added = 0
 
         # length = general_functions.file_len(definitions_filename)
-        file = open(definitions_filename, "r", encoding='utf-8')
+        # self.deck.add_note()
+        self.deck = genanki.Deck(
+            2020000110,
+            deck_name
+        )
 
-        # Iterate all lines in the definitions file
+        for row in words:
+            word = row["word"]
+            word_traditional = row["word_traditional"]
+            pinyin = row["pinyin"]
+            definition = row["definition"]
+            # word["word_id"]
+            # word["word"]
+            # word["word_traditional"]
+            # word["word_type"]
+            # word["pinyin"]
+            # word["pinyin_numbers"]
+            # word["number_of_strokes"]
+            # word["sub_components"]
+            # word["frequency"]
+            # word["hsk_level"]
+            # word["top_level"]]
+            # word["audio_path"]
+            # word["image_path"]
+            # word["definition"]
 
-        # genanki.Package(my_deck).write_to_file('output.apkg')
-        print("Deck " + deck_name + " created with " + str(num_of_valid_cards_added) + " cards")
+            if not word:
+                word = "Not found"
+            if not word_traditional:
+                word_traditional = "Not found"
+            if not pinyin:
+                pinyin = "Not found"
+            if not definition:
+                definition = "Not found"
+
+            note = genanki.Note(
+                model=CHINESE_CARD_MODEL,
+                fields=[word, word_traditional, pinyin, definition],
+                # sort_field can be used to sort when the cards appear.
+                # By default they are shown in the order they are addeed, so this is not currently used
+                sort_field=1,
+
+            )
+            self.deck.add_note(note)
+
+        genanki.Package(self.deck).write_to_file(filename + ".apkg")
+        logger.info("Deck " + deck_name + " created with " + str(num_of_valid_cards_added) + " cards")
+        return filename + ".apkg"
 
 
 if __name__ == '__main__':

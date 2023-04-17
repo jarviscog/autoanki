@@ -1,5 +1,6 @@
 import os
 import logging
+import pprint
 import time
 
 from .BookCleaner import BookCleaner
@@ -72,6 +73,8 @@ class AutoAnki:
         AutoAnki, their definitions must be found. This function passively finds definitions and adds them to the table
         :return: None
         """
+
+        # TODO Make progress par for unfinished records
         logger.info("Checking for records...")
         self.database_manager.cursor.execute("SELECT word FROM dictionary WHERE definition IS NULL")
         response_rows = self.database_manager.cursor.fetchall()
@@ -93,7 +96,15 @@ class AutoAnki:
                 logger.info("No new rows to complete in dictionary table")
             # time.sleep(2)
 
-    def create_deck(self, deck_name: str):
+    @staticmethod
+    def is_database(db_path):
+        return DatabaseManager.is_database(db_path)
+
+    @staticmethod
+    def create_autoanki_db(db_path: str):
+        DatabaseManager.create_autoanki_db(db_path)
+
+    def create_deck(self, deck_name: str, filepath: str):
         """
         Creates a deck file in the directory of the main file.
         :return:
@@ -104,11 +115,11 @@ class AutoAnki:
         logger.info("Generating deck file [" + deck_name + ".apk ]")
         words = self.database_manager.get_all_completed_definitions()
 
-        # deck_path = self.deck_manager.generate_deck_file(words, deck_name)
-        # if deck_path is None:
-        #     logger.warning("Was not able to create deck file for [", deck_name, "]")
-        # else:
-        #     logger.info("Generated deck file [" + deck_path + "]")
+        deck_path = self.deck_manager.generate_deck_file(words, deck_name, filepath)
+        if deck_path is None:
+            logger.warning("Was not able to create deck file for [", deck_name, "]")
+        else:
+            logger.info("Generated deck file [" + deck_path + "]")
 
     @property
     def book_list(self):

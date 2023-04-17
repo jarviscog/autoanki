@@ -296,8 +296,30 @@ class DatabaseManager:
         self.cursor.execute("SELECT * FROM dictionary WHERE definition IS NOT NULL")
         raw_words = self.cursor.fetchall()
 
-        pprint.pp(raw_words)
-        return raw_words
+        # pprint.pp(raw_words)
+        words = []
+        for row in raw_words:
+            word = {}
+            word["word_id"] = row[0]
+            word["word"] = row[1]
+            word["word_traditional"] = row[2]
+            word["word_type"] = row[3]
+            word["pinyin"] = row[4]
+            word["pinyin_numbers"] = row[5]
+            word["number_of_strokes"] = row[6]
+            word["sub_components"] = row[7]
+            word["frequency"] = row[8]
+            word["hsk_level"] = row[9]
+            word["top_level"] = row[10]
+            word["audio_path"] = row[11]
+            word["image_path"] = row[12]
+            word["definition"] = row[13]
+            # print(word["word"])
+            # pprint.pp(word)
+            # words.append(word)
+            words.append(word)
+        # pprint.pp(words)
+        return words
 
     @property
     def book_list(self):
