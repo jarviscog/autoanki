@@ -133,43 +133,6 @@ class DeckManager:
 
         self.book_list = []
 
-    def add_book(self, book_name:str):
-
-        # TODO Decide what to do with this function
-        print("Adding book: " + book_name)
-
-        # Check if the book is in the database
-        if book_name not in self.books_in_db:
-            print(f"Book [{book_name}] not found in the database")
-            return
-        else:
-            book_definitions = self.database_manager.get_book_definitions(book_name)
-            pprint(book_definitions)
-
-            for row in book_definitions:
-
-                dictionary_word_id = row[0]
-                word = row[1]
-                if row[2] is 'Same':
-                    word_traditional=word
-                else:
-                    word_traditional = row[2]
-                pinyin = row[4]
-                definition = "<br>" + row[7]
-
-                # self.deck.add_note()
-                note = genanki.Note(
-                    model=CHINESE_CARD_MODEL,
-                    fields=[word, word_traditional, pinyin, definition],
-                    # sort_field can be used to sort when the cards appear.
-                    # By default they are shown in the order they are addeed, so this is not currently used
-                    sort_field=1,
-
-                )
-
-                self.deck.add_note(note)
-            print(self.deck.write_to_collection_from_addon())
-
     def generate_deck_file(self, words, deck_name: str, filename: str):
         """
         Generates a deck file from the database
@@ -193,8 +156,10 @@ class DeckManager:
         for row in words:
             word = row["word"]
             word_traditional = row["word_traditional"]
+            if word_traditional == 'Same':
+                word_traditional = "-"
             pinyin = row["pinyin"]
-            definition = row["definition"]
+            definition = "<br>" + row["definition"]
             # word["word_id"]
             # word["word"]
             # word["word_traditional"]

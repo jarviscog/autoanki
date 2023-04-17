@@ -38,7 +38,9 @@ Once all of your books are added, the definitions need to be found, and then you
 aa.complete_unfinished_definitions()
 aa.create_deck("AutoAnki Deck", "output")
 ```
-This will automatically have the .apkg extension, which Anki uses. Go into Anki, and import this file. You should see your deck in the list 
+This will automatically have the .apkg extension, which Anki uses. Go into Anki, and import this file. You should see your deck in the list:
+
+![Anki deck view](media/images/anki.jpg "Anki deck view")
 
 When getting definitions for words, it uses selenium to scrape definitions
 from a dictionary website
@@ -49,12 +51,61 @@ Drivers can be found here ---> https://chromedriver.chromium.org/downloads
 ### Terminal
 If you would like to run AutoAnki from the terminal, run AutoAnki/terminal.py  
 This will run a terminal interface where you will be able to run
-## Files
-See `code_outline.md` for more info on the files and how they are used.
+
+## How it works
+AutoAnki interfaces has 4 components on the back end:
+1. BookCleaner: Cleans the input coming in from files that the user supplies 
+2. DatabaseManager: Takes the cleaned input and puts it into the database
+3. Dictionary: Finds definitions for words in the database
+4. DeckManager: takes information from the user and database, and makes an Anki deck 
+out of it
+
+### Database:
+There are 3 different types of tables in the DB, 
+1. dictionary, which holds all the definitions and other information 
+2. book_list, which holds the titles of the books in the database 
+3. book, based off of the name of the book, and holds the words in the book to find in the dictionary
+
+### dictionary:
+- word_id
+- word
+- word_traditional
+- word_type (noun, verb, etc.)
+- pinyin
+- pinyin_numbers
+- number_of_strokes
+- sub_components
+- frequency
+- hsk_level
+- top_level
+- audio_path
+- image_path
+- definition
+
+![Dictionary table](media/images/dictionary-table.jpg "Dictionary table") 
+*Dictionary table*  
+
+### book_list:
+- book_name
+- book_table_name
+- language
+
+![Book list table](media/images/book_list_table.jpg "Book list table")
+*Book list table*
+
+### book_example
+ - book_table_word_id
+ - dictionary_word_id
+ - number_of_appearances 
+
+![Book table](media/images/book_table.jpg "Book table")
+*Book table*
+
 ## Planned features
 - Currently, all definitions are collected from the internet. This is really slow, 
 so using a dictionary from a file would greatly improve performance. It could fall back on the 
 web dictionary for words it can't find
 - More customization for how the cards in the deck look, and what they have on them
 - The ability to hear what a word sounds like. The database supports this, I just need combine the sounds, and upload the sounds with the cards.
+- There are a few TODOs in the code that I would like to fix
  
