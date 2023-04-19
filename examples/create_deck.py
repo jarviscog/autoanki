@@ -1,4 +1,5 @@
-from src.autoanki import AutoAnki
+from autoanki import AutoAnki
+
 
 # from autoanki.BookCleaner import BookCleaner
 # from autoanki.DatabaseManager import DatabaseManager

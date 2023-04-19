@@ -1,6 +1,5 @@
 requests~=2.27.1
-selenium~=4.1.0
-beautifulsoup4~=4.10.0
 pinyin~=0.4.0
-Flask~=2.2.2
-Werkzeug~=2.2.2
+beautifulsoup4~=4.10.0
+genanki~=0.13.0
+jieba~=0.42.1
