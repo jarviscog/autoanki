@@ -1,1 +1,3 @@
 include autoanki/DatabaseManager/*
+
+include src/autoanki/DatabaseManager/*

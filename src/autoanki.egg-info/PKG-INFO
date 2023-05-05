@@ -1,6 +1,6 @@
 Metadata-Version: 2.1
 Name: autoanki
-Version: 1.0.5
+Version: 1.0.10
 Summary: Automatically make Anki Decks for Chinese text
 Home-page: https://github.com/timmy6figures/autoanki
 Author: Jarvis Coghlin
@@ -31,7 +31,7 @@ It can be hard transitioning from graded readers to full books, and this tool wa
 AutoAnki is both a library and a terminal tool. 
 To get started, run 
 ```pip install autoanki```
-This should install all the requirements. Then, in a Python file do```from AutoAnki import AutoAnki```
+This should install all the requirements. Then, in a Python file do ```from autoanki import AutoAnki```
 
 To get started, first, create a database for AutoAnki to use 
 ```    

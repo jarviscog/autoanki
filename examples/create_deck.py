@@ -1,4 +1,4 @@
-from autoanki import AutoAnki
+from src.autoanki.AutoAnki import AutoAnki
 
 
 # from autoanki.BookCleaner import BookCleaner
@@ -27,7 +27,7 @@ def main():
     # dict = YellowBridgeDictionary()
     # bookpath = os.path.join('media', 'test_files', 'short-story.txt')
 
-    db_path = "../AutoAnki.db"
+    db_path = "./AutoAnki.db"
     if not AutoAnki.is_database(db_path):
         AutoAnki.create_autoanki_db(db_path)
 

@@ -1,4 +1,3 @@
-
 import os
 import pprint
 import re
@@ -7,11 +6,11 @@ import logging
 import unicodedata
 
 from pathlib import Path
-
 import jieba
 
 logger = logging.getLogger('autoanki')
 logger.setLevel(logging.INFO)
+
 
 class DatabaseManager:
 
@@ -67,13 +66,16 @@ class DatabaseManager:
         """
         logger.info("DatabaseManager: Creating database [" + database_path + "]")
         path = os.path.join(os.path.dirname(__file__), 'databases_init.sql')
-        with open(path, 'r') as sql_file:
-            sql_script = sql_file.read()
-        connection = sqlite3.connect(database_path)
-        cursor = connection.cursor()
-        cursor.executescript(sql_script)
-        connection.commit()
-
+        try:
+            with open(path, 'r') as sql_file:
+                sql_script = sql_file.read()
+            connection = sqlite3.connect(database_path)
+            cursor = connection.cursor()
+            cursor.executescript(sql_script)
+            connection.commit()
+        except FileNotFoundError:
+            logger.warning("Could not create database: Missing sql files")
+            return False
         # # Create book_table
         # path = os.path.join(os.path.dirname(__file__), 'databases_init.sql')
         # with open(path, 'r') as sql_file:
@@ -207,24 +209,23 @@ class DatabaseManager:
         logger.info("Done adding file to database")
 
     def add_book(self, bookpath: str, book_name: str):
-        """
-        Adds a file to the autoanki database. This involves the following steps:
-        1 - Add book to the book_list table
-        2 - Add all the files in bookpath to the definitions table and book table
-        3 - Add book to book_list property
+        f"""
+        Adds a file to the autoanki database. This involves the following steps:\n
+        1 - Add book to the book_list table\n
+        2 - Add all the files in "bookpath" to the definitions table and book table\n
+        3 - Add book to book_list property\n
 
         If given a directory, it will recursively search for all files in the directory and add them.
 
         if not already there, adding the
-        :param bookpath: The filepath to the book. It is assumed this is a directory with the files to add
-        :param book_name: The name of the book from which this
+        :param bookpath: The filepath to the book. This is file, or a directory of files
+        :param book_name: The name of the book. This will show up in the Anki deck
         :return: None
         """
         # TODO Make this work for multiple files. Right now only works for one filepath
         logger.info("Adding book...")
         # Gets a 'table name' clean version of the book name
         book_tablename = self.convert_to_tablename(book_name)
-
 
         # Add the name of the book to the book_list table
         success = self._create_book_table(book_name, book_tablename)
@@ -244,7 +245,7 @@ class DatabaseManager:
 
     def print_database_status(self):
         """
-        Prints some basic information about the database
+        Print basic information about the database
         :return:
         """
         self.cursor.execute("SELECT word FROM dictionary")
@@ -263,20 +264,20 @@ class DatabaseManager:
         print(format_string_int.format("Number of unfinished rows:", len(unfinished_rows)))
 
     def complete_definition(self, params: list):
-        """
-        Completes a definition for one word in the dictionary table
-        :param params:
+        f"""
+        Complete a definition for one word in the dictionary table\n
+        traditional_script = params[0]\n
+        word_type = params[1]\n
+        pinyin = params[2]\n
+        pinyin_numbers = params[3]\n
+        sub_components = params[4]\n
+        hsk_level = params[5]\n
+        top_level = params[6]\n
+        definition = params[7]\n
+        word = params[8]
+        :param params: A list of params for the database:
         :return:
         """
-        # traditional_script = params[0]
-        # part_of_speech = params[1]
-        # pinyin= params[2]
-        # pinyin_num = params[3]
-        # composing_words = params[4]
-        # hsk_level = params[0]
-        # top_level = params[0]
-        # definition = params[0]
-        # word = params[0]
 
         self.cursor.execute("UPDATE dictionary "
                             "SET word_traditional = ?, "
@@ -299,27 +300,32 @@ class DatabaseManager:
         # pprint.pp(raw_words)
         words = []
         for row in raw_words:
-            word = {}
-            word["word_id"] = row[0]
-            word["word"] = row[1]
-            word["word_traditional"] = row[2]
-            word["word_type"] = row[3]
-            word["pinyin"] = row[4]
-            word["pinyin_numbers"] = row[5]
-            word["number_of_strokes"] = row[6]
-            word["sub_components"] = row[7]
-            word["frequency"] = row[8]
-            word["hsk_level"] = row[9]
-            word["top_level"] = row[10]
-            word["audio_path"] = row[11]
-            word["image_path"] = row[12]
-            word["definition"] = row[13]
+            word = {
+                "word_id": row[0],
+                "word": row[1],
+                "word_traditional": row[2],
+                "word_type": row[3],
+                "pinyin": row[4],
+                "pinyin_numbers": row[5],
+                "number_of_strokes": row[6],
+                "sub_components": row[7],
+                "frequency": row[8],
+                "hsk_level": row[9],
+                "top_level": row[10],
+                "audio_path": row[11],
+                "image_path": row[12],
+                "definition": row[13]
+            }
             # print(word["word"])
             # pprint.pp(word)
             # words.append(word)
             words.append(word)
         # pprint.pp(words)
         return words
+
+   
+
+
 
     @property
     def book_list(self):

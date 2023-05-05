@@ -8,11 +8,15 @@ src/autoanki/__init__.py
 src/autoanki.egg-info/PKG-INFO
 src/autoanki.egg-info/SOURCES.txt
 src/autoanki.egg-info/dependency_links.txt
+src/autoanki.egg-info/not-zip-safe
 src/autoanki.egg-info/top_level.txt
 src/autoanki/BookCleaner/BookCleaner.py
 src/autoanki/BookCleaner/__init__.py
 src/autoanki/DatabaseManager/DatabaseManager.py
 src/autoanki/DatabaseManager/__init__.py
+src/autoanki/DatabaseManager/book_table.sql
+src/autoanki/DatabaseManager/book_table_view.sql
+src/autoanki/DatabaseManager/databases_init.sql
 src/autoanki/DeckManager/__init__.py
 src/autoanki/Dictionary/CC-CEDictionary.py
 src/autoanki/Dictionary/Dictionary.py

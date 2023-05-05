@@ -45,7 +45,7 @@ class AutoAnki:
         :return:
         """
 
-        logger.info(f"autoanki: Adding book from [{book_path}]")
+        logger.debug(f"autoanki: Adding book from [{book_path}]")
 
         # Clean the book
         if not self.book_cleaner.clean(book_path):
