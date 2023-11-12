@@ -8,8 +8,9 @@ Converts Chinese books from text files to Anki decks.
 
 ![Text to Anki](media/images/example.jpg "Text to Anki")
 
-AutoAnki was created to help Chinese learners get into more advanced texts. 
-It can be hard transitioning from graded readers to full books, and this tool was designed to help ease that process.
+The intention was to allow Chinese learners to move from beginner books to more advanced  material. I found there was a gap in knowledge going from beginner learning books, to teen novels, where each novel will generally have its own specialized terminology, making the transition tedious. This is solved by automatically making Anki decks that have this specialized terminology
+
+An example would be Harry Potter. It will have lots of common terminology, but will have a heavy emphasis on specialized words such as Wand, Robe, Wizard, Broomstick, etc. These words are very uncommon, however in the context of a novel such as this they become way more common, and it is useful to learn a lot of these words before starting.
 
 ## Usage
 
