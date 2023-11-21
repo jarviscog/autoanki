@@ -109,4 +109,9 @@ web dictionary for words it can't find
 - More customization for how the cards in the deck look, and what they have on them
 - The ability to hear what a word sounds like. The database supports this, I just need combine the sounds, and upload the sounds with the cards.
 - There are a few TODOs in the code that I would like to fix
- 
+- 
+
+## Other Info
+
+If you would like to get involved, or learn more information, reading about the Anki system is really important, especially the [Getting Started](https://docs.ankiweb.net/getting-started.html)
+
