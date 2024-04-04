@@ -4,8 +4,10 @@ import genanki
 from genanki import Model
 from pprint import pprint
 
-logger = logging.getLogger('autoanki')
+logger = logging.getLogger('autoanki.dckmngr')
 logger.setLevel(logging.INFO)
+
+# TODO If the user included .apkg at the end, ignore it
 
 # TODO Add this somewhere
 # # All the resources for finding the
@@ -93,27 +95,6 @@ CHINESE_CARD_MODEL = Model(
     css='.card {\n font-family: arial;\n font-size: 30px;\n text-align: center;\n color: black;\n background-color: white;\n}\n',
 )
 
-
-def _create_test_deck():
-    """
-    Used for testing
-    :return:
-    """
-
-    print("Generating card")
-    my_note = genanki.Note(
-        model=CHINESE_CARD_MODEL,
-        fields=['Capital of Canada', 'Ottawa'],
-        sort_field=1
-    )
-    my_deck = genanki.Deck(
-        2023480110,
-        'Country Capitals'
-    )
-    my_deck.add_note(my_note)
-    genanki.Package(my_deck).write_to_file('output.apkg')
-
-
 class DeckManager:
     """
     The class to make anki decks. Create the file using generate_deck_file()
@@ -140,8 +121,6 @@ class DeckManager:
         :param definitions_filename: The name of the file containing the definitions.
         :return:
         """
-        # TODO This is a legacy function. Update this to use the database, rather than text file
-        # Has not been changed to use the object, which it should.
 
         # Number of valid cards that have been added to the deck
         num_of_valid_cards_added = 0
@@ -156,9 +135,12 @@ class DeckManager:
         for row in words:
             word = row["word"]
             word_traditional = row["word_traditional"]
-            if word_traditional == 'Same':
+            if word_traditional == word:
                 word_traditional = "-"
-            pinyin = row["pinyin"]
+            if row["pinyin"]:
+                pinyin = row["pinyin"]
+            else:
+                pinyin = row["pinyin_numbers"]
             definition = "<br>" + row["definition"]
             # word["word_id"]
             # word["word"]
@@ -193,12 +175,9 @@ class DeckManager:
 
             )
             self.deck.add_note(note)
+            num_of_valid_cards_added += 1
 
         genanki.Package(self.deck).write_to_file(filename + ".apkg")
         logger.info("Deck " + deck_name + " created with " + str(num_of_valid_cards_added) + " cards")
         return filename + ".apkg"
 
-
-if __name__ == '__main__':
-    maker = DeckManager()
-    maker.generate_deck_file('autoanki.apkg', 'example.txt')

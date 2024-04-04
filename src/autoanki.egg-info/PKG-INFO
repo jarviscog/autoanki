@@ -1,6 +1,6 @@
 Metadata-Version: 2.1
 Name: autoanki
-Version: 1.0.10
+Version: 1.1.0
 Summary: Automatically make Anki Decks for Chinese text
 Home-page: https://github.com/timmy6figures/autoanki
 Author: Jarvis Coghlin
@@ -14,36 +14,41 @@ Description-Content-Type: text/markdown
 License-File: LICENSE.txt
 
 > **❗️** <br>
-Pull requests welcome! If you think you can improve AA in any way, you are welcome to send me a message!
+Pull requests welcome! If you think you can improve AA in any way, open a PR!
 
 # autoanki
-Auto-Generate Anki Flashcards from a text file.
- 
-Converts Chinese books from text files to Anki decks.
+Tool for generating Anki flashcards to learn Chinese.
 
-![Text to Anki](media/images/example.jpg "Text to Anki")
+<img src="media/images/example.jpg" alt="Text to Anki" width="80%"/>
 
-AutoAnki was created to help Chinese learners get into more advanced texts. 
-It can be hard transitioning from graded readers to full books, and this tool was designed to help ease that process.
+## Motivation
+
+When learning Chinese, usually the advice given is to learn the top X most common words.
+This is good advice, as you can get pretty far with this, however it's not perfect.
+
+For example, Harry Potter. This book will have normal distrobution for most words, however there will be a heavy emphasis on a specialized subset of words such as Wand, Robe, Wizard, Broomstick etc. These words will show up a lot more than they would otherwise.
+
+The intention of this package was to allow Chinese learners to move from beginner books to more advanced material. I found there was a gap in knowledge going from beginner learning books (where there is little specalized terminology), to teen novels, where each novel will generally have its own specialized terminology, making the transition tedious. This is solved by automatically making Anki decks that have this specialized terminology, so that you are able to memorize these words while continuing to make progress
 
 ## Usage
 
-AutoAnki is both a library and a terminal tool. 
+autoanki is both a library and a command-line tool.
+
 To get started, run 
 ```pip install autoanki```
-This should install all the requirements. Then, in a Python file do ```from autoanki import AutoAnki```
+This should install all the requirements. Then, in a Python file, do ```from autoanki import AutoAnki```
 
-To get started, first, create a database for AutoAnki to use 
+To get started, first, create a database for autoanki to use 
 ```    
 db_path = "AutoAnki.db"
 if not AutoAnki.is_database(db_path):
     AutoAnki.create_autoanki_db(db_path)
 ```
-Then create an instance of AutoAnki using the database
+Then create an instance of autoanki using the database
 ```
 aa = AutoAnki(db_path)
 ```
-Add whatever books you want in your deck. These can be text files, or a folder full of text files
+Add whatever books you want in your deck. These can be a single file, or a folder
 ```
 bookpath = 'short-story.txt'
 aa.add_book(bookpath, 'My first book😆')
@@ -53,27 +58,16 @@ Once all of your books are added, the definitions need to be found, and then you
 aa.complete_unfinished_definitions()
 aa.create_deck("AutoAnki Deck", "output")
 ```
-This will automatically have the .apkg extension, which Anki uses. Go into Anki, and import this file. You should see your deck in the list:
+This will automatically have the .apkg extension, which Anki uses. 
+Import this file into Anki, and you're all set.
 
-![Anki deck view](media/images/anki.jpg "Anki deck view")
-
-When getting definitions for words, it uses selenium to scrape definitions
-from a dictionary website
-
-Check your version of Chrome, and put the same version driver in the same directory as main.
-Drivers can be found here ---> https://chromedriver.chromium.org/downloads
-
-### Terminal
-If you would like to run AutoAnki from the terminal, run AutoAnki/terminal.py  
-This will run a terminal interface where you will be able to run
 
 ## How it works
 AutoAnki interfaces has 4 components on the back end:
 1. BookCleaner: Cleans the input coming in from files that the user supplies 
 2. DatabaseManager: Takes the cleaned input and puts it into the database
 3. Dictionary: Finds definitions for words in the database
-4. DeckManager: takes information from the user and database, and makes an Anki deck 
-out of it
+4. DeckManager: Creates Decks
 
 ### Database:
 There are 3 different types of tables in the DB, 
@@ -81,7 +75,7 @@ There are 3 different types of tables in the DB,
 2. book_list, which holds the titles of the books in the database 
 3. book, based off of the name of the book, and holds the words in the book to find in the dictionary
 
-### dictionary:
+#### dictionary:
 - word_id
 - word
 - word_traditional
@@ -100,7 +94,7 @@ There are 3 different types of tables in the DB,
 ![Dictionary table](media/images/dictionary-table.jpg "Dictionary table") 
 *Dictionary table*  
 
-### book_list:
+#### book_list:
 - book_name
 - book_table_name
 - language
@@ -108,7 +102,7 @@ There are 3 different types of tables in the DB,
 ![Book list table](media/images/book_list_table.jpg "Book list table")
 *Book list table*
 
-### book_example
+### book
  - book_table_word_id
  - dictionary_word_id
  - number_of_appearances 
@@ -117,10 +111,9 @@ There are 3 different types of tables in the DB,
 *Book table*
 
 ## Planned features
-- Currently, all definitions are collected from the internet. This is really slow, 
-so using a dictionary from a file would greatly improve performance. It could fall back on the 
-web dictionary for words it can't find
-- More customization for how the cards in the deck look, and what they have on them
-- The ability to hear what a word sounds like. The database supports this, I just need combine the sounds, and upload the sounds with the cards.
-- There are a few TODOs in the code that I would like to fix
- 
+- See ROADMAP.md
+
+## Other Info
+
+If you would like to get involved, or learn more information, reading Anki documentation is really important, especially the [Getting Started](https://docs.ankiweb.net/getting-started.html)
+

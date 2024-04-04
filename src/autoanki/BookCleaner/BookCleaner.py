@@ -20,31 +20,35 @@ GARBAGE_SENTENCES = ['',
                      "。",
                      "\n"]
 
-logger = logging.getLogger('autoanki')
+logger = logging.getLogger('autoanki.bookcleaner')
 logger.setLevel(logging.INFO)
 
 
 class BookCleaner:
 
     def __init__(self):
+        """ Internal tool used to sanatize input
+        Use `clean(bookpath)` to sanatize files and remove junk data
+        """
         self.file_list = []
         self.bookpath = ""
 
-    def clean(self, bookpath: str):
+    def clean(self, bookpath: str) -> None | list[str]:
         """
         Cleans the files contained in the bookpath. If bookpath is a single file, clean it.
-        :return: The path to the cleaned file(s)
+        Args: 
+            `bookpath: filepath of files to be cleaned`
+        Return: 
+            `str: list of cleaned file(s)`
         """
         if not os.path.exists(bookpath):
-            # PRACTICE Should I raise an error here, or let the caller raise one?
-            logger.warning("BookCleaner: Cannot find path [" + str(bookpath) + "]")
+            logger.warning("Cannot find path [" + str(bookpath) + "]")
             return None
 
         # If the bookpath is a single file, clean and return it
         if os.path.isfile(bookpath):
-            cleaned_path = self._clean_file(bookpath, cleaned_files_root=None)
-            return cleaned_path
-        # Otherwise, get a list of files to clean, and return the cleaned files directory
+            cleaned_files = [self._clean_file(bookpath, cleaned_files_root=None)]
+            return cleaned_files
         else:
             dirty_files = []
             for root, dirs, files in os.walk(bookpath):
@@ -57,7 +61,7 @@ class BookCleaner:
 
             # Check this cleaning won't be mean to the CPU
             if len(dirty_files) > 50:
-                yn = input("The number of files is very large. Are you sure you want to convert this many files? (Y/N)")
+                yn = input("Over 50 files. Are you sure you want to convert this many files? (Y/N)")
                 if yn.lower() != 'y':
                     return None
 

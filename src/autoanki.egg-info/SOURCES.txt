@@ -18,7 +18,7 @@ src/autoanki/DatabaseManager/book_table.sql
 src/autoanki/DatabaseManager/book_table_view.sql
 src/autoanki/DatabaseManager/databases_init.sql
 src/autoanki/DeckManager/__init__.py
-src/autoanki/Dictionary/CC-CEDictionary.py
+src/autoanki/Dictionary/CEDictionary.py
 src/autoanki/Dictionary/Dictionary.py
 src/autoanki/Dictionary/YellowBridgeDictionary.py
 src/autoanki/Dictionary/__init__.py

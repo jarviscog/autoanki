@@ -1,1 +1,1 @@
-from .YellowBridgeDictionary import YellowBridgeDictionary
+from .CEDictionary import CEDictionary 

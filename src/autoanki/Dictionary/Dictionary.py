@@ -8,9 +8,10 @@ class Dictionary(ABC):
         pass
 
     @abstractmethod
-    def find_word(self):
+    def find_word(self, word:str) -> None | list[str]:
         pass
 
     @abstractmethod
-    def size(self):
+    def size(self) -> int:
         pass
+

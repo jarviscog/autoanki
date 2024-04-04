@@ -8,9 +8,22 @@ import unicodedata
 from pathlib import Path
 import jieba
 
-logger = logging.getLogger('autoanki')
-logger.setLevel(logging.INFO)
+logger = logging.getLogger('autoanki.dbmngr')
+#TODO: Set logging level from autoanki
+# logger.setLevel(logging.INFO)
 
+FILTERED_WORDS = [
+    '\n',
+    ' ',
+    '。',
+    '"',
+    "‘",
+    "’",
+    "“",
+    "”",
+    "，",
+    "、",
+]
 
 class DatabaseManager:
 
@@ -19,7 +32,7 @@ class DatabaseManager:
             logger.warning("The database [", database_path, "] does not exist.")
             raise Exception("Cannot create DatabaseManager with invalid database path.")
         self.database_path = database_path
-        self.book_list = []
+        self.books = []
         path = os.path.join(os.getcwd(), self.database_path)
         self.connection = sqlite3.connect(path)
         self.cursor = self.connection.cursor()
@@ -64,7 +77,7 @@ class DatabaseManager:
         :param database_path: The path to the database to create.
         :return:
         """
-        logger.info("DatabaseManager: Creating database [" + database_path + "]")
+        logger.info("Creating database [" + database_path + "]")
         path = os.path.join(os.path.dirname(__file__), 'databases_init.sql')
         try:
             with open(path, 'r') as sql_file:
@@ -144,7 +157,8 @@ class DatabaseManager:
                     # print("Tokenized line: ", tokenized_line)
                     for word in tokenized_line:
 
-                        if word != '\n':
+                        is_ascii = len(word) == len(word.encode())
+                        if word not in FILTERED_WORDS and not is_ascii:
                             # print("Word: ",word)
                             if word_appearances.get(word) == None:
                                 word_appearances[word] = 1
@@ -209,11 +223,11 @@ class DatabaseManager:
         logger.info("Done adding file to database")
 
     def add_book(self, bookpath: str, book_name: str):
-        f"""
+        """
         Adds a file to the autoanki database. This involves the following steps:\n
-        1 - Add book to the book_list table\n
-        2 - Add all the files in "bookpath" to the definitions table and book table\n
-        3 - Add book to book_list property\n
+        1 - Add book to the book_list table
+        2 - Add all the files in "bookpath" to the definitions table and book table
+        3 - Add book to book_list property
 
         If given a directory, it will recursively search for all files in the directory and add them.
 
@@ -230,6 +244,7 @@ class DatabaseManager:
         # Add the name of the book to the book_list table
         success = self._create_book_table(book_name, book_tablename)
         if not success:
+            logger.error("Failed to create book table")
             return
 
         # Add all the words in the book to the 'definitions' table
@@ -243,7 +258,7 @@ class DatabaseManager:
         logger.info("Done adding book.")
         return True
 
-    def print_database_status(self):
+    def print_info(self):
         """
         Print basic information about the database
         :return:
@@ -257,13 +272,13 @@ class DatabaseManager:
         print("------------------------")
         print(self.database_path)
         print("------------------------")
-        print(format_string_int.format("Number of books:", len(self.book_list)))
+        print(format_string_int.format("Number of books:", len(self.books)))
         print(format_string_dec.format("Database size (MB):", Path(self.database_path).stat().st_size / (1024 * 1024)))
         print("Dictionary Table:")
         print(format_string_int.format("Number of rows:", len(all_rows)))
         print(format_string_int.format("Number of unfinished rows:", len(unfinished_rows)))
 
-    def complete_definition(self, params: list):
+    def update_definition(self, params: list):
         f"""
         Complete a definition for one word in the dictionary table\n
         traditional_script = params[0]\n
@@ -323,12 +338,8 @@ class DatabaseManager:
         # pprint.pp(words)
         return words
 
-   
-
-
-
     @property
-    def book_list(self):
+    def books(self):
         connection = sqlite3.connect(self.database_path)
         cursor = connection.cursor()
         cursor.execute("SELECT book_name FROM book_list")
@@ -337,6 +348,6 @@ class DatabaseManager:
             return_array.append(table[0])
         return return_array
 
-    @book_list.setter
-    def book_list(self, value):
-        self._book_list = value
+    @books.setter
+    def books(self, value):
+        self._books= value

@@ -30,7 +30,6 @@ class YellowBridgeDictionary(Dictionary):
         print(repr(word))
         if word == None or word == '':
             print("There is no page on Yellowbridge page for null")
-            logger
             return
 
         urlx = "http://www.yellowbridge.com/chinese/dictionary.php?word="
