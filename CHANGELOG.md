@@ -29,3 +29,15 @@
 - Formatted logging output
 - Updated README.md
 - Cleaned input to remove punctuation
+
+
+## v1.1.5 (DD/MM/2024)
+- Updated README.md
+- Moved DeckManager out of __init__.py
+- If the user included .apkg at the end, ignore it
+- Logger for each module is now set by AutoAnki
+- Fixed images displaying on Pypi
+- Made Database mandager functions more verbose
+- Now uses internal CC-CEDICT file
+- Faster dictionary lookups by using internal state
+- Better dictionary formatting

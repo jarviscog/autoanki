@@ -8,10 +8,6 @@ import unicodedata
 from pathlib import Path
 import jieba
 
-logger = logging.getLogger('autoanki.dbmngr')
-#TODO: Set logging level from autoanki
-# logger.setLevel(logging.INFO)
-
 FILTERED_WORDS = [
     '\n',
     ' ',
@@ -23,13 +19,16 @@ FILTERED_WORDS = [
     "”",
     "，",
     "、",
+    "·",
 ]
 
 class DatabaseManager:
 
-    def __init__(self, database_path):
+    def __init__(self, database_path, debug_level):
+        self.logger = logging.getLogger('autoanki.dbmngr')
+        self.logger.setLevel(debug_level)
         if not os.path.exists(database_path):
-            logger.warning("The database [", database_path, "] does not exist.")
+            self.logger.warning("The database [", database_path, "] does not exist.")
             raise Exception("Cannot create DatabaseManager with invalid database path.")
         self.database_path = database_path
         self.books = []
@@ -41,11 +40,9 @@ class DatabaseManager:
     def convert_to_tablename(name: str):
         """
         Converts a string to a sql-valid table name.
-        :param name: The name to convert
-        :return: A tablename valid for an sql table
+        `param name` The name to convert
+        `return` A tablename valid for an sql table
         """
-        # TODO Look more into table name conventions (- vs. _ etc.)
-        #   : in sql table name?
         value = unicodedata.normalize('NFKC', name)
         # value.replace("：",":")
         value = value.replace("：", "__")
@@ -53,20 +50,18 @@ class DatabaseManager:
         return re.sub(r'[-\s]+', '_', value).strip('-_')
 
     @staticmethod
-    def is_database(database_name):
+    def is_database(database_name:str):
+        if not database_name.endswith(".db"):
+            return False
+        if not os.path.exists(database_name):
+            return False
         try:
-            if database_name.split(".")[1] != "db":
-                return False
-            if not os.path.exists(database_name):
-                return False
-
             connection = sqlite3.connect(database_name)
-
             cursor = connection.cursor()
             # This will fail if dictionary table does not exist
             cursor.execute("SELECT word FROM dictionary")
             connection.close()
-        except:
+        except sqlite3.OperationalError:
             return False
         return True
 
@@ -74,9 +69,9 @@ class DatabaseManager:
     def create_autoanki_db(database_path):
         """
         Creates an autoanki database file, including all tables needed for autoanki
-        :param database_path: The path to the database to create.
-        :return:
+        `database_path` The path to the database to create
         """
+        logger = logging.getLogger('autoanki.dbmngr')
         logger.info("Creating database [" + database_path + "]")
         path = os.path.join(os.path.dirname(__file__), 'databases_init.sql')
         try:
@@ -87,59 +82,46 @@ class DatabaseManager:
             cursor.executescript(sql_script)
             connection.commit()
         except FileNotFoundError:
-            logger.warning("Could not create database: Missing sql files")
+            logger.warning("Could not create database: Missing SQL files")
             return False
-        # # Create book_table
-        # path = os.path.join(os.path.dirname(__file__), 'databases_init.sql')
-        # with open(path, 'r') as sql_file:
-        #     sql_script = sql_file.read()
-        # connection = sqlite3.connect(database_path)
-        # cursor = connection.cursor()
-        # cursor.executescript(sql_script)
-        # connection.commit()
 
-    def _create_book_table(self, book_name, table_name):
+    def _create_book_table(self, book_name, table_name) -> bool:
         """
         Creates a new entry in the book_list table
-        :param table_name: The name of the new entry to create
-        :return: False if error
+        `table_name` The name of the new entry to create
+        `return` False if error
         """
         self.cursor.execute("SELECT table_name FROM book_list")
         book_list = self.cursor.fetchall()
 
-        # Check if the book is already there
-        # If not, add the book to the table
-        if (table_name,) not in book_list:
-            # print("Inserting")
-            self.cursor.execute(f"INSERT INTO book_list VALUES(\"{book_name}\",\"{table_name}\",'cn')")
-            self.connection.commit()
-            fname = 'book_table.sql'
-            this_file = os.path.abspath(__file__)
-            this_dir = os.path.dirname(this_file)
-            wanted_file = os.path.join(this_dir, fname)
-            fd = open(wanted_file, 'r')
-            book_table_file = fd.read()
-            print(type(book_table_file))
-            book_table_file = book_table_file.replace("BOOK_NAME", table_name)
-            fd.close()
-            # Create the new table
-            self.cursor.execute(book_table_file)
-            self.connection.commit()
-
-        else:
-            logger.warning("The book is already in database. Not adding")
+        if (table_name,) in book_list:
+            self.logger.warning("The book is already in database. Not adding")
             return False
+
+        # self.logger.debug("Inserting")
+        self.cursor.execute(f"INSERT INTO book_list VALUES(\"{book_name}\",\"{table_name}\",'cn')")
+        self.connection.commit()
+        fname = 'book_table.sql'
+        this_file = os.path.abspath(__file__)
+        this_dir = os.path.dirname(this_file)
+        wanted_file = os.path.join(this_dir, fname)
+        fd = open(wanted_file, 'r')
+        book_table_file = fd.read()
+        book_table_file = book_table_file.replace("BOOK_NAME", table_name)
+        fd.close()
+        # Create the new table
+        self.cursor.execute(book_table_file)
+        self.connection.commit()
         return True
 
     def add_file_to_database(self, filepath, table_name):
         """
         Adds every word in a file to both the dictionary table and the book's table
-        :param filepath: The path to the file
-        :param table_name: The name of the table to add the words to.
+        `filepath` The path to the file
+        `table_name` The name of the table to add the words to.
             This should be the same for every wile in a given book
-        :return:
         """
-        logger.info(f"Adding file {filepath} to database...")
+        self.logger.info(f"Adding file {filepath} to database...")
 
         # Get number of appearances for each word in the file, and put it into a dictionary
         word_appearances = {}
@@ -147,10 +129,8 @@ class DatabaseManager:
         word_ids = {}
         with open(filepath,'r',encoding='utf-8') as f:
             line = " "
-            i = 0
             while line:
                 line = f.readline()
-                i += 1
                 if line:
                     # print("Line: ", line)
                     tokenized_line = jieba.lcut(line)
@@ -165,18 +145,18 @@ class DatabaseManager:
                             else:
                                 word_appearances[word] += 1
 
-        logger.info(f"Found {str(len(word_appearances.items()))} words in file.")
+        self.logger.info(f"Found {str(len(word_appearances.items()))} words in file.")
 
         # Add the words to the dictionary if they are not already there
         self.cursor.execute(f"SELECT word FROM dictionary")
         self.connection.commit()
         dictionary_words = self.cursor.fetchall()
 
-        logger.info(f"Found {str(len(dictionary_words))} words in dictionary.")
+        self.logger.info(f"Found {str(len(dictionary_words))} words in dictionary.")
 
         for word, appearances in word_appearances.items():
             if (word,) not in dictionary_words:
-                # logger.info("Adding word...")
+                # self.logger.debug("Adding word...")
 
                 self.cursor.execute(f"INSERT INTO dictionary (word) VALUES (?)", [word])
                 self.connection.commit()
@@ -204,8 +184,6 @@ class DatabaseManager:
 
             # If the word is already in the dictionary, add the number of appearances to it
             if dictionary_word_id in book_table_appearances:
-                # number_of_apprearances_in_table =
-                # print("HIT")
                 file_appearances = word_appearances[word]
                 db_appearances = book_table_appearances[dictionary_word_id]
                 print("File app:", file_appearances)
@@ -220,7 +198,7 @@ class DatabaseManager:
                                     f"VALUES (?,?)", [dictionary_word_id, word_appearances[word]])
                 self.connection.commit()
 
-        logger.info("Done adding file to database")
+        self.logger.info("Done adding file to database")
 
     def add_book(self, bookpath: str, book_name: str):
         """
@@ -237,14 +215,14 @@ class DatabaseManager:
         :return: None
         """
         # TODO Make this work for multiple files. Right now only works for one filepath
-        logger.info("Adding book...")
+        self.logger.info("Adding book...")
         # Gets a 'table name' clean version of the book name
         book_tablename = self.convert_to_tablename(book_name)
 
         # Add the name of the book to the book_list table
         success = self._create_book_table(book_name, book_tablename)
         if not success:
-            logger.error("Failed to create book table")
+            self.logger.error("Failed to create book table")
             return
 
         # Add all the words in the book to the 'definitions' table
@@ -255,7 +233,7 @@ class DatabaseManager:
         # if success is False:
         #     return
 
-        logger.info("Done adding book.")
+        self.logger.info("Done adding book.")
         return True
 
     def print_info(self):
@@ -337,6 +315,11 @@ class DatabaseManager:
             words.append(word)
         # pprint.pp(words)
         return words
+
+    def unfinished_definitions(self) -> int:
+        self.cursor.execute("SELECT word FROM dictionary WHERE definition IS NULL")
+        unfinished_rows = self.cursor.fetchall()
+        return len(unfinished_rows)
 
     @property
     def books(self):

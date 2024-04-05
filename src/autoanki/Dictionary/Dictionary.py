@@ -4,7 +4,7 @@ from abc import ABC, abstractmethod
 class Dictionary(ABC):
 
     @abstractmethod
-    def __init__(self):
+    def __init__(self, debug_level=20):
         pass
 
     @abstractmethod

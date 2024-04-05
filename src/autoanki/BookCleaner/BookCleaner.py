@@ -20,16 +20,16 @@ GARBAGE_SENTENCES = ['',
                      "。",
                      "\n"]
 
-logger = logging.getLogger('autoanki.bookcleaner')
-logger.setLevel(logging.INFO)
 
 
 class BookCleaner:
 
-    def __init__(self):
+    def __init__(self, debug_level):
         """ Internal tool used to sanatize input
         Use `clean(bookpath)` to sanatize files and remove junk data
         """
+        self.logger = logging.getLogger('autoanki.bookcleaner')
+        self.logger.setLevel(debug_level)
         self.file_list = []
         self.bookpath = ""
 
@@ -42,7 +42,7 @@ class BookCleaner:
             `str: list of cleaned file(s)`
         """
         if not os.path.exists(bookpath):
-            logger.warning("Cannot find path [" + str(bookpath) + "]")
+            self.logger.warning("Cannot find path [" + str(bookpath) + "]")
             return None
 
         # If the bookpath is a single file, clean and return it
@@ -76,9 +76,6 @@ class BookCleaner:
         for file in dirty_files:
             cleaned_filepath = self._clean_file(file, cleaned_files_root=cleaned_files_root)
             cleaned_files.append(cleaned_filepath)
-
-        # print(dirty_files)
-        # print(cleaned_files)
 
         return cleaned_files
 

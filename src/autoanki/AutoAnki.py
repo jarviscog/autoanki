@@ -14,51 +14,40 @@ MAGENTA = "\u001b[35m"
 CYAN = "\u001b[36m"
 WHITE = "\u001b[37m"
 RESET = "\u001b[0m"
-# Add this to see the function name:
-#%(funcName)s
 logging.basicConfig(
-    # filename='HISTORYlistener.log',
-    level=logging.DEBUG,
+    # filename='HISTORY.log',
+    level=logging.WARNING,
     format=f'{GREEN}%(asctime)s{RESET} {RED}%(levelname)8s{RESET} {YELLOW}%(name)18s{RESET}: %(message)s',
     datefmt='%Y-%m-%d %H:%M:%S',
 )
 
-logger = logging.getLogger('autoanki')
-logger.setLevel(logging.INFO)
-logger.debug(f"logger active")
-
-logging.basicConfig(
-    # filename='HISTORYlistener.log',
-    level=logging.CRITICAL,
-    format=f'--{GREEN}%(asctime)s{RESET} {RED}%(levelname)8s{RESET} {YELLOW}%(name)18s{RESET}: %(message)s',
-    datefmt='%Y-%m-%d %H:%M:%S',
-)
-
-
 class AutoAnki:
 
-    def __init__(self, database_filepath='autoanki.db', logging_level=20):
+    def __init__(self, database_filepath='autoanki.db', debug_level=20):
         """
         Creates an instance of autoanki.
         This creates a book cleaner, database connection, and deck maker
         :param database_filepath: The filepath for the database
         :param logging_level: between 0 (DEBUG) and 50(CRITICAL)
         """
-        logger.setLevel(logging_level)
-        logger.info("Connecting to database...")
+        self.logger = logging.getLogger('autoanki')
+        self.logger.setLevel(debug_level)
+        self.logger.debug(f"logger active")
+        self.logger.info("Connecting to database...")
+
+        self.book_cleaner = BookCleaner(debug_level)
 
         self.database_filepath = database_filepath
-
-        self.book_cleaner = BookCleaner()
         if not DatabaseManager.is_database(database_filepath):
-            logger.info("Creating database...")
+            self.logger.info("Creating database...")
             DatabaseManager.create_autoanki_db(database_filepath)
-            logger.info("Done creating database.")
-        self.database_manager = DatabaseManager(database_filepath)
-        self.dictionary = CEDictionary()
-        self.deck_manager = DeckManager()
+            self.logger.info("Done creating database.")
+        self.database_manager = DatabaseManager(database_filepath, debug_level)
 
-        logger.info("Connected!")
+        self.dictionary = CEDictionary(debug_level)
+        self.deck_manager = DeckManager(debug_level)
+
+        self.logger.info("Connected!")
 
     def add_book(self, book_path: str, book_name: str = 'New Book'):
         """
@@ -68,19 +57,19 @@ class AutoAnki:
         :return:
         """
 
-        logger.debug(f"autoanki: Adding book from [{book_path}]")
+        self.logger.debug(f"autoanki: Adding book from [{book_path}]")
 
         # Clean the book
         if not self.book_cleaner.clean(book_path):
-            #logger.warning("autoanki: Unable to clean book [" + book_name + "].")
+            # logger.warning("autoanki: Unable to clean book [" + book_name + "].")
             return
 
         # Add the book to the database
         if not self.database_manager.add_book(book_path, book_name):
-            #logger.warning("Unable to add [" + book_name + "] to database.")
+            self.logger.warning("Unable to add [" + book_name + "] to database.")
             return
 
-        logger.info("autoanki: Added [" + book_path + "].")
+        self.logger.info("autoanki: Added [" + book_path + "].")
 
     def complete_unfinished_definitions(self):
         """
@@ -90,27 +79,31 @@ class AutoAnki:
         """
 
         # TODO Make progress bar for unfinished records
-        logger.info("Checking for records...")
+        self.logger.info("Checking for records...")
         self.database_manager.cursor.execute("SELECT word FROM dictionary WHERE definition IS NULL")
         response_rows = self.database_manager.cursor.fetchall()
         #while len(response_rows) > 0:
         self.database_manager.cursor.execute("SELECT word FROM dictionary WHERE definition IS NULL")
         response_rows = self.database_manager.cursor.fetchall()
         if len(response_rows) > 0:
-            logger.info("Adding " + str(len(response_rows)) + " rows to dictionary table")
+            self.logger.info("Adding " + str(len(response_rows)) + " rows to dictionary table")
             for row in response_rows:
                 word = row[0]
 
-                logger.debug(f"Finding: [{word}]...")
+                self.logger.debug(f"Finding: [{word}]...")
                 params = self.dictionary.find_word(word)
                 if not params:
-                    logger.info(f"Could not find: [{word}]")
+                    self.logger.info(f"❌Could not find: [{word}]")
                 else:
+                    self.logger.info(f"✅Found: [{word}]")
                     self.database_manager.update_definition(params)
 
         else:
-            logger.info("No new rows to complete in dictionary table")
+            self.logger.info("No new rows to complete in dictionary table")
             # time.sleep(2)
+
+    def print_database_info(self):
+        self.database_manager.print_info()
 
     @staticmethod
     def is_database(db_path):
@@ -126,14 +119,14 @@ class AutoAnki:
         :return:
         """
 
-        logger.info("Generating deck file [" + deck_name + ".apk]")
+        self.logger.info("Generating deck file [" + deck_name + ".apk]")
         words = self.database_manager.get_all_completed_definitions()
 
         deck_path = self.deck_manager.generate_deck_file(words, deck_name, filepath)
         if deck_path is None:
-            logger.warning("Was not able to create deck file for [", deck_name, "]")
+            self.logger.warning("Was not able to create deck file for [", deck_name, "]")
         else:
-            logger.info("Generated deck file [" + deck_path + "]")
+            self.logger.info("Generated deck file [" + deck_path + "]")
 
     @property
     def book_list(self):

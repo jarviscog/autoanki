@@ -6,24 +6,31 @@
 - [x] Clean input of numbers, whitespace, etc.
 - [x] Updated README.md
 
-## v1.2.0
+## v1.1.5
+
+- [x] Fix Images on Pypi
+- [x] Logging level set by autoanki
+- [x] Better formatted dictionary lookups
+- [x] Faster Dictionary Lookups
+
+## v1.2.0 
 
 - [ ] Feedback/QC
-- [ ] Fix Images on Pypi
+- [ ] Support for internet word lookups
 - [ ] Add individual entries to the database
-- [ ] Output books as subdecks
-- [ ] Option to filter out common words from output file
-- [ ] Support for both internet word lookups, and local file
 
 ## v1.3.0
 
-- [ ] Add formatting settings to output deck
+- [ ] Add formatting settings to cards
 - [ ] Add tags to cards
-- [ ] Add terminal options back in
+- [ ] More customization for card apperance
+- [ ] [Filter by word frequency](https://lingua.mtsu.edu/chinese-computing/statistics/char/list.php?Which=MO)
+- [ ] Filter by HSK level
 
 ## v1.X.X
 
-- [ ] Multiple supported languages?
-- [ ] Choose what cards to add to deck
+- [ ] Add terminal options back in
 - [ ] Add audio and images to cards automatically
-- [ ] More customization for how the cards in the deck look, and what they have on them
+- [ ] Output books as subdecks
+- [ ] Add automated tests
+- [ ] Multiple supported languages?

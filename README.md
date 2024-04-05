@@ -4,16 +4,18 @@ Pull requests welcome! If you think you can improve AA in any way, open a PR!
 # autoanki
 Tool for generating Anki flashcards to learn Chinese.
 
-<img src="media/images/example.jpg" alt="Text to Anki" width="80%"/>
+<img src="https://github.com/timmy6figures/autoanki/blob/main/media/images/example.jpg?raw=true" alt="Text to Anki" width="80%"/>
 
 ## Motivation
 
-When learning Chinese, usually the advice given is to learn the top X most common words.
-This is good advice, as you can get pretty far with this, however it's not perfect.
+When learning Chinese, advice is to learn the top X most common words.
+This is good advice, as you can get pretty far with this, however it's [not perfect](https://en.wikipedia.org/wiki/Zipf%27s_law#/media/File:Zipf's_law_on_War_and_Peace.png).
 
-For example, Harry Potter. This book will have normal distrobution for most words, however there will be a heavy emphasis on a specialized subset of words such as Wand, Robe, Wizard, Broomstick etc. These words will show up a lot more than they would otherwise.
+For example, Harry Potter. This book will have normal distribution for most words, however there will be a heavy emphasis on a specialized subset of words such as Wand, Robe, Wizard, Broomstick etc. These words will show up a lot more than they would otherwise.
 
 The intention of this package was to allow Chinese learners to move from beginner books to more advanced material. I found there was a gap in knowledge going from beginner learning books (where there is little specalized terminology), to teen novels, where each novel will generally have its own specialized terminology, making the transition tedious. This is solved by automatically making Anki decks that have this specialized terminology, so that you are able to memorize these words while continuing to make progress
+
+With autoanki, you selectivley add words to an Anki file to continue progressing with your lanuage learning skills.
 
 ## Usage
 
@@ -36,7 +38,7 @@ aa = AutoAnki(db_path)
 Add whatever books you want in your deck. These can be a single file, or a folder
 ```
 bookpath = 'short-story.txt'
-aa.add_book(bookpath, 'My first book😆')
+aa.add_book(bookpath, 'My first book🍎')
 ```
 Once all of your books are added, the definitions need to be found, and then you can create a deck!
 ```
@@ -46,6 +48,11 @@ aa.create_deck("AutoAnki Deck", "output")
 This will automatically have the .apkg extension, which Anki uses. 
 Import this file into Anki, and you're all set.
 
+#### Other commands
+If you want to see the status of the database, use:
+```
+aa.print_database_info()
+```
 
 ## How it works
 AutoAnki interfaces has 4 components on the back end:
@@ -76,24 +83,21 @@ There are 3 different types of tables in the DB,
 - image_path
 - definition
 
-![Dictionary table](media/images/dictionary-table.jpg "Dictionary table") 
-*Dictionary table*  
+<img src="https://github.com/timmy6figures/autoanki/blob/main/media/images/dictionary-table.jpg?raw=true" alt="Dictionary table" width="80%"/>
 
 #### book_list:
 - book_name
 - book_table_name
 - language
 
-![Book list table](media/images/book_list_table.jpg "Book list table")
-*Book list table*
+<img src="https://github.com/timmy6figures/autoanki/blob/main/media/images/book_list_table.jpg?raw=true" alt="Book list table" width="50%"/>
 
 ### book
  - book_table_word_id
  - dictionary_word_id
  - number_of_appearances 
 
-![Book table](media/images/book_table.jpg "Book table")
-*Book table*
+<img src="https://github.com/timmy6figures/autoanki/blob/main/media/images/book_table.jpg?raw=true" alt="Book table" width="80%"/>
 
 ## Planned features
 - See ROADMAP.md
@@ -102,3 +106,4 @@ There are 3 different types of tables in the DB,
 
 If you would like to get involved, or learn more information, reading Anki documentation is really important, especially the [Getting Started](https://docs.ankiweb.net/getting-started.html)
 
+To get definitions, this autoanki uses the [CC-CEDICT](https://www.mdbg.net/chinese/dictionary?page=cedict) under the creative commons licence. 
