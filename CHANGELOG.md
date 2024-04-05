@@ -31,7 +31,7 @@
 - Cleaned input to remove punctuation
 
 
-## v1.1.5 (DD/MM/2024)
+## v1.1.5 (05/05/2024)
 - Updated README.md
 - Moved DeckManager out of __init__.py
 - If the user included .apkg at the end, ignore it
@@ -41,3 +41,9 @@
 - Now uses internal CC-CEDICT file
 - Faster dictionary lookups by using internal state
 - Better dictionary formatting
+
+## v1.1.6 (05/05/2024)
+- Removed unnecessary logging output
+- Set multiple definitions on newlines
+
+

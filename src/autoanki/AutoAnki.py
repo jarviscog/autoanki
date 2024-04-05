@@ -93,9 +93,9 @@ class AutoAnki:
                 self.logger.debug(f"Finding: [{word}]...")
                 params = self.dictionary.find_word(word)
                 if not params:
-                    self.logger.info(f"❌Could not find: [{word}]")
+                    self.logger.debug(f"❌Could not find: [{word}]")
                 else:
-                    self.logger.info(f"✅Found: [{word}]")
+                    self.logger.debug(f"✅Found: [{word}]")
                     self.database_manager.update_definition(params)
 
         else:

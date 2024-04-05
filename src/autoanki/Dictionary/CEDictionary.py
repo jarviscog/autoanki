@@ -54,14 +54,15 @@ class CEDictionary(Dictionary):
                 # self.logger.debug(f"PinYin: {pinyin_numbers}")
                 # self.logger.debug(f"DEF: {definition}")
                 definitions[current_word]['trad_word'] = trad_word
-                definitions[current_word]['pinyin_numbers'] += pinyin_numbers 
-                definitions[current_word]['definition'] += definition.strip("\n") 
+                definitions[current_word]['pinyin_numbers'] += '<br>' + pinyin_numbers 
+                definitions[current_word]['definition'] += '<br>' + definition 
 
                 last_word = current_word
 
         self.logger.info("Done!")
         for key, value in definitions.items():
-            print(key, '->', value)
+            definitions[key]['definition'].strip('\n')
+            # print(key, '->', value)
         return definitions
 
 

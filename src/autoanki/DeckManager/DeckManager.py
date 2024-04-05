@@ -95,5 +95,5 @@ class DeckManager:
 
         genanki.Package(self.deck).write_to_file(filename)
         self.logger.info("Deck " + deck_name + " created with " + str(num_of_valid_cards_added) + " cards")
-        return filename + ".apkg"
+        return filename
 
