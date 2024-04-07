@@ -1,5 +1,7 @@
 import logging
 
+from autoanki.Dictionary.YellowBridgeDictionary import YellowBridgeDictionary
+
 from .BookCleaner import BookCleaner
 from .DatabaseManager import DatabaseManager
 from .Dictionary import CEDictionary
@@ -17,7 +19,7 @@ RESET = "\u001b[0m"
 logging.basicConfig(
     # filename='HISTORY.log',
     level=logging.WARNING,
-    format=f'{GREEN}%(asctime)s{RESET} {RED}%(levelname)8s{RESET} {YELLOW}%(name)18s{RESET}: %(message)s',
+    format=f'{GREEN}%(asctime)s{RESET} {RED}%(levelname)8s{RESET} {YELLOW}%(name)16s{RESET}: %(message)s',
     datefmt='%Y-%m-%d %H:%M:%S',
 )
 
@@ -37,14 +39,16 @@ class AutoAnki:
 
         self.book_cleaner = BookCleaner(debug_level)
 
+        self.dictionary = CEDictionary(debug_level)
+        self.online_dictionary = YellowBridgeDictionary(debug_level)
+
         self.database_filepath = database_filepath
         if not DatabaseManager.is_database(database_filepath):
             self.logger.info("Creating database...")
-            DatabaseManager.create_autoanki_db(database_filepath)
+            DatabaseManager.create_database(database_filepath)
             self.logger.info("Done creating database.")
         self.database_manager = DatabaseManager(database_filepath, debug_level)
 
-        self.dictionary = CEDictionary(debug_level)
         self.deck_manager = DeckManager(debug_level)
 
         self.logger.info("Connected!")
@@ -56,7 +60,6 @@ class AutoAnki:
         :param book_name: The name of the book being added e.g. "Lost Prince"
         :return:
         """
-
         self.logger.debug(f"autoanki: Adding book from [{book_path}]")
 
         # Clean the book
@@ -74,7 +77,8 @@ class AutoAnki:
     def complete_unfinished_definitions(self):
         """
         autoanki contains an internal definitions table that is scraped from the internet. As words are added to
-        autoanki, their definitions must be found. This function passively finds definitions and adds them to the table
+        autoanki, their definitions must be found.
+        This function passively finds definitions and adds them to the table
         :return: None
         """
 
@@ -82,25 +86,48 @@ class AutoAnki:
         self.logger.info("Checking for records...")
         self.database_manager.cursor.execute("SELECT word FROM dictionary WHERE definition IS NULL")
         response_rows = self.database_manager.cursor.fetchall()
-        #while len(response_rows) > 0:
-        self.database_manager.cursor.execute("SELECT word FROM dictionary WHERE definition IS NULL")
-        response_rows = self.database_manager.cursor.fetchall()
         if len(response_rows) > 0:
             self.logger.info("Adding " + str(len(response_rows)) + " rows to dictionary table")
             for row in response_rows:
                 word = row[0]
 
-                self.logger.debug(f"Finding: [{word}]...")
+                # self.logger.debug(f"Finding: [{word}]...")
+
+                # self.logger.debug("Trying local dictionary...")
                 params = self.dictionary.find_word(word)
-                if not params:
-                    self.logger.debug(f"❌Could not find: [{word}]")
-                else:
-                    self.logger.debug(f"✅Found: [{word}]")
+                if params:
+                    # self.logger.debug(f"✅Found: [{params[8]}]")
                     self.database_manager.update_definition(params)
+                    continue
+
+                # self.logger.debug("Trying YellowBridge...")
+                # params = self.online_dictionary.find_word(word)
+                # if params:
+                    # self.logger.debug(f"✅Found: [{word}]")
+                    # self.database_manager.update_definition(params)
+                    # continue
+
+                self.logger.info(f"❌Could not find: [{word}]")
 
         else:
             self.logger.info("No new rows to complete in dictionary table")
-            # time.sleep(2)
+
+    def deck_settings(self,
+                      inclue_traditional = True, 
+                      inclue_part_of_speech = True, 
+                      ):
+        """
+        Configures settings for what's in the deck, and how it looks
+        """
+
+
+        self.deck_manager.settings(
+            inclue_traditional,
+            inclue_part_of_speech, 
+        )
+
+
+        pass
 
     def print_database_info(self):
         self.database_manager.print_info()
@@ -110,12 +137,14 @@ class AutoAnki:
         return DatabaseManager.is_database(db_path)
 
     @staticmethod
-    def create_autoanki_db(db_path: str):
-        DatabaseManager.create_autoanki_db(db_path)
+    def create_database(db_path: str):
+        DatabaseManager.create_database(db_path)
 
     def create_deck(self, deck_name: str, filepath: str):
         """
         Creates a deck file in the directory of the main file.
+        `deck_name` The name that will show up in Anki
+        `filepath` Path to the file
         :return:
         """
 
@@ -151,5 +180,13 @@ class AutoAnki:
 
 if __name__ == '__main__':
 
+    # This is where the command line tool will be put
+    # Parse args
+    # parser = argparse.ArgumentParser(description='This is a new command-line tool')
+
+    # Input files
     aa = AutoAnki()
+
+    # Output deck
+    # aa.create_deck()
     print(aa.book_list)

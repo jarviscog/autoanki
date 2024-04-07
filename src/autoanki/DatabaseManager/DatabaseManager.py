@@ -1,26 +1,19 @@
 import os
-import pprint
+from string import punctuation
 import re
 import sqlite3
 import logging
 import unicodedata
+from glob import glob
 
 from pathlib import Path
 import jieba
+import chinese_converter
 
-FILTERED_WORDS = [
-    '\n',
-    ' ',
-    '。',
-    '"',
-    "‘",
-    "’",
-    "“",
-    "”",
-    "，",
-    "、",
-    "·",
-]
+from autoanki.BookCleaner.BookCleaner import CLEANED_FILES_DIRECTORY
+
+CHINESE_PUNC = "！？｡。＂＃＄％＆＇（）＊＋，－／：；＜＝＞＠［＼］＾＿｀｛｜｝～｟｠｢｣､、〃《》「」『』【】〔〕〖〗〘〙〚〛〜〝〞〟〰〾〿–—‘’‛“”„‟…‧﹏."
+PUNC = "™∞•◎ "
 
 class DatabaseManager:
 
@@ -66,7 +59,7 @@ class DatabaseManager:
         return True
 
     @staticmethod
-    def create_autoanki_db(database_path):
+    def create_database(database_path):
         """
         Creates an autoanki database file, including all tables needed for autoanki
         `database_path` The path to the database to create
@@ -123,41 +116,46 @@ class DatabaseManager:
         """
         self.logger.info(f"Adding file {filepath} to database...")
 
-        # Get number of appearances for each word in the file, and put it into a dictionary
+
         word_appearances = {}
-        # As we add words to the definitions table, get the id. This is for the book table
-        word_ids = {}
         with open(filepath,'r',encoding='utf-8') as f:
             line = " "
             while line:
                 line = f.readline()
-                if line:
-                    # print("Line: ", line)
-                    tokenized_line = jieba.lcut(line)
-                    # print("Tokenized line: ", tokenized_line)
-                    for word in tokenized_line:
+                if not line:
+                    continue
+                words = jieba.lcut(line)
+                for word in words:
 
-                        is_ascii = len(word) == len(word.encode())
-                        if word not in FILTERED_WORDS and not is_ascii:
-                            # print("Word: ",word)
-                            if word_appearances.get(word) == None:
-                                word_appearances[word] = 1
-                            else:
-                                word_appearances[word] += 1
+                    # Remove puncuation
+                    word = word.translate(str.maketrans('', '', punctuation))
 
-        self.logger.info(f"Found {str(len(word_appearances.items()))} words in file.")
+                    is_ascii = len(word) == len(word.encode())
+
+                    is_ascii_special = False
+                    if len(word) == 1:
+                        is_ascii_special = ord(word[0]) > 128 and ord(word[0]) < 255 
+
+                    if word in PUNC or word in CHINESE_PUNC or is_ascii or is_ascii_special or word is None:
+                        continue
+                    if word_appearances.get(word) == None:
+                        # Convert the word to simplified if needed
+                        word = chinese_converter.to_simplified(word)
+                        word_appearances[word] = 1
+                    else:
+                        word_appearances[word] += 1
+
+
 
         # Add the words to the dictionary if they are not already there
         self.cursor.execute(f"SELECT word FROM dictionary")
         self.connection.commit()
         dictionary_words = self.cursor.fetchall()
-
-        self.logger.info(f"Found {str(len(dictionary_words))} words in dictionary.")
+        self.logger.info(f"{len(word_appearances.items())} words in file. {len(dictionary_words)} in dictionary.")
 
         for word, appearances in word_appearances.items():
             if (word,) not in dictionary_words:
                 # self.logger.debug("Adding word...")
-
                 self.cursor.execute(f"INSERT INTO dictionary (word) VALUES (?)", [word])
                 self.connection.commit()
 
@@ -186,8 +184,8 @@ class DatabaseManager:
             if dictionary_word_id in book_table_appearances:
                 file_appearances = word_appearances[word]
                 db_appearances = book_table_appearances[dictionary_word_id]
-                print("File app:", file_appearances)
-                print("Book app:", book_table_appearances[dictionary_word_id])
+                # print("File app:", file_appearances)
+                # print("Book app:", book_table_appearances[dictionary_word_id])
                 sum = file_appearances + db_appearances
                 self.cursor.execute(f"UPDATE {table_name} SET number_of_appearances = ? "
                                     f"WHERE dictionary_word_id = ?", [sum, dictionary_word_id])
@@ -198,7 +196,7 @@ class DatabaseManager:
                                     f"VALUES (?,?)", [dictionary_word_id, word_appearances[word]])
                 self.connection.commit()
 
-        self.logger.info("Done adding file to database")
+        # self.logger.debug("Done adding file to database")
 
     def add_book(self, bookpath: str, book_name: str):
         """
@@ -214,8 +212,8 @@ class DatabaseManager:
         :param book_name: The name of the book. This will show up in the Anki deck
         :return: None
         """
-        # TODO Make this work for multiple files. Right now only works for one filepath
         self.logger.info("Adding book...")
+
         # Gets a 'table name' clean version of the book name
         book_tablename = self.convert_to_tablename(book_name)
 
@@ -225,13 +223,22 @@ class DatabaseManager:
             self.logger.error("Failed to create book table")
             return
 
-        # Add all the words in the book to the 'definitions' table
-        self.add_file_to_database(bookpath, book_tablename)
+        self.logger.debug(bookpath)
+        if os.path.isdir(bookpath):
+            self.logger.debug("Directory found:")
+            result = [y for x in os.walk(bookpath + '/' + CLEANED_FILES_DIRECTORY) for y in glob(os.path.join(x[0], '*.txt'))]
+            for path in result:
+                self.logger.debug(path)
+                self.add_file_to_database(path, book_tablename)
 
-        # # Add all the words in the bookpath to a new table with the name of the book.
-        # success = self.add_book_table_to_db(bookpath, table_book_name)
-        # if success is False:
-        #     return
+        elif os.path.isfile(bookpath):
+            self.logger.debug("File found:")
+            # Add all the words in the book to the `definitions` table
+            self.add_file_to_database(bookpath, book_tablename)
+
+        else:
+            self.logger.warning(f"Incorrect bookpath: [{bookpath}]")
+            return False
 
         self.logger.info("Done adding book.")
         return True
@@ -271,7 +278,8 @@ class DatabaseManager:
         :param params: A list of params for the database:
         :return:
         """
-
+        # TODO Some sanatization here might be a good idea
+        #   Make sure junk data can't crash this function
         self.cursor.execute("UPDATE dictionary "
                             "SET word_traditional = ?, "
                             "word_type = ?,"

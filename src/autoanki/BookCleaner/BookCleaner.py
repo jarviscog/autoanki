@@ -1,16 +1,5 @@
 import logging
 import os
-# import shutil
-# import glob
-# from pathlib import Path
-#
-# from selenium.webdriver import ActionChains
-# from selenium.webdriver.common.by import By
-#
-# from selenium import webdriver
-# from os.path import isfile, join
-# import time
-# MAX_TXT_TO_PINYIN_SIZE = 270000
 
 CLEANED_FILES_DIRECTORY = 'cleaned_files'
 CLEANED_FILES_SUFFIX = '_cleaned'
@@ -79,25 +68,27 @@ class BookCleaner:
 
         return cleaned_files
 
-    @staticmethod
-    def _clean_file(filepath, cleaned_files_root):
+    def _clean_file(self, filepath, cleaned_files_root):
         """
         Takes a txt file and cleans it up, putting every sentence on a new line
         :param filepath: The txt file to clean
         :param cleaned_files_root: The root
         :return:
         """
-
         # Set the directory where the cleaned file will go
         if not cleaned_files_root:
             # root/test1.txt -> root/hello_cleaned.txt
             new_filepath = os.path.splitext(filepath)[0] + CLEANED_FILES_SUFFIX + os.path.splitext(filepath)[1]
         else:
-            new_filepath = os.path.join(cleaned_files_root, '/'.join(filepath.split('/')[1:]))
+            # TODO I'm suspicious that this works every time
+            new_filepath = os.path.join(cleaned_files_root, '/'.join(filepath.split('/')[2:]))
+        # self.logger.debug(f"Old filepath: [{filepath}]")
+        # self.logger.debug(f"New filepath: [{new_filepath}]")
 
         # Clean page file of characters that may cause issues.
         page_file = open(filepath, encoding='utf-8')
         page_sentences = page_file.read().split("。")
+        # f = open("test.txt", "w", encoding='utf-8')
         cleaned_file = open(new_filepath, "w", encoding='utf-8')
 
         for page_sentence in page_sentences:

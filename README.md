@@ -8,14 +8,14 @@ Tool for generating Anki flashcards to learn Chinese.
 
 ## Motivation
 
-When learning Chinese, advice is to learn the top X most common words.
+When learning Chinese, some common advice is to learn the top X most common words.
 This is good advice, as you can get pretty far with this, however it's [not perfect](https://en.wikipedia.org/wiki/Zipf%27s_law#/media/File:Zipf's_law_on_War_and_Peace.png).
 
 For example, Harry Potter. This book will have normal distribution for most words, however there will be a heavy emphasis on a specialized subset of words such as Wand, Robe, Wizard, Broomstick etc. These words will show up a lot more than they would otherwise.
 
 The intention of this package was to allow Chinese learners to move from beginner books to more advanced material. I found there was a gap in knowledge going from beginner learning books (where there is little specalized terminology), to teen novels, where each novel will generally have its own specialized terminology, making the transition tedious. This is solved by automatically making Anki decks that have this specialized terminology, so that you are able to memorize these words while continuing to make progress
 
-With autoanki, you selectivley add words to an Anki file to continue progressing with your lanuage learning skills.
+With autoanki, you selectively add words to an Anki file to continue progressing with your lanuage learning skills.
 
 ## Usage
 
@@ -29,7 +29,7 @@ To get started, first, create a database for autoanki to use
 ```    
 db_path = "AutoAnki.db"
 if not AutoAnki.is_database(db_path):
-    AutoAnki.create_autoanki_db(db_path)
+    AutoAnki.create_database(db_path)
 ```
 Then create an instance of autoanki using the database
 ```
@@ -107,3 +107,4 @@ There are 3 different types of tables in the DB,
 If you would like to get involved, or learn more information, reading Anki documentation is really important, especially the [Getting Started](https://docs.ankiweb.net/getting-started.html)
 
 To get definitions, this autoanki uses the [CC-CEDICT](https://www.mdbg.net/chinese/dictionary?page=cedict) under the creative commons licence. 
+

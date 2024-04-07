@@ -15,7 +15,10 @@ class DeckManager:
         is pretty significant for understanding this.
     """
 
-    def __init__(self, debug_level):
+    def __init__(self, debug_level,
+                include_traditional=True,
+                 include_part_of_speech=True
+                 ):
         self.logger = logging.getLogger('autoanki.dckmngr')
         self.logger.setLevel(debug_level)
         self.deck = genanki.Deck(
@@ -24,8 +27,20 @@ class DeckManager:
         )
         self.include_pinyin_numbers = False
         self.include_number_of_strokes = False
+        self.include_traditional = include_traditional 
+        self.include_part_of_speech = include_part_of_speech
 
         self.book_list = []
+
+    def settings(self,
+                 include_traditional,
+                 include_part_of_speech
+                 ):
+        """
+        Configures settings for what's in the deck, and how it looks
+        """
+        self.include_traditional = include_traditional
+        self.include_part_of_speech = include_part_of_speech 
 
     def generate_deck_file(self, words, deck_name: str, filename: str):
         """
@@ -47,9 +62,16 @@ class DeckManager:
 
         for row in words:
             word = row["word"]
-            word_traditional = row["word_traditional"]
+
+            if self.include_traditional:
+                word_traditional = row["word_traditional"]
+            else:
+                word_traditional = ""
+
+            if len(word) != len(word_traditional):
+                self.logger.error(f"{word} and {word_traditional} should be the same length")
             if word_traditional == word:
-                word_traditional = "-"
+                word_traditional = "-"*len(word)
             if row["pinyin"]:
                 pinyin = row["pinyin"]
             else:

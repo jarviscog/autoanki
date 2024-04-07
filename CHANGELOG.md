@@ -47,3 +47,10 @@
 - Set multiple definitions on newlines
 
 
+## v1.1.7 (07/05/2024)
+- Added pinyin with symbols, instead of numbers
+- Added part of speech. (Noun, verb, etc.)
+- Added ability to add book from directory
+- Traditional books now format correctly in the database
+- Improved Puncuation filtering
+

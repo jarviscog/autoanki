@@ -13,24 +13,30 @@
 - [x] Better formatted dictionary lookups
 - [x] Faster Dictionary Lookups
 
-## v1.2.0 
+## v1.1.7 
 
-- [ ] Feedback/QC
-- [ ] Support for internet word lookups
-- [ ] Add individual entries to the database
+- Card settings
+- [x] Add formatting settings to cards
+- [x] More customization for card apperance
+- [x] Filter Grammar from database better
 
-## v1.3.0
+## v1.1.8
 
-- [ ] Add formatting settings to cards
 - [ ] Add tags to cards
-- [ ] More customization for card apperance
+- [ ] Global Dictionary lookups
+- [ ] Chinese internet word lookups
+- [ ] Feedback/QC
+
+- Card filters
 - [ ] [Filter by word frequency](https://lingua.mtsu.edu/chinese-computing/statistics/char/list.php?Which=MO)
-- [ ] Filter by HSK level
+- [ ] Filter by HSK level/word frequency
 
 ## v1.X.X
 
-- [ ] Add terminal options back in
+- [ ] Add individual entries to the database
 - [ ] Add audio and images to cards automatically
 - [ ] Output books as subdecks
 - [ ] Add automated tests
+- [ ] Add terminal options back in
 - [ ] Multiple supported languages?
+- [ ] Grammatical patterns?
