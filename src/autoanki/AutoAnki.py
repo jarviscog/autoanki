@@ -1,4 +1,5 @@
 import logging
+import jieba
 
 from autoanki.Dictionary.YellowBridgeDictionary import YellowBridgeDictionary
 
@@ -25,19 +26,21 @@ logging.basicConfig(
 
 class AutoAnki:
 
-    def __init__(self, database_filepath='autoanki.db', debug_level=20):
+    def __init__(self, database_filepath='autoanki.db', debug_level=20, force=False):
         """
         Creates an instance of autoanki.
-        This creates a book cleaner, database connection, and deck maker
+        This creates a book cleaner, database connection, dictioary connection, and deck maker
         :param database_filepath: The filepath for the database
         :param logging_level: between 0 (DEBUG) and 50(CRITICAL)
+        :param `force`: Skip conformations for cleaning large numbers of files
         """
         self.logger = logging.getLogger('autoanki')
         self.logger.setLevel(debug_level)
         self.logger.debug(f"logger active")
         self.logger.info("Connecting to database...")
 
-        self.book_cleaner = BookCleaner(debug_level)
+        self.force = force
+        self.book_cleaner = BookCleaner(debug_level, self.force)
 
         self.dictionary = CEDictionary(debug_level)
         self.online_dictionary = YellowBridgeDictionary(debug_level)
@@ -64,7 +67,7 @@ class AutoAnki:
 
         # Clean the book
         if not self.book_cleaner.clean(book_path):
-            # logger.warning("autoanki: Unable to clean book [" + book_name + "].")
+            # self.logger.warning("autoanki: Unable to clean book [" + book_name + "].")
             return
 
         # Add the book to the database
@@ -89,9 +92,9 @@ class AutoAnki:
         if len(response_rows) > 0:
             self.logger.info("Adding " + str(len(response_rows)) + " rows to dictionary table")
             for row in response_rows:
-                word = row[0]
+                word = str(row[0])
 
-                # self.logger.debug(f"Finding: [{word}]...")
+                # self.logger.info(f"Finding: [{word}]...")
 
                 # self.logger.debug("Trying local dictionary...")
                 params = self.dictionary.find_word(word)
@@ -100,6 +103,92 @@ class AutoAnki:
                     self.database_manager.update_definition(params)
                     continue
 
+                subwords = jieba.cut(word)
+                if len(next(subwords)) == len(word):
+                    pass 
+                else: 
+                    self.database_manager.remove_word(word)
+                    subwords = jieba.cut(word)
+                    self.logger.debug(f"✅Splitting and inserting: [{word}]")
+                    for subword in subwords:
+                        self.database_manager.insert_word(subword)
+                        params = self.dictionary.find_word(subword)
+                        if params:
+                            self.logger.debug(f"✅  Found: [{params[8]}]")
+                            self.database_manager.update_definition(params)
+                        else:
+                            self.logger.debug(f"❌Could not find: [{word}]")
+
+                    continue
+
+                CHINESE_NUMBERS = "第一二两三四五五六七八九十百千万满"
+                # Remove all numbers from the front
+                # Lots of the words follow the following format:
+                #   Number + Subject
+                old_word = "" 
+                temp_word = word
+                while old_word != temp_word:
+                    old_word = temp_word 
+                    if len(temp_word) == 0:
+                        break
+                    if temp_word[0] in CHINESE_NUMBERS:
+                        temp_word = temp_word[1:]
+                params = self.dictionary.find_word(temp_word)
+                if params:
+                    self.database_manager.remove_word(word)
+                    self.database_manager.insert_word(temp_word)
+                    self.logger.debug(f"✅  Found: [{params[8]}]")
+                    self.database_manager.update_definition(params)
+                    continue
+
+                # Can we remove some modifiers and get it?
+                stripped_word = word.lstrip('小')
+                stripped_word = stripped_word.lstrip('大')
+                stripped_word = stripped_word.lstrip('这')
+                stripped_word = stripped_word.lstrip('那')
+                stripped_word = stripped_word.lstrip('不')
+                stripped_word = stripped_word.lstrip('几')
+                stripped_word = stripped_word.lstrip('无')
+                stripped_word = stripped_word.lstrip('没')
+                stripped_word = stripped_word.lstrip('全')
+                stripped_word = stripped_word.lstrip('上')
+                stripped_word = stripped_word.lstrip('下')
+                stripped_word = stripped_word.lstrip('太')
+                params = self.dictionary.find_word(stripped_word)
+                if params:
+                    self.database_manager.remove_word(word)
+                    self.database_manager.insert_word(stripped_word)
+                    self.logger.debug(f"✅  Found: [{params[8]}]")
+                    self.database_manager.update_definition(params)
+                    continue
+
+                # TODO 2 repeated, 1
+                # 点点头
+                # 长长的
+
+                # TODO 的 at the end
+
+                # TODO 2 repeated, 2 repeated
+                # 起起伏伏
+
+                # Nuclear option. TODO
+                if len(word) == 2:
+                    self.database_manager.remove_word(word)
+
+                    self.database_manager.insert_word(word[0])
+                    params = self.dictionary.find_word(word[0])
+                    if params:
+                        self.logger.debug(f"✅  Found: [{params[8]}]")
+                        self.database_manager.update_definition(params)
+                        
+
+                    self.database_manager.insert_word(word[1])
+                    params = self.dictionary.find_word(word[1])
+                    if params:
+                        self.logger.debug(f"✅  Found: [{params[8]}]")
+                        self.database_manager.update_definition(params)
+
+
                 # self.logger.debug("Trying YellowBridge...")
                 # params = self.online_dictionary.find_word(word)
                 # if params:
@@ -107,7 +196,7 @@ class AutoAnki:
                     # self.database_manager.update_definition(params)
                     # continue
 
-                self.logger.info(f"❌Could not find: [{word}]")
+                self.logger.debug(f"❌Could not find: [{word}]")
 
         else:
             self.logger.info("No new rows to complete in dictionary table")

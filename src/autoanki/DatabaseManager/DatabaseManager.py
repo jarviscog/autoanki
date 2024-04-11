@@ -12,8 +12,9 @@ import chinese_converter
 
 from autoanki.BookCleaner.BookCleaner import CLEANED_FILES_DIRECTORY
 
-CHINESE_PUNC = "！？｡。＂＃＄％＆＇（）＊＋，－／：；＜＝＞＠［＼］＾＿｀｛｜｝～｟｠｢｣､、〃《》「」『』【】〔〕〖〗〘〙〚〛〜〝〞〟〰〾〿–—‘’‛“”„‟…‧﹏."
-PUNC = "™∞•◎ "
+CHINESE_PUNC = "ｗ９ｌｉｔｂｎｅｐ ！？◇｡。．ｈ＂＃＄％＆＇（）＊＋，－／：；＜＝＞＠［＼］＾＿｀｛｜｝～｟｠｢｣､、〃《》「」『』【】〔〕〖〗〘〙〚〛〜〝〞〟〰〾〿–—‘’‛“”„‟…‧﹏."
+PUNC = "™∞•◎ ♦⑽]■①"
+CHINESE_NUMBERS = "第一二两三四五六七八九十百千万满"
 
 class DatabaseManager:
 
@@ -66,6 +67,7 @@ class DatabaseManager:
         """
         logger = logging.getLogger('autoanki.dbmngr')
         logger.info("Creating database [" + database_path + "]")
+        # TODO Fix this logger
         path = os.path.join(os.path.dirname(__file__), 'databases_init.sql')
         try:
             with open(path, 'r') as sql_file:
@@ -114,8 +116,7 @@ class DatabaseManager:
         `table_name` The name of the table to add the words to.
             This should be the same for every wile in a given book
         """
-        self.logger.info(f"Adding file {filepath} to database...")
-
+        self.logger.info(f"Adding [{filepath}] to database...")
 
         word_appearances = {}
         with open(filepath,'r',encoding='utf-8') as f:
@@ -126,6 +127,33 @@ class DatabaseManager:
                     continue
                 words = jieba.lcut(line)
                 for word in words:
+
+                    # TODO There is a lot of shenanigans happening in this section. 
+                    #   This should be split into a Chinese-spesific file, and 
+                    #   some of these rules should be re-evaluated
+                    word = word.lstrip("第")
+                    word = word.lstrip("几")
+
+                    # Repeated characters (always?) contain the same meaning as one, just varied slightly
+                    # 人人 = everyone
+                    if len(word) == 2 and word[0] == word[1]:
+                        word = word[0]
+
+                    # Some gramatical patterns:
+                    if len(word) > 2 and word[0] == "在" and word[-1] == "上":
+                        word = word[1:-2]
+
+
+                    # Remove all numbers from the front
+                    # Lots of the words follow the following format:
+                    #   Number + Subject
+                    old_word = "" 
+                    while old_word != word:
+                        old_word = word
+                        if len(word) == 0:
+                            break
+                        if word[0] in CHINESE_NUMBERS:
+                            word = word[1:]
 
                     # Remove puncuation
                     word = word.translate(str.maketrans('', '', punctuation))
@@ -155,9 +183,7 @@ class DatabaseManager:
 
         for word, appearances in word_appearances.items():
             if (word,) not in dictionary_words:
-                # self.logger.debug("Adding word...")
-                self.cursor.execute(f"INSERT INTO dictionary (word) VALUES (?)", [word])
-                self.connection.commit()
+                self.insert_word(word)
 
         # Make a dictionary of word ids from dictionary
         self.cursor.execute(f"SELECT word_id, word FROM dictionary")
@@ -197,6 +223,23 @@ class DatabaseManager:
                 self.connection.commit()
 
         # self.logger.debug("Done adding file to database")
+
+    def insert_word(self, word):
+        # TODO Doing this breaks the `number_of_appearances`. This is a temporary fix
+        self.cursor.execute("SELECT word FROM dictionary WHERE word = ?", [word])
+        all_rows = self.cursor.fetchall()
+        
+        if len(all_rows) == 0:
+            # self.logger.info("  Inserting")
+            self.cursor.execute(f"INSERT INTO dictionary (word) VALUES (?)", [word])
+            self.connection.commit()
+
+    def remove_word(self, word:str):
+        if '*' in word:
+            self.logger.info(f"Not executing: [{word}]. Star in command")
+            return
+        self.cursor.execute(f"DELETE FROM dictionary WHERE word=(?)", [word])
+        self.connection.commit()
 
     def add_book(self, bookpath: str, book_name: str):
         """

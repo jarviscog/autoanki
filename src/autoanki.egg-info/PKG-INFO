@@ -1,6 +1,6 @@
 Metadata-Version: 2.1
 Name: autoanki
-Version: 1.1.7
+Version: 1.1.8
 Summary: Automatically make Anki Decks for Chinese text
 Home-page: https://github.com/timmy6figures/autoanki
 Author: Jarvis Coghlin
@@ -76,43 +76,24 @@ AutoAnki interfaces has 4 components on the back end:
 3. Dictionary: Finds definitions for words in the database
 4. DeckManager: Creates Decks
 
-### Database:
-There are 3 different types of tables in the DB, 
-1. dictionary, which holds all the definitions and other information 
-2. book_list, which holds the titles of the books in the database 
-3. book, based off of the name of the book, and holds the words in the book to find in the dictionary
+### Dictionary
+This is an abstract class that can be implemented with the following methods
+- `__init__(debug_level)`
+- `find_word(word)` - Returns None, or a list of paramaters that match the input of DatabaseManager.update_definition()
+- `size()` - Number of entries in the dictionary
 
-#### dictionary:
-- word_id
-- word
-- word_traditional
-- word_type (noun, verb, etc.)
-- pinyin
-- pinyin_numbers
-- number_of_strokes
-- sub_components
-- frequency
-- hsk_level
-- top_level
-- audio_path
-- image_path
-- definition
+There is one dictionary included as the default: an endpoint to [CC-CEDICT](https://www.mdbg.net/chinese/dictionary?page=cedict). 
+I have local versions of other dictionaries with copyrighted data, which I can not upload.
 
-<img src="https://github.com/timmy6figures/autoanki/blob/main/media/images/dictionary-table.jpg?raw=true" alt="Dictionary table" width="80%"/>
-
-#### book_list:
-- book_name
-- book_table_name
-- language
-
+### Database
+There are 3 different types of tables in the DB:
+- `dictionary` contains a information about each word, including the pinyin, traditional characters, and a definition
+- `book_list` contains the book name, table name, and language for each book added
+- `book` contains the book table id, dictionary word id, and the number of appearances for each word in the book
+  
+<img src="https://github.com/timmy6figures/autoanki/blob/main/media/images/dictionary-table.jpg?raw=true" alt="Dictionary table" width="60%"/>
 <img src="https://github.com/timmy6figures/autoanki/blob/main/media/images/book_list_table.jpg?raw=true" alt="Book list table" width="50%"/>
-
-### book
- - book_table_word_id
- - dictionary_word_id
- - number_of_appearances 
-
-<img src="https://github.com/timmy6figures/autoanki/blob/main/media/images/book_table.jpg?raw=true" alt="Book table" width="80%"/>
+<img src="https://github.com/timmy6figures/autoanki/blob/main/media/images/book_table.jpg?raw=true" alt="Book table" width="40%"/>
 
 ## Planned features
 - See ROADMAP.md
@@ -121,5 +102,5 @@ There are 3 different types of tables in the DB,
 
 If you would like to get involved, or learn more information, reading Anki documentation is really important, especially the [Getting Started](https://docs.ankiweb.net/getting-started.html)
 
-To get definitions, this autoanki uses the [CC-CEDICT](https://www.mdbg.net/chinese/dictionary?page=cedict) under the creative commons licence. 
+To get definitions, this autoanki uses the [CC-CEDICT]() under the creative commons licence. 
 

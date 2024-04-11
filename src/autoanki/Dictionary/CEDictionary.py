@@ -47,18 +47,20 @@ class CEDictionary(Dictionary):
 
     def __init__(self, debug_level):
         """Chinese to English Dictionary
-
+        Parser for the CC-CEDICT Dictionary:
+            https://www.mdbg.net/chinese/dictionary?page=cedict
+        This is a file containing 122,839 entries
         """
         self.logger = logging.getLogger('autoanki.cedict')
         self.logger.setLevel(debug_level)
-        self.logger.info("Loading Chinese Dictionary")
+        self.logger.info("Loading Chinese Dictionary (CEDictionary)")
         self.dict = self._parse_file()
-        self.logger.info("Done!")
+        self.logger.debug("Done!")
         
         pass
 
     def _parse_file(self) -> dict[str, dict]:
-        self.logger.info("Parsing file...")
+        self.logger.debug("Parsing file...")
         if not path.isfile(PATH_TO_FILE):
             self.logger.critical("Could not open dictionary file")
 
@@ -111,6 +113,7 @@ class CEDictionary(Dictionary):
         
         # Convert the word to simplified if needed
         word = chinese_converter.to_simplified(word)
+        # self.logger.info(f"[{word}] [{word in self.dict}]")
 
         if word in self.dict:
             """

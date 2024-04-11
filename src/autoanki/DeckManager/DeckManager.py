@@ -103,6 +103,7 @@ class DeckManager:
 
             note = genanki.Note(
                 model=template_decks.CHINESE_CARD_MODEL,
+                tags=['autoanki'],
                 fields=[word, word_traditional, pinyin, definition],
                 # sort_field can be used to sort when the cards appear.
                 # By default they are shown in the order they are addeed, so this is not currently used

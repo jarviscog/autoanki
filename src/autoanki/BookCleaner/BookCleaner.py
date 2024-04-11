@@ -13,14 +13,16 @@ GARBAGE_SENTENCES = ['',
 
 class BookCleaner:
 
-    def __init__(self, debug_level):
+    def __init__(self, debug_level, force=False):
         """ Internal tool used to sanatize input
         Use `clean(bookpath)` to sanatize files and remove junk data
+        `force` Ignore confirmations on if you want to clean >50 files
         """
         self.logger = logging.getLogger('autoanki.bookcleaner')
         self.logger.setLevel(debug_level)
         self.file_list = []
         self.bookpath = ""
+        self.force = force
 
     def clean(self, bookpath: str) -> None | list[str]:
         """
@@ -49,7 +51,7 @@ class BookCleaner:
                             dirty_files.append(os.path.join(root, file))
 
             # Check this cleaning won't be mean to the CPU
-            if len(dirty_files) > 50:
+            if len(dirty_files) > 50 and not self.force:
                 yn = input("Over 50 files. Are you sure you want to convert this many files? (Y/N)")
                 if yn.lower() != 'y':
                     return None
@@ -87,8 +89,11 @@ class BookCleaner:
 
         # Clean page file of characters that may cause issues.
         page_file = open(filepath, encoding='utf-8')
-        page_sentences = page_file.read().split("。")
-        # f = open("test.txt", "w", encoding='utf-8')
+        try: 
+            page_sentences = page_file.read().split("。")
+        except:
+            self.logger.error(f"Critical error cleaning file: [{filepath}]")
+            return
         cleaned_file = open(new_filepath, "w", encoding='utf-8')
 
         for page_sentence in page_sentences:
