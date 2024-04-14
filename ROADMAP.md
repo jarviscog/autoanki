@@ -11,7 +11,7 @@
 - [x] Better formatted dictionary lookups
 - [x] Faster Dictionary Lookups
 
-## v1.1.7 
+## v1.1.7
 - Card settings
 - [x] Add formatting settings to cards
 - [x] More customization for card apperance
@@ -21,7 +21,7 @@
 - Dictionary
 - [x] Better Dictionary lookups (80%> hit-rate)
     - [x] Filter numbers and number-subject tokens
-    - [x] Missed Dictionary lookups < 3 characters will return split definitions 
+    - [x] Missed Dictionary lookups < 3 characters will return split definitions
     - [x] Same character repeated twice/thrice
 
 - [x] Add tags to cards
