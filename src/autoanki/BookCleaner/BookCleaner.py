@@ -10,7 +10,6 @@ GARBAGE_SENTENCES = ['',
                      "\n"]
 
 
-
 class BookCleaner:
 
     def __init__(self, debug_level, force=False):
@@ -115,65 +114,3 @@ class BookCleaner:
 
         return new_filepath
 
-    # @staticmethod
-    # def _compact_file(page_path):
-    #
-    #     print("Compacting...")
-    #     """
-    #     # Compacts all of the different pages in this directory into a specified size.
-    #     # Compacted in this context means that the files are re-organized by size, not chapter/webpage
-    #     # Some websites used have a free limit of 300kb, for example. Rather then pass all of these pages through one by
-    #     # one, it is more efficient to compact these into 299kb files and send those.
-    #     Currently not in use
-    #     # :return: True if success
-    #     """
-    #     all_pages_text = ""
-    #
-    #     for page_path in self.pages:
-    #         page = open(self.bookpath + "\\" + page_path, "r", encoding="utf-8")
-    #         for i in range(file_len(self.bookpath + "\\" + page_path)):
-    #             all_pages_text += page.readline()
-    #
-    #     print("Found " + str(len(self.pages)) + " pages totalling " + str(len(all_pages_text)) + " characters.")
-    #
-    #     # Splits the all_pages_text into smaller parts and saves it to the compacted_pages directory.
-    #     i, current_compacted_filename_number = 0, 0
-    #     all_pages_sentences = all_pages_text.split("\n")
-    #     current_compacted_file_size = 0
-    #     current_compacted_file_text = ""
-    #     while i < len(all_pages_sentences):
-    #
-    #         current_sentence = all_pages_sentences[i]
-    #
-    #         # If the current file has hit its limit, start a new compacted file and reset all variables
-    #         if (len(current_sentence) + current_compacted_file_size) > self.MAX_TXT_TO_PINYIN_SIZE:
-    #             current_compacted_filename_number += 1
-    #             current_file = open(self.compacted_pages_directory + "\\" + "compacted-" + str(
-    #                 current_compacted_filename_number) + ".txt", "w",
-    #                                 encoding="utf-8")
-    #             for line in current_compacted_file_text.split("\n"):
-    #                 current_file.write(line + "\n")
-    #             current_file.close()
-    #             current_compacted_file_size = 0
-    #             current_compacted_file_text = ""
-    #
-    #         # Chinese characters are utf-8, meaning they are 8 bytes
-    #         current_compacted_file_size += len(current_sentence) * 3
-    #         current_compacted_file_text += current_sentence
-    #         # A newline character is one byte
-    #         current_compacted_file_size += 1
-    #         current_compacted_file_text += "\n"
-    #
-    #         i += 1
-    #
-    #     current_compacted_filename_number += 1
-    #     current_file = open(
-    #         self.compacted_pages_directory + "\\" + "compacted-" + str(current_compacted_filename_number) + ".txt",
-    #         "w",
-    #         encoding="utf-8")
-    #     for line in current_compacted_file_text.split("\n"):
-    #         current_file.write(line + "\n")
-    #     current_file.close()
-    #
-    #     print("Done compacting")
-    #     return True

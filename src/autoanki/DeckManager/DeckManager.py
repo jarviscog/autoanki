@@ -1,10 +1,9 @@
 import logging
 
 import genanki
-from genanki import Model
-from pprint import pprint
+from wordfreq import word_frequency
 
-from ..DeckManager import template_decks
+from autoanki.DeckManager import template_decks
 
 class DeckManager:
     """
@@ -34,13 +33,15 @@ class DeckManager:
 
     def settings(self,
                  include_traditional,
-                 include_part_of_speech
+                 include_part_of_speech,
+                 word_frequency_filter
                  ):
         """
         Configures settings for what's in the deck, and how it looks
         """
         self.include_traditional = include_traditional
         self.include_part_of_speech = include_part_of_speech 
+        self.word_frequency_filter = word_frequency_filter 
 
     def generate_deck_file(self, words, deck_name: str, filename: str):
         """
@@ -61,6 +62,11 @@ class DeckManager:
         )
 
         for row in words:
+
+            if self.word_frequency_filter:
+                if self.word_frequency_filter < row['frequency']:
+                    continue
+
             word = row["word"]
 
             if self.include_traditional:
@@ -70,8 +76,15 @@ class DeckManager:
 
             if len(word) != len(word_traditional):
                 self.logger.error(f"{word} and {word_traditional} should be the same length")
-            if word_traditional == word:
-                word_traditional = "-"*len(word)
+
+            # Replace all matching characters with a dash 
+            formatted_word_traditional = ""
+            for i in range(len(word)):
+                if word[i] == word_traditional[i]:
+                    formatted_word_traditional += "-"
+                else:
+                    formatted_word_traditional += word_traditional[i]
+
             if row["pinyin"]:
                 pinyin = row["pinyin"]
             else:

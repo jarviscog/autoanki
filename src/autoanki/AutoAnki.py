@@ -1,12 +1,10 @@
 import logging
-import jieba
 
-from autoanki.Dictionary.YellowBridgeDictionary import YellowBridgeDictionary
-
-from .BookCleaner import BookCleaner
-from .DatabaseManager import DatabaseManager
-from .Dictionary import CEDictionary
-from .DeckManager import DeckManager
+from autoanki.BookCleaner import BookCleaner
+from autoanki.DatabaseManager import DatabaseManager
+from autoanki.Dictionary import CEDictionary
+from autoanki.DeckManager import DeckManager
+from autoanki.Tokenizer import ChineseTokenizer
 
 BLACK = "\u001b[30m"
 RED = "\u001b[31m"
@@ -26,7 +24,7 @@ logging.basicConfig(
 
 class AutoAnki:
 
-    def __init__(self, database_filepath='autoanki.db', debug_level=20, force=False):
+    def __init__(self, database_filepath='autoanki.db', debug_level=20, force=False, dictionary=None):
         """
         Creates an instance of autoanki.
         This creates a book cleaner, database connection, dictioary connection, and deck maker
@@ -42,8 +40,10 @@ class AutoAnki:
         self.force = force
         self.book_cleaner = BookCleaner(debug_level, self.force)
 
-        self.dictionary = CEDictionary(debug_level)
-        self.online_dictionary = YellowBridgeDictionary(debug_level)
+        if dictionary:
+            self.logger.info("Using custom dictionary")
+        else:
+            self.dictionary = CEDictionary(debug_level)
 
         self.database_filepath = database_filepath
         if not DatabaseManager.is_database(database_filepath):
@@ -81,142 +81,45 @@ class AutoAnki:
         """
         autoanki contains an internal definitions table that is scraped from the internet. As words are added to
         autoanki, their definitions must be found.
-        This function passively finds definitions and adds them to the table
-        :return: None
+        This function finds definitions and adds them to the table
         """
-
         # TODO Make progress bar for unfinished records
         self.logger.info("Checking for records...")
         self.database_manager.cursor.execute("SELECT word FROM dictionary WHERE definition IS NULL")
         response_rows = self.database_manager.cursor.fetchall()
-        if len(response_rows) > 0:
-            self.logger.info("Adding " + str(len(response_rows)) + " rows to dictionary table")
-            for row in response_rows:
-                word = str(row[0])
-
-                # self.logger.info(f"Finding: [{word}]...")
-
-                # self.logger.debug("Trying local dictionary...")
-                params = self.dictionary.find_word(word)
-                if params:
-                    # self.logger.debug(f"✅Found: [{params[8]}]")
-                    self.database_manager.update_definition(params)
-                    continue
-
-                subwords = jieba.cut(word)
-                if len(next(subwords)) == len(word):
-                    pass 
-                else: 
-                    self.database_manager.remove_word(word)
-                    subwords = jieba.cut(word)
-                    self.logger.debug(f"✅Splitting and inserting: [{word}]")
-                    for subword in subwords:
-                        self.database_manager.insert_word(subword)
-                        params = self.dictionary.find_word(subword)
-                        if params:
-                            self.logger.debug(f"✅  Found: [{params[8]}]")
-                            self.database_manager.update_definition(params)
-                        else:
-                            self.logger.debug(f"❌Could not find: [{word}]")
-
-                    continue
-
-                CHINESE_NUMBERS = "第一二两三四五五六七八九十百千万满"
-                # Remove all numbers from the front
-                # Lots of the words follow the following format:
-                #   Number + Subject
-                old_word = "" 
-                temp_word = word
-                while old_word != temp_word:
-                    old_word = temp_word 
-                    if len(temp_word) == 0:
-                        break
-                    if temp_word[0] in CHINESE_NUMBERS:
-                        temp_word = temp_word[1:]
-                params = self.dictionary.find_word(temp_word)
-                if params:
-                    self.database_manager.remove_word(word)
-                    self.database_manager.insert_word(temp_word)
-                    self.logger.debug(f"✅  Found: [{params[8]}]")
-                    self.database_manager.update_definition(params)
-                    continue
-
-                # Can we remove some modifiers and get it?
-                stripped_word = word.lstrip('小')
-                stripped_word = stripped_word.lstrip('大')
-                stripped_word = stripped_word.lstrip('这')
-                stripped_word = stripped_word.lstrip('那')
-                stripped_word = stripped_word.lstrip('不')
-                stripped_word = stripped_word.lstrip('几')
-                stripped_word = stripped_word.lstrip('无')
-                stripped_word = stripped_word.lstrip('没')
-                stripped_word = stripped_word.lstrip('全')
-                stripped_word = stripped_word.lstrip('上')
-                stripped_word = stripped_word.lstrip('下')
-                stripped_word = stripped_word.lstrip('太')
-                params = self.dictionary.find_word(stripped_word)
-                if params:
-                    self.database_manager.remove_word(word)
-                    self.database_manager.insert_word(stripped_word)
-                    self.logger.debug(f"✅  Found: [{params[8]}]")
-                    self.database_manager.update_definition(params)
-                    continue
-
-                # TODO 2 repeated, 1
-                # 点点头
-                # 长长的
-
-                # TODO 的 at the end
-
-                # TODO 2 repeated, 2 repeated
-                # 起起伏伏
-
-                # Nuclear option. TODO
-                if len(word) == 2:
-                    self.database_manager.remove_word(word)
-
-                    self.database_manager.insert_word(word[0])
-                    params = self.dictionary.find_word(word[0])
-                    if params:
-                        self.logger.debug(f"✅  Found: [{params[8]}]")
-                        self.database_manager.update_definition(params)
-                        
-
-                    self.database_manager.insert_word(word[1])
-                    params = self.dictionary.find_word(word[1])
-                    if params:
-                        self.logger.debug(f"✅  Found: [{params[8]}]")
-                        self.database_manager.update_definition(params)
-
-
-                # self.logger.debug("Trying YellowBridge...")
-                # params = self.online_dictionary.find_word(word)
-                # if params:
-                    # self.logger.debug(f"✅Found: [{word}]")
-                    # self.database_manager.update_definition(params)
-                    # continue
-
-                self.logger.debug(f"❌Could not find: [{word}]")
-
-        else:
+        if len(response_rows) == 0:
             self.logger.info("No new rows to complete in dictionary table")
+            return
+
+        self.logger.info("Adding " + str(len(response_rows)) + " rows to dictionary table")
+        self.tokenizer = ChineseTokenizer()
+        for row in response_rows:
+            word = str(row[0])
+
+            # self.logger.debug(f"Finding: [{word}]")
+            # self.logger.debug("Trying local dictionary...")
+            params = self.dictionary.find_word(word)
+            if params:
+                # self.logger.debug(f"✅Found: [{params[8]}]")
+                self.database_manager.update_definition(params)
+                continue
+
+            self.logger.info(f"❌Could not find: [{word}]")
 
     def deck_settings(self,
-                      inclue_traditional = True, 
-                      inclue_part_of_speech = True, 
+                      inclue_traditional = True,
+                      inclue_part_of_speech = True,
+                      word_frequency_filter = None,
                       ):
-        """
-        Configures settings for what's in the deck, and how it looks
-        """
+        """Configures settings for what's in the deck, and how it looks"
 
-
+        `word_frequency_filter`: Float between 0 and 1. 1 being every word is included, 0 being none are included
+        """
         self.deck_manager.settings(
             inclue_traditional,
-            inclue_part_of_speech, 
+            inclue_part_of_speech,
+            word_frequency_filter,
         )
-
-
-        pass
 
     def print_database_info(self):
         self.database_manager.print_info()
@@ -267,15 +170,3 @@ class AutoAnki:
         pass
 
 
-if __name__ == '__main__':
-
-    # This is where the command line tool will be put
-    # Parse args
-    # parser = argparse.ArgumentParser(description='This is a new command-line tool')
-
-    # Input files
-    aa = AutoAnki()
-
-    # Output deck
-    # aa.create_deck()
-    print(aa.book_list)

@@ -1,37 +1,41 @@
 import os
-from string import punctuation
 import re
 import sqlite3
 import logging
 import unicodedata
-from glob import glob
 
+from glob import glob
 from pathlib import Path
-import jieba
-import chinese_converter
 
 from autoanki.BookCleaner.BookCleaner import CLEANED_FILES_DIRECTORY
+from autoanki.Tokenizer.ChineseTokenizer import ChineseTokenizer
 
-CHINESE_PUNC = "ｗ９ｌｉｔｂｎｅｐ ！？◇｡。．ｈ＂＃＄％＆＇（）＊＋，－／：；＜＝＞＠［＼］＾＿｀｛｜｝～｟｠｢｣､、〃《》「」『』【】〔〕〖〗〘〙〚〛〜〝〞〟〰〾〿–—‘’‛“”„‟…‧﹏."
-PUNC = "™∞•◎ ♦⑽]■①"
-CHINESE_NUMBERS = "第一二两三四五六七八九十百千万满"
 
 class DatabaseManager:
 
     def __init__(self, database_path, debug_level):
+        # TODO Documentation
         self.logger = logging.getLogger('autoanki.dbmngr')
         self.logger.setLevel(debug_level)
+
+        # Init database
         if not os.path.exists(database_path):
             self.logger.warning("The database [", database_path, "] does not exist.")
             raise Exception("Cannot create DatabaseManager with invalid database path.")
         self.database_path = database_path
-        self.books = []
+
+        # Text segmenter
+        self.tokenizer = ChineseTokenizer(debug_level)
+
+        # Sql connection
         path = os.path.join(os.getcwd(), self.database_path)
         self.connection = sqlite3.connect(path)
         self.cursor = self.connection.cursor()
 
+        self.books = []
+
     @staticmethod
-    def convert_to_tablename(name: str):
+    def convert_to_tablename(name: str) -> str:
         """
         Converts a string to a sql-valid table name.
         `param name` The name to convert
@@ -117,63 +121,21 @@ class DatabaseManager:
             This should be the same for every wile in a given book
         """
         self.logger.info(f"Adding [{filepath}] to database...")
-
         word_appearances = {}
         with open(filepath,'r',encoding='utf-8') as f:
             line = " "
             while line:
-                line = f.readline()
+                line = f.readline().strip(" ")
                 if not line:
                     continue
-                words = jieba.lcut(line)
+                words = self.tokenizer.tokenize(line)
+                if not words:
+                    continue
                 for word in words:
-
-                    # TODO There is a lot of shenanigans happening in this section. 
-                    #   This should be split into a Chinese-spesific file, and 
-                    #   some of these rules should be re-evaluated
-                    word = word.lstrip("第")
-                    word = word.lstrip("几")
-
-                    # Repeated characters (always?) contain the same meaning as one, just varied slightly
-                    # 人人 = everyone
-                    if len(word) == 2 and word[0] == word[1]:
-                        word = word[0]
-
-                    # Some gramatical patterns:
-                    if len(word) > 2 and word[0] == "在" and word[-1] == "上":
-                        word = word[1:-2]
-
-
-                    # Remove all numbers from the front
-                    # Lots of the words follow the following format:
-                    #   Number + Subject
-                    old_word = "" 
-                    while old_word != word:
-                        old_word = word
-                        if len(word) == 0:
-                            break
-                        if word[0] in CHINESE_NUMBERS:
-                            word = word[1:]
-
-                    # Remove puncuation
-                    word = word.translate(str.maketrans('', '', punctuation))
-
-                    is_ascii = len(word) == len(word.encode())
-
-                    is_ascii_special = False
-                    if len(word) == 1:
-                        is_ascii_special = ord(word[0]) > 128 and ord(word[0]) < 255 
-
-                    if word in PUNC or word in CHINESE_PUNC or is_ascii or is_ascii_special or word is None:
-                        continue
                     if word_appearances.get(word) == None:
-                        # Convert the word to simplified if needed
-                        word = chinese_converter.to_simplified(word)
                         word_appearances[word] = 1
                     else:
                         word_appearances[word] += 1
-
-
 
         # Add the words to the dictionary if they are not already there
         self.cursor.execute(f"SELECT word FROM dictionary")
@@ -228,7 +190,6 @@ class DatabaseManager:
         # TODO Doing this breaks the `number_of_appearances`. This is a temporary fix
         self.cursor.execute("SELECT word FROM dictionary WHERE word = ?", [word])
         all_rows = self.cursor.fetchall()
-        
         if len(all_rows) == 0:
             # self.logger.info("  Inserting")
             self.cursor.execute(f"INSERT INTO dictionary (word) VALUES (?)", [word])
@@ -317,7 +278,8 @@ class DatabaseManager:
         hsk_level = params[5]\n
         top_level = params[6]\n
         definition = params[7]\n
-        word = params[8]
+        frequency = params[8]
+        word = params[9]
         :param params: A list of params for the database:
         :return:
         """
@@ -331,7 +293,8 @@ class DatabaseManager:
                             "sub_components = ?,"
                             "hsk_level = ?,"
                             "top_level = ?,"
-                            "definition = ?"
+                            "definition = ?,"
+                            "frequency = ?"
                             "WHERE word = ?",
                             params)
         self.connection.commit()

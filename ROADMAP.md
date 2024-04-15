@@ -30,29 +30,32 @@
 - Batch One Decks!
 
 ## v1.1.9
-- [ ] Seperate Chinese tokenizer from DatabaseManager
-- [ ] Filter non-ascii latin character set (Don't filter T恤)
-- [ ] Fix word count after dictionary word-split
-- [ ] Remove Chinese-spesific parts from AutoAnki.py
+- Filtering/Defining
+- [x] Seperate Chinese tokenizer from DatabaseManager
+- [x] Improve table for part-of-speech
+- [x] Fix relative imports in pip version
+- [x] Traditional word should exclusively replace only different words
+- [x] Filter non-ascii latin character set (Don't filter T恤)
+- [x] Remove Chinese-spesific parts from AutoAnki.py
+- [x] complete_unfinished_definitions() should only be run once
+- [x] Fix word count after dictionary word-split
 
-- [ ] LDC Dictionary lookups
-- [ ] Internet Dictionary lookups
-- [ ] Global Dictionary lookups (Pre-done LDC + CCEDict + Internet)
-
-- [ ] [Better Word Frequency Data](https://lingua.mtsu.edu/chinese-computing/statistics/char/list.php?Which=MO)
+- [x] [Better Word Frequency Data](https://lingua.mtsu.edu/chinese-computing/statistics/char/list.php?Which=MO)
+- Card filters
+- [x] Filter by word frequency
 
 ## v1.2.0
 - Speed:
 - [ ] Faster book scraping
 
-- Card filters
-- [ ] Filter by word frequency
 - [ ] Filter by HSK level
-- [ ] Review filter documentation
 
+- [ ] Fix nested relative paths in BookCleaner
 - [ ] Option to add book name as a tag
+- [ ] Add part-of-speech to card
 
 - [ ] Logo/Branding
+- Batch Two Decks?
 
 ## Potential New Features
 
@@ -65,9 +68,13 @@
 
 - [?] Add audio to cards
 - [?] Add images to cards
+- [?] Embed links to online dictionary in cards?
 
 - [?] Multiple supported languages?
+- [?] English word + definition style cards?
 - [?] Grammatical patterns?
+- [?] Estimate HSK level of word from sub-words
+- [?] 成语?
 - [?] Chinese Idioms?
 - [?] Song lyrics?
 - [?] Add terminal options back in

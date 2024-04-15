@@ -53,6 +53,20 @@ If you want to see the status of the database, use:
 ```
 aa.print_database_info()
 ```
+If you would like to create and use your own dictionary, you can pass it in when you 
+```
+aa = AutoAnki(db_path, dictionary=CustomDictionary())
+```
+This dictionary must implement functions from the abstract class `autoanki/Dictionary.py`
+
+Some settings can be set regarding how cards will be formatted, and what will be shown. They can be seen here:
+```
+aa.deck_settings(
+include_traditional=True,
+include_part_of_speech=True,
+word_frequency_filter=1e-05 # Float between 0 and 1. Filters using this library: https://pypi.org/project/wordfreq/
+)
+```
 
 ## How it works
 AutoAnki interfaces has 4 components on the back end:

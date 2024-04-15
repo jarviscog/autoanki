@@ -1,6 +1,6 @@
 Metadata-Version: 2.1
 Name: autoanki
-Version: 1.1.8
+Version: 1.1.9
 Summary: Automatically make Anki Decks for Chinese text
 Home-page: https://github.com/timmy6figures/autoanki
 Author: Jarvis Coghlin
@@ -9,7 +9,7 @@ Project-URL: Bug Tracker, https://github.com/timmy6figures/autoanki/issues
 Classifier: Programming Language :: Python :: 3
 Classifier: License :: OSI Approved :: MIT License
 Classifier: Operating System :: OS Independent
-Requires-Python: >=3.6
+Requires-Python: >=3.10
 Description-Content-Type: text/markdown
 License-File: LICENSE.txt
 
@@ -67,6 +67,20 @@ Import this file into Anki, and you're all set.
 If you want to see the status of the database, use:
 ```
 aa.print_database_info()
+```
+If you would like to create and use your own dictionary, you can pass it in when you 
+```
+aa = AutoAnki(db_path, dictionary=CustomDictionary())
+```
+This dictionary must implement functions from the abstract class `autoanki/Dictionary.py`
+
+Some settings can be set regarding how cards will be formatted, and what will be shown. They can be seen here:
+```
+aa.deck_settings(
+include_traditional=True,
+include_part_of_speech=True,
+word_frequency_filter=1e-05 # Float between 0 and 1. Filters using this library: https://pypi.org/project/wordfreq/
+)
 ```
 
 ## How it works

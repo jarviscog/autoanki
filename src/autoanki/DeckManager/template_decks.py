@@ -1,9 +1,8 @@
-import genanki
 from genanki import Model
 
 CHINESE_CARD_MODEL = Model(
     1559383145,
-    'Chinese Card (autoanki)',
+    'autoanki-chinese',
     fields=[
         {
             'name': 'word',

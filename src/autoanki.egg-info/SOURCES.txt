@@ -24,3 +24,7 @@ src/autoanki/Dictionary/CEDictionary.py
 src/autoanki/Dictionary/Dictionary.py
 src/autoanki/Dictionary/YellowBridgeDictionary.py
 src/autoanki/Dictionary/__init__.py
+src/autoanki/Dictionary/cedict_ts.u8
+src/autoanki/Tokenizer/ChineseTokenizer.py
+src/autoanki/Tokenizer/Tokenizer.py
+src/autoanki/Tokenizer/__init__.py
