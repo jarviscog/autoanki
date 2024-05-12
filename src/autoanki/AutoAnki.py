@@ -6,6 +6,8 @@ from autoanki.Dictionary import CEDictionary
 from autoanki.DeckManager import DeckManager
 from autoanki.Tokenizer import ChineseTokenizer
 
+import datetime
+
 BLACK = "\u001b[30m"
 RED = "\u001b[31m"
 GREEN = "\u001b[32m"
@@ -25,18 +27,18 @@ logging.basicConfig(
 
 class AutoAnki:
 
-    def __init__(self, database_filepath='autoanki.db', debug_level=20, force=False, dictionary=None):
+    def __init__(self, database_filepath=None, debug_level=20, force=False, dictionary=None):
         """
         Creates an instance of autoanki.
         This creates a book cleaner, database connection, dictioary connection, and deck maker
-        :param database_filepath: The filepath for the database
-        :param logging_level: between 0 (DEBUG) and 50(CRITICAL)
-        :param `force`: Skip conformations for cleaning large numbers of files
+        Args:
+            `database_filepath`: The filepath for the database. If none specified a new one will be created
+            `logging_level`: between 0 (DEBUG) and 50(CRITICAL)
+            `force`: Skip conformations for cleaning large numbers of files
         """
         self.logger = logging.getLogger('autoanki')
         self.logger.setLevel(debug_level)
-        self.logger.debug(f"logger active")
-        self.logger.info("Connecting to database...")
+        self.logger.debug(f"Autoanki logger active")
 
         self.force = force
         self.book_cleaner = BookCleaner(debug_level, self.force)
@@ -47,36 +49,66 @@ class AutoAnki:
             self.dictionary = CEDictionary(debug_level)
 
         self.database_filepath = database_filepath
-        if not DatabaseManager.is_database(database_filepath):
-            self.logger.info("Creating database...")
-            DatabaseManager.create_database(database_filepath)
-            self.logger.info("Done creating database.")
+        if not database_filepath:
+            self.logger.info("No database specified. Creating a new one...")
+            ct = datetime.datetime.now()
+            print("current time:-", ct)
+
+            # DatabaseManager.create_database(database_filepath)
+        else:
+            if not DatabaseManager.is_database(database_filepath):
+                self.logger.info("Creating database...")
+                DatabaseManager.create_database(database_filepath)
+                self.logger.info("Done creating database.")
+
+        self.logger.info("Connecting to database...")
         self.database_manager = DatabaseManager(database_filepath, debug_level)
 
+        self.logger.info("Connecting to DeckManager...")
         self.deck_manager = DeckManager(debug_level)
 
-        self.logger.info("Connected!")
+        self.logger.info("Done init!")
 
-    def add_book(self, book_path: str, book_name: str = 'New Book'):
+
+    def add_book_from_string(self, contents: str, book_name: str = 'Book Name'):
         """
         Add a directory full of files to the database
-        :param book_path: The filepath to the directory that contains the files to add. e.g. lost_prince.txt
-        :param book_name: The name of the book being added e.g. "Lost Prince"
-        :return:
+        Args:
+            `contents`: path to the directory that contains the files to add
+            `book_name`: The name of the book being added e.g. "Lost Prince"
         """
-        self.logger.debug(f"autoanki: Adding book from [{book_path}]")
-
-        # Clean the book
-        # if not self.book_cleaner.clean(book_path):
-            # self.logger.warning("autoanki: Unable to clean book [" + book_name + "].")
-            # return
+        self.logger.debug(f"autoanki: Adding book [{book_name}] from string")
+        if not contents:
+            self.logger.info(f"No contents supplied")
+            return
 
         # Add the book to the database
-        if not self.database_manager.add_book(book_path, book_name):
+        if not self.database_manager.add_book_from_string(contents, book_name):
             self.logger.warning("Unable to add [" + book_name + "] to database.")
             return
 
-        self.logger.info("autoanki: Added [" + book_path + "].")
+        self.logger.info("autoanki: Added book from string.")
+
+
+    def add_book_from_file(self, filepath: str, book_name: str = "Book Name"):
+        """
+        Add a directory full of files to the database
+        Args:
+            `filepath`: path to the directory that contains the files to add
+            `book_name`: The name of the book being added e.g. "Lost Prince"
+        """
+        self.logger.debug(f"autoanki: Adding book [{book_name}] from file: [{filepath}]")
+        if not filepath:
+            self.logger.info(f"No filepath supplied")
+            return
+
+        # Add the book to the database
+        if not self.database_manager.add_book_from_file(filepath, book_name):
+            self.logger.warning("Unable to add [" + book_name + "] to database.")
+            return
+
+        self.logger.info("autoanki: Added [" + filepath + "].")
+
 
     def complete_unfinished_definitions(self):
         """
@@ -84,7 +116,6 @@ class AutoAnki:
         autoanki, their definitions must be found.
         This function finds definitions and adds them to the table
         """
-        # TODO Make progress bar for unfinished records
         self.logger.info("Checking for records...")
         self.database_manager.cursor.execute("SELECT word FROM dictionary WHERE definition IS NULL")
         response_rows = self.database_manager.cursor.fetchall()

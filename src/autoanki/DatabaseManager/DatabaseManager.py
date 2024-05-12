@@ -122,29 +122,27 @@ class DatabaseManager:
         self.connection.commit()
         return True
 
-    def add_file_to_database(self, filepath: str, table_name: str):
+    def add_contents_to_database(self, contents: str, table_name: str):
         """ Adds every word in a file to both the dictionary table and the book's table
         Args:
             `filepath`: The path to the file
             `table_name`: The name of the table to add the words to.
                 This should be the same for every wile in a given book
         """
-        self.logger.info(f"Adding [{filepath}] to database...")
+        self.logger.info(f"Adding contents to database...")
         word_appearances = {}
-        with open(filepath,'r',encoding='utf-8') as f:
-            line = " "
-            while line:
-                line = f.readline().strip(" ")
-                if not line:
-                    continue
-                words = self.tokenizer.tokenize(line)
-                if not words:
-                    continue
-                for word in words:
-                    if word_appearances.get(word) == None:
-                        word_appearances[word] = 1
-                    else:
-                        word_appearances[word] += 1
+        lines = contents.splitlines()
+        for line in lines:
+            if not line:
+                continue
+            words = self.tokenizer.tokenize(line)
+            if not words:
+                continue
+            for word in words:
+                if word_appearances.get(word) == None:
+                    word_appearances[word] = 1
+                else:
+                    word_appearances[word] += 1
 
         # Add the words to the dictionary if they are not already there
         self.cursor.execute(f"SELECT word FROM dictionary")
@@ -215,16 +213,35 @@ class DatabaseManager:
         self.cursor.execute(f"DELETE FROM dictionary WHERE word=(?)", [word])
         self.connection.commit()
 
-    def add_book(self, bookpath: str, book_name: str):
+    def add_book_from_string(self, contents: str, book_name: str):
+        self._add_book(contents, book_name)
+
+    def add_book_from_file(self, filepath: str, book_name: str):
+        if not os.path.isfile(filepath):
+            self.logger.info(f"File does not exist: [{filepath}]")
+            return
+
+        with open(filepath, 'r') as file:
+            contents = file.read()
+            self._add_book(contents, book_name)
+    # def add_book_from_folder(directory):
+        # TODO This
+
+        # Legacy code from _add_book()
+        # self.logger.debug("Bookpath: " + filepath)
+        # if os.path.isdir(filepath):
+        #     self.logger.debug("Directory found:")
+        #     result = [y for x in os.walk(filepath + '/' + CLEANED_FILES_DIRECTORY) for y in glob(os.path.join(x[0], '*.txt'))]
+        #     for path in result:
+        #         self.logger.debug(path)
+        #         self.add_file_to_database(path, book_tablename)
+
+
+    def _add_book(self, contents: str, book_name: str):
         """ Adds a file to the autoanki database. 
         This involves the following steps:\n
         1 - Add book to the `book_list` table
         2 - Add all the files in "bookpath" to the definitions table and book table
-        3 - Add book to book_list property
-
-        If given a directory, it will recursively search for all files in the directory and add them.
-
-        if not already there, adding the
         Args:
             `bookpath`: The filepath to the book. This is file, or a directory of files
             `book_name: The name of the book. This will show up in the Anki deck
@@ -232,29 +249,14 @@ class DatabaseManager:
         self.logger.info("Adding book...")
         # Get a 'table name' clean version of the book name
         book_tablename = self.convert_to_tablename(book_name)
-
         # Add the name of the book to the book_list table
         success = self._create_book_table(book_name, book_tablename)
         if not success:
-            self.logger.error("Failed to create book table")
+            self.logger.error(f"Failed to create book table: [{book_tablename}]")
             return
 
-        self.logger.debug("Bookpath: " + bookpath)
-        if os.path.isdir(bookpath):
-            self.logger.debug("Directory found:")
-            result = [y for x in os.walk(bookpath + '/' + CLEANED_FILES_DIRECTORY) for y in glob(os.path.join(x[0], '*.txt'))]
-            for path in result:
-                self.logger.debug(path)
-                self.add_file_to_database(path, book_tablename)
-
-        elif os.path.isfile(bookpath):
-            self.logger.debug("File found:")
-            # Add all the words in the book to the `definitions` table
-            self.add_file_to_database(bookpath, book_tablename)
-
-        else:
-            self.logger.warning(f"Incorrect bookpath: [{bookpath}]")
-            return False
+        # Add all the words in the book to the `definitions` table
+        self.add_contents_to_database(contents, book_tablename)
 
         self.logger.info("Done adding book.")
         return True

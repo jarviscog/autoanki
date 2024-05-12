@@ -63,6 +63,14 @@ Current roadmap for the project.
 - [ ] Improve dictionaries
 - [ ] Address TODOs
 - [ ] Remove BookCleaner and merge into Tokenizer/DatabaseManager
+- [ ] Issues installing:
+    - chinese-converter
+    - wordfreq
+    - pinyin
+    - genanki
+- [ ] Ability to omit database name
+- [x] Add ability to add book from string
+- [ ] Find tools to do profiling on speed
 
 - Improved Cards
 - [ ] Add part-of-speech to card
@@ -78,6 +86,7 @@ Current roadmap for the project.
 
 - [ ] Filter by HSK level
 - [ ] Faster book scraping
+- [ ] Update README
 
 ## Potential New Features
 
