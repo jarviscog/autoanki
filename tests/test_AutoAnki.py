@@ -1,7 +1,7 @@
 import os
 import pytest
 
-from ..src.autoanki.AutoAnki import AutoAnki
+from autoanki.AutoAnki import AutoAnki
 
 TEST_DB_NAME = 'tests/UnitTest.db'
 
