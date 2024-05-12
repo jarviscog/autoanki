@@ -1,5 +1,4 @@
 import unittest
-import autoanki
 from autoanki.AutoAnki import AutoAnki
 
 # @unittest.skip('Some reason')
