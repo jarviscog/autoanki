@@ -1,5 +1,5 @@
 include autoanki/DatabaseManager/*
-
 include src/autoanki/DatabaseManager/*
-
 include src/autoanki/Dictionary/*
+
+include requirements.txt

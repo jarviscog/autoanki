@@ -2,6 +2,7 @@ LICENSE.txt
 MANIFEST.in
 README.md
 pyproject.toml
+requirements.txt
 setup.cfg
 src/autoanki/AutoAnki.py
 src/autoanki/__init__.py

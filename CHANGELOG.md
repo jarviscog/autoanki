@@ -1,7 +1,15 @@
 # Changelog
 - All notable changes to this project will be documented here
 
-## v1.1.9 (2024/05/15)
+## v1.1.91 (2024/05/11)
+- Updated documentation for classes/functions
+- Fixed bug in book cleaner due to nested relative imports
+- Removed unnecessary slashes from CE-DICT definitions
+- Silenced logs coming from libraries
+- Hopefully fixed install requirements to include requirements.txt
+- Fixed incorrect version release dates
+
+## v1.1.9 (2024/04/15)
 - Seperated text tokenizer into new class (with abstract class)
 - Removed legacy code from BookCleaner
 - Added `chinese-converter` to requirements
@@ -12,25 +20,25 @@
 - Added word frequency data to database
 - Added ability to filter cards based on frequency
 
-## v1.1.8 (2024/05/11)
+## v1.1.8 (2024/04/11)
 - Added `autoanki` tag to all cards generated
 - Added smarter dictionary lookups, including removing numbers, same character twice (宝宝), and splitting some words
 - Added `force` option to skip confirming cleaning large numbers of files
 - Added documentation for Dictionary
 - Reordered CHANGELOG.md
 
-## v1.1.7 (2023/05/07)
+## v1.1.7 (2023/04/07)
 - Added pinyin with symbols, instead of numbers
 - Added part of speech. (Noun, verb, etc.)
 - Added ability to add book from directory
 - Traditional books now format correctly in the database
 - Improved Puncuation filtering
 
-## v1.1.6 (2023/05/05)
+## v1.1.6 (2023/04/05)
 - Removed unnecessary logging output
 - Set multiple definitions on newlines
 
-## v1.1.5 (2023/05/05)
+## v1.1.5 (2024/04/05)
 - Updated README.md
 - Moved DeckManager out of __init__.py
 - If the user included .apkg at the end, ignore it
@@ -41,7 +49,7 @@
 - Faster dictionary lookups by using internal state
 - Better dictionary formatting
 
-## v1.1.0 (2023/05/05)
+## v1.1.0 (2024/04/04)
 - Fixed bugs
 - Removed legacy files
 - Changed dictionary to use local file, rather than internet lookups
@@ -49,7 +57,7 @@
 - Updated README.md
 - Cleaned input to remove punctuation
 
-## v1.0.9 (2023/05/05)
+## v1.0.10 (2023/05/05)
 - Fixed setup.cfg bad imports
 
 ## v1.0.7 (2023/05/05)
@@ -59,5 +67,5 @@
 ## v1.0.5 (2023/04/17)
 - Added LICENCE
 
-## v1.0.0 (2023/04/17)
+## v1.0.2 (2023/04/17)
 - First stable release of `autoanki`

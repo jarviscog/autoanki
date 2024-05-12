@@ -1,3 +1,8 @@
+Current roadmap for the project. 
+- [x] Means completed
+- [ ] Means an unfinished item
+- [?] Means a potential feature. Decide if needed, and act accordingly
+
 ## v1.1.0
 - [x] Verify all components working
 - [x] Format logging output
@@ -44,38 +49,60 @@
 - Card filters
 - [x] Filter by word frequency
 
+## v1.1.91
+- [x] Fix nested relative paths in BookCleaner
+- [x] Remove superfluous slashes from CE-DICT definitions
+- [x] Remove logs from libraries
+- [x] confirm requirements install correctly
+- [x] Add documentation
+
 ## v1.2.0
-- Speed:
-- [ ] Faster book scraping
+- Backend
+- [ ] Add option to use custom dictionary
+- [ ] Convert database magager to abstract class to prepare for multi-language
+- [ ] Improve dictionaries
+- [ ] Address TODOs
+- [ ] Remove BookCleaner and merge into Tokenizer/DatabaseManager
+
+- Improved Cards
+- [ ] Add part-of-speech to card
+- [ ] Option to include English -> Chinese cards
+- [ ] Add minimum number of repititions before getting added to the deck
+- [ ] Option to add book name as a tag
+- [?] Output books as subdecks
+
+- Docs/Non-code
+- [ ] Logo/Branding
+
+## v1.2.1
 
 - [ ] Filter by HSK level
-
-- [ ] Fix nested relative paths in BookCleaner
-- [ ] Option to add book name as a tag
-- [ ] Add part-of-speech to card
-
-- [ ] Logo/Branding
-- Batch Two Decks?
+- [ ] Faster book scraping
 
 ## Potential New Features
 
-- [ ] Progress bars for cleaner output
-- [ ] Output books as subdecks
-- [ ] Add automated tests
+- AutoAnki
+- [?] Progress bars for cleaner output
+- [?] Add terminal options back in/Update README
 
-- Debug Tools
-- [ ] Delete database definitions
+- Debug/Testing
+- [?] Delete database definitions
+- [?] Add automated tests
 
+- Cards
 - [?] Add audio to cards
 - [?] Add images to cards
-- [?] Embed links to online dictionary in cards?
+- [?] Embed links to online dictionary in cards
 
-- [?] Multiple supported languages?
-- [?] English word + definition style cards?
-- [?] Grammatical patterns?
-- [?] Estimate HSK level of word from sub-words
-- [?] 成语?
+- Features
+- [?] Add ability to use epub files from kindle
 - [?] Chinese Idioms?
 - [?] Song lyrics?
-- [?] Add terminal options back in
+- [?] English word + definition style cards?
+- [?] Multiple supported languages?
+- [?] Show word from the context in which it showed up
+
+- [?] Grammatical patterns?
+- [?] 成语?
+- [?] Estimate HSK level of word from sub-words
 

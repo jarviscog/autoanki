@@ -14,7 +14,9 @@ from autoanki.Tokenizer.ChineseTokenizer import ChineseTokenizer
 class DatabaseManager:
 
     def __init__(self, database_path, debug_level):
-        # TODO Documentation
+        """Interfaces with an SQLLite database containing information on words, definitions, and more
+
+        """
         self.logger = logging.getLogger('autoanki.dbmngr')
         self.logger.setLevel(debug_level)
 
@@ -38,8 +40,10 @@ class DatabaseManager:
     def convert_to_tablename(name: str) -> str:
         """
         Converts a string to a sql-valid table name.
-        `param name` The name to convert
-        `return` A tablename valid for an sql table
+        Args:
+            `name`: The name to convert
+        Return:
+            A valid sql table name
         """
         value = unicodedata.normalize('NFKC', name)
         # value.replace("：",":")
@@ -49,6 +53,10 @@ class DatabaseManager:
 
     @staticmethod
     def is_database(database_name:str):
+        """ Verifies integrity of AutoAnki database
+        Args:
+            `database_name`: Filepath of database
+        """
         if not database_name.endswith(".db"):
             return False
         if not os.path.exists(database_name):
@@ -64,10 +72,10 @@ class DatabaseManager:
         return True
 
     @staticmethod
-    def create_database(database_path):
-        """
-        Creates an autoanki database file, including all tables needed for autoanki
-        `database_path` The path to the database to create
+    def create_database(database_path: str):
+        """ Creates autoanki database file, including all tables needed
+        Args:
+            `database_path`: The path to the database to create
         """
         logger = logging.getLogger('autoanki.dbmngr')
         logger.info("Creating database [" + database_path + "]")
@@ -85,10 +93,11 @@ class DatabaseManager:
             return False
 
     def _create_book_table(self, book_name, table_name) -> bool:
-        """
-        Creates a new entry in the book_list table
-        `table_name` The name of the new entry to create
-        `return` False if error
+        """ Creates a new entry in the book_list table
+        Args:
+            `table_name`: The name of the new entry to create
+        Return:
+            False if error
         """
         self.cursor.execute("SELECT table_name FROM book_list")
         book_list = self.cursor.fetchall()
@@ -113,12 +122,12 @@ class DatabaseManager:
         self.connection.commit()
         return True
 
-    def add_file_to_database(self, filepath, table_name):
-        """
-        Adds every word in a file to both the dictionary table and the book's table
-        `filepath` The path to the file
-        `table_name` The name of the table to add the words to.
-            This should be the same for every wile in a given book
+    def add_file_to_database(self, filepath: str, table_name: str):
+        """ Adds every word in a file to both the dictionary table and the book's table
+        Args:
+            `filepath`: The path to the file
+            `table_name`: The name of the table to add the words to.
+                This should be the same for every wile in a given book
         """
         self.logger.info(f"Adding [{filepath}] to database...")
         word_appearances = {}
@@ -188,6 +197,9 @@ class DatabaseManager:
 
     def insert_word(self, word):
         # TODO Doing this breaks the `number_of_appearances`. This is a temporary fix
+        # TODO This is really ineficcient
+        #   Either contain an internal dict of words in the dictionary, 
+        #   or wrap this with a try catch
         self.cursor.execute("SELECT word FROM dictionary WHERE word = ?", [word])
         all_rows = self.cursor.fetchall()
         if len(all_rows) == 0:
@@ -196,6 +208,7 @@ class DatabaseManager:
             self.connection.commit()
 
     def remove_word(self, word:str):
+        # TODO: Make more stringent constraints on removing words. This should be extremely rare
         if '*' in word:
             self.logger.info(f"Not executing: [{word}]. Star in command")
             return
@@ -203,22 +216,21 @@ class DatabaseManager:
         self.connection.commit()
 
     def add_book(self, bookpath: str, book_name: str):
-        """
-        Adds a file to the autoanki database. This involves the following steps:\n
-        1 - Add book to the book_list table
+        """ Adds a file to the autoanki database. 
+        This involves the following steps:\n
+        1 - Add book to the `book_list` table
         2 - Add all the files in "bookpath" to the definitions table and book table
         3 - Add book to book_list property
 
         If given a directory, it will recursively search for all files in the directory and add them.
 
         if not already there, adding the
-        :param bookpath: The filepath to the book. This is file, or a directory of files
-        :param book_name: The name of the book. This will show up in the Anki deck
-        :return: None
+        Args:
+            `bookpath`: The filepath to the book. This is file, or a directory of files
+            `book_name: The name of the book. This will show up in the Anki deck
         """
         self.logger.info("Adding book...")
-
-        # Gets a 'table name' clean version of the book name
+        # Get a 'table name' clean version of the book name
         book_tablename = self.convert_to_tablename(book_name)
 
         # Add the name of the book to the book_list table
@@ -227,7 +239,7 @@ class DatabaseManager:
             self.logger.error("Failed to create book table")
             return
 
-        self.logger.debug(bookpath)
+        self.logger.debug("Bookpath: " + bookpath)
         if os.path.isdir(bookpath):
             self.logger.debug("Directory found:")
             result = [y for x in os.walk(bookpath + '/' + CLEANED_FILES_DIRECTORY) for y in glob(os.path.join(x[0], '*.txt'))]
@@ -248,10 +260,7 @@ class DatabaseManager:
         return True
 
     def print_info(self):
-        """
-        Print basic information about the database
-        :return:
-        """
+        """ Print basic information about the database """
         self.cursor.execute("SELECT word FROM dictionary")
         all_rows = self.cursor.fetchall()
         self.cursor.execute("SELECT word FROM dictionary WHERE definition IS NULL")
@@ -268,8 +277,7 @@ class DatabaseManager:
         print(format_string_int.format("Number of unfinished rows:", len(unfinished_rows)))
 
     def update_definition(self, params: list):
-        f"""
-        Complete a definition for one word in the dictionary table\n
+        f""" Complete a definition for one word in the dictionary table\n
         traditional_script = params[0]\n
         word_type = params[1]\n
         pinyin = params[2]\n

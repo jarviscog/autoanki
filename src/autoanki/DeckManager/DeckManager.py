@@ -29,6 +29,8 @@ class DeckManager:
         self.include_traditional = include_traditional 
         self.include_part_of_speech = include_part_of_speech
 
+        self.word_frequency_filter = None
+
         self.book_list = []
 
     def settings(self,
@@ -117,7 +119,7 @@ class DeckManager:
             note = genanki.Note(
                 model=template_decks.CHINESE_CARD_MODEL,
                 tags=['autoanki'],
-                fields=[word, word_traditional, pinyin, definition],
+                fields=[word, formatted_word_traditional, pinyin, definition],
                 # sort_field can be used to sort when the cards appear.
                 # By default they are shown in the order they are addeed, so this is not currently used
                 sort_field=1,

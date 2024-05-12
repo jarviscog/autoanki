@@ -11,3 +11,4 @@ Lib
 .codetogether.ignore
 .DS_Store
 .idea/.name
+.python-version

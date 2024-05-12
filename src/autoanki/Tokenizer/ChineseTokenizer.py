@@ -1,7 +1,9 @@
+import logging
+
 import jieba
+logging.getLogger("jieba").setLevel(logging.WARNING)
 import chinese_converter
 from string import punctuation
-import logging
 
 from autoanki.Dictionary.CEDictionary import CEDictionary
 
@@ -9,7 +11,7 @@ from autoanki.Dictionary.CEDictionary import CEDictionary
 PUNCTUATION = """
 +,;:'()[]{}&*^%$#@!◇♦•·■◎∞=™©×
 """
-CHINESE_PUNC = "！？｡。．.…、＂＃＄％＆＇（）＊＋，－／：；＜＝＞＠［＼］＾＿｀｛｜｝～｟｠｢｣､、〃《》「」『』【】〔〕〖〗〘〙〚〛〜〝〞〟〰〾〿–—‘’‛“”„‟…‧﹏  ① ② ⑽ "
+CHINESE_PUNC = "！？｡。．.…、＂＃＄％＆＇（）＊＋，－／：；＜＝＞＠［＼］＾＿｀｛｜｝～｟｠｢｣､、〃《》「」『』【】〔〕〖〗〘〙〚〛〜〝〞〟〰〾〿–—‘’‛“”„‟…‧﹏  ① ② ③ ④ ⑽ "
 
 # TODO: This can be extened and implemented
 OTHER = "ｗ９ｌｉｔｂｎｅｐｈⅠ Ⅱ Ⅲ Ⅳ "

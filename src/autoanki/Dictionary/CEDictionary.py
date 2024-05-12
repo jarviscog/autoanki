@@ -3,6 +3,7 @@ import logging
 
 import pinyin
 import jieba
+logging.getLogger("jieba").setLevel(logging.WARNING)
 import jieba.posseg as pseg
 import chinese_converter
 from wordfreq import word_frequency
@@ -11,17 +12,16 @@ from autoanki.Dictionary.Dictionary import Dictionary
 
 PATH_TO_FILE = path.join(path.dirname(__file__), 'cedict_ts.u8')
 
-
 # Use the lookup table here: https://github.com/fxsjy/jieba
 NOUN = ['n', 'nt', 'nrt', 'ORG', 'nr', 'PER', 'ns', 'nw', 'nz', 'f', 's', 'an', 'zg', 'j']
 TIME = ['t', 'TIME', 'tg', 'g']
 ADPOSITION = ['p']
-PRONOUN = ['r']
+PRONOUN = ['r', 'rz', 'rg']
 QUANTIFIER = ['q', 'm']
 VERB = ['v', 'vd', 'vn', 'e', 'vg', 'h']
-ADVERB = ['ad', 'd', 'aq']
+ADVERB = ['ad', 'd', 'aq', 'df']
 OTHER = ['vn', 'xc', 'x']
-ADJECTIVE = ['a', 'b', 'ng']
+ADJECTIVE = ['a', 'b', 'ng', 'ag']
 CONJUNCTION = ['c']
 PARTICLE = ['y', 'u', 'uj', 'uz', 'ul', 'uv', 'ud', 'ug']
 PUNCTUATION = ['w']
@@ -47,7 +47,10 @@ class CEDictionary(Dictionary):
         pass
 
     def _parse_file(self) -> dict[str, dict]:
-        self.logger.debug("Parsing file...")
+        """Parse dictionary file on load
+        `return` A dictionary of the information, the key being the Chinese word
+        """
+        self.logger.debug("Parsing CE-DICT file...")
         if not path.isfile(PATH_TO_FILE):
             self.logger.critical("Could not open dictionary file")
 
@@ -90,6 +93,12 @@ class CEDictionary(Dictionary):
 
         for key, _ in definitions.items():
             definitions[key]['definition'].strip('\n')
+            definitions[key]['definition'] = definitions[key]['definition'].lstrip('<br>')
+            definitions[key]['definition'] = definitions[key]['definition'].lstrip('/')
+
+            definitions[key]['definition'] = definitions[key]['definition'].rstrip('\n')
+            definitions[key]['definition'] = definitions[key]['definition'].rstrip('/')
+            # self.logger.info('[' + definitions[key]['definition'] + ']')
         return definitions
 
 

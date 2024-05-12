@@ -18,9 +18,10 @@ RESET = "\u001b[0m"
 logging.basicConfig(
     # filename='HISTORY.log',
     level=logging.WARNING,
-    format=f'{GREEN}%(asctime)s{RESET} {RED}%(levelname)8s{RESET} {YELLOW}%(name)16s{RESET}: %(message)s',
+    format=f'{GREEN}%(asctime)s{RESET} {RED}%(levelname)8s{RESET} {YELLOW}%(name)-16s{RESET}: %(message)s',
     datefmt='%Y-%m-%d %H:%M:%S',
 )
+
 
 class AutoAnki:
 
@@ -66,9 +67,9 @@ class AutoAnki:
         self.logger.debug(f"autoanki: Adding book from [{book_path}]")
 
         # Clean the book
-        if not self.book_cleaner.clean(book_path):
+        # if not self.book_cleaner.clean(book_path):
             # self.logger.warning("autoanki: Unable to clean book [" + book_name + "].")
-            return
+            # return
 
         # Add the book to the database
         if not self.database_manager.add_book(book_path, book_name):

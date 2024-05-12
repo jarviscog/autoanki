@@ -1,11 +1,14 @@
 import logging
 import os
 
+# TODO: I think that the entire book cleaner file is not needed. 
+#   Words should not be written back to a file. This is slow
 CLEANED_FILES_DIRECTORY = 'cleaned_files'
 CLEANED_FILES_SUFFIX = '_cleaned'
 # Sentences That should not be added to the completed file.
 GARBAGE_SENTENCES = ['',
                      "",
+                     ".",
                      "。",
                      "\n"]
 
@@ -15,7 +18,8 @@ class BookCleaner:
     def __init__(self, debug_level, force=False):
         """ Internal tool used to sanatize input
         Use `clean(bookpath)` to sanatize files and remove junk data
-        `force` Ignore confirmations on if you want to clean >50 files
+        Args:
+            `force`: Ignore confirmations on if you want to clean >50 files
         """
         self.logger = logging.getLogger('autoanki.bookcleaner')
         self.logger.setLevel(debug_level)
@@ -34,6 +38,7 @@ class BookCleaner:
         if not os.path.exists(bookpath):
             self.logger.warning("Cannot find path [" + str(bookpath) + "]")
             return None
+        self.logger.info("Bookpath: " + bookpath)
 
         # If the bookpath is a single file, clean and return it
         if os.path.isfile(bookpath):
@@ -65,26 +70,24 @@ class BookCleaner:
 
         for file in dirty_files:
             cleaned_filepath = self._clean_file(file, cleaned_files_root=cleaned_files_root)
-            cleaned_files.append(cleaned_filepath)
+            if cleaned_filepath:
+                cleaned_files.append(cleaned_filepath)
 
         return cleaned_files
 
-    def _clean_file(self, filepath, cleaned_files_root):
+    def _clean_file(self, filepath: str, cleaned_files_root: str):
         """
-        Takes a txt file and cleans it up, putting every sentence on a new line
-        :param filepath: The txt file to clean
-        :param cleaned_files_root: The root
-        :return:
+        Takes a txt file and cleans it up, filtering junk and putting every sentence on a new line
+        Args:
+            `filepath`: The txt file to clean
+            `cleaned_files_root`: The root
         """
-        # Set the directory where the cleaned file will go
-        if not cleaned_files_root:
-            # root/test1.txt -> root/hello_cleaned.txt
-            new_filepath = os.path.splitext(filepath)[0] + CLEANED_FILES_SUFFIX + os.path.splitext(filepath)[1]
-        else:
-            # TODO I'm suspicious that this works every time
-            new_filepath = os.path.join(cleaned_files_root, '/'.join(filepath.split('/')[2:]))
-        # self.logger.debug(f"Old filepath: [{filepath}]")
-        # self.logger.debug(f"New filepath: [{new_filepath}]")
+
+        # TODO: This will not work for books with nested files that share the same name
+        filename = os.path.basename(filepath)
+        new_filepath = os.path.join(cleaned_files_root, filename)
+        self.logger.debug("Filepath:     " + filepath)
+        self.logger.debug("New filepath: " + new_filepath)
 
         # Clean page file of characters that may cause issues.
         page_file = open(filepath, encoding='utf-8')
