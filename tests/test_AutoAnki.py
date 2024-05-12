@@ -1,13 +1,12 @@
 import os
-import unittest
+import pytest
+
 
 from autoanki.AutoAnki import AutoAnki
 
-# @unittest.skip('Some reason')
-
 TEST_DB_NAME = 'tests/UnitTest.db'
 
-class TestAutoAnki(unittest.TestCase):
+class TestAutoAnki():
 
     @classmethod
     def setUpClass(cls): ### run once before all test cases ###
@@ -28,29 +27,26 @@ class TestAutoAnki(unittest.TestCase):
     ### make sure to add => test_ <= as prefix to all test cases otherwise they won't work ###
     def test_init(self):
         aa = AutoAnki(TEST_DB_NAME, debug_level=20)
+        assert aa.book_list == []
         aa.print_database_info()
+
+        self.tearDown()
 
     def test_book_list(self):
         aa = AutoAnki(TEST_DB_NAME, debug_level=20)
 
         # No books
-        self.assertEqual(len(aa.book_list), 0)
+        assert len(aa.book_list) == 0
 
         # Add book
         aa.add_book_from_string("你好。再见", "Test Book")
-        self.assertEqual(len(aa.book_list), 1)
+        assert len(aa.book_list) == 1
 
         # Add book incorrectly
         aa.add_book_from_file("你好。再见", "Test Book")
-        self.assertEqual(len(aa.book_list), 1)
+        assert len(aa.book_list) == 1
 
-
-
-
-if __name__ == "__main__":
-    unittest.main()
-
-
+        self.tearDown()
 
 
 
