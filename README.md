@@ -1,12 +1,10 @@
-> **❗️** <br>
-Pull requests welcome! If you think you can improve AA in any way, open a PR!
-
 # autoanki
-Tool for generating Anki flashcards to learn Chinese.
+Tool for generating Chinese flashcards for Anki
 
-<img src="https://github.com/timmy6figures/autoanki/blob/main/media/images/example.jpg?raw=true" alt="Text to Anki" width="80%"/>
+![PyPI - Version](https://img.shields.io/pypi/v/autoanki)
+![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/timmy6figures/autoanki/python-package.yml)
 
-## Motivation
+## About
 
 When learning Chinese, some common advice is to learn the top X most common words.
 This is good advice, as you can get pretty far with this, however it's [not perfect](https://en.wikipedia.org/wiki/Zipf%27s_law#/media/File:Zipf's_law_on_War_and_Peace.png).
