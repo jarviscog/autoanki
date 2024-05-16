@@ -1,11 +1,11 @@
 import logging
 
 import jieba
+
 logging.getLogger("jieba").setLevel(logging.WARNING)
 import chinese_converter
 from string import punctuation
 
-from autoanki.Dictionary.CEDictionary import CEDictionary
 
 # TODO Is there a way to do this in a smarter way? Maybe check if the characters are in a certian UTF-8 block?
 PUNCTUATION = """
@@ -18,30 +18,32 @@ OTHER = "ｗ９ｌｉｔｂｎｅｐｈⅠ Ⅱ Ⅲ Ⅳ "
 
 # TODO Remove straight numbers and english words
 
-class ChineseTokenizer():
 
+class ChineseTokenizer:
     def __init__(self, debug_level=20, dictionary=None):
-        self.logger = logging.getLogger('autoanki.dbmngr')
+        self.logger = logging.getLogger("autoanki.dbmngr")
         self.logger.setLevel(debug_level)
 
-        # Currently, each element tokenized will be checked against the dictionary, 
+        # Currently, each element tokenized will be checked against the dictionary,
         #   and shortented if there is not a match
-        # TODO It's silly how much processing power this might use in worst-case. 
+        # TODO It's silly how much processing power this might use in worst-case.
         #   Can we improve on this?
         if dictionary:
             self.dictionary = dictionary
         else:
+            from autoanki.Dictionary.CEDictionary import CEDictionary
+
             self.dictionary = CEDictionary(debug_level=20)
 
-    def tokenize(self, line:str) -> None | list[str]:
-        
+    def tokenize(self, line: str) -> None | list[str]:
+
         # TODO jieba has more features that we should take advantage of to get better tokenizing
         dirty_words = jieba.lcut(line)
         clean_words = []
         self.logger.debug("Dirty words:")
         self.logger.debug(dirty_words)
         for word in dirty_words:
-            word = word.strip('\n')
+            word = word.strip("\n")
             if not word:
                 continue
             # Convert the word to simplified if needed
@@ -61,7 +63,6 @@ class ChineseTokenizer():
                 clean_words.append(word)
                 continue
 
-
             # Try tokenizing again?
             subwords = jieba.lcut(word)
             if len(subwords) > 1:
@@ -70,9 +71,9 @@ class ChineseTokenizer():
                 continue
 
             # Remove all ascii
-            new_word = ''.join(i for i in word if ord(i)>128)
+            new_word = "".join(i for i in word if ord(i) > 128)
             # if word != new_word:
-                # self.logger.info(f"{word} -> {new_word}", )
+            # self.logger.info(f"{word} -> {new_word}", )
             word = new_word
             if not word:
                 continue
@@ -151,38 +152,35 @@ class ChineseTokenizer():
         if clean_words:
             self.logger.debug("Clean words")
             self.logger.debug(clean_words)
-        return clean_words 
+        return clean_words
 
-
-    def remove_numbers(self, word:str):
+    def remove_numbers(self, word: str):
         # Remove all numbers from the front
         # Lots of the words follow the following format:
         #   Number + Subject
         CHINESE_NUMBERS = "第一二两三四五五六七八九十百千万满"
-        old_word = "" 
+        old_word = ""
         temp_word = word
         while old_word != temp_word:
-            old_word = temp_word 
+            old_word = temp_word
             if len(temp_word) == 0:
                 break
             if temp_word[0] in CHINESE_NUMBERS:
                 temp_word = temp_word[1:]
         return temp_word
 
-    def remove_modifiers(self, word:str):
-        stripped_word = word.lstrip('小')
-        stripped_word = stripped_word.lstrip('大')
-        stripped_word = stripped_word.lstrip('这')
-        stripped_word = stripped_word.lstrip('那')
-        stripped_word = stripped_word.lstrip('不')
-        stripped_word = stripped_word.lstrip('几')
-        stripped_word = stripped_word.lstrip('无')
-        stripped_word = stripped_word.lstrip('没')
-        stripped_word = stripped_word.lstrip('全')
-        stripped_word = stripped_word.lstrip('上')
-        stripped_word = stripped_word.lstrip('下')
-        stripped_word = stripped_word.lstrip('太')
-        stripped_word = stripped_word.lstrip('一个')
+    def remove_modifiers(self, word: str):
+        stripped_word = word.lstrip("小")
+        stripped_word = stripped_word.lstrip("大")
+        stripped_word = stripped_word.lstrip("这")
+        stripped_word = stripped_word.lstrip("那")
+        stripped_word = stripped_word.lstrip("不")
+        stripped_word = stripped_word.lstrip("几")
+        stripped_word = stripped_word.lstrip("无")
+        stripped_word = stripped_word.lstrip("没")
+        stripped_word = stripped_word.lstrip("全")
+        stripped_word = stripped_word.lstrip("上")
+        stripped_word = stripped_word.lstrip("下")
+        stripped_word = stripped_word.lstrip("太")
+        stripped_word = stripped_word.lstrip("一个")
         return stripped_word
-
-

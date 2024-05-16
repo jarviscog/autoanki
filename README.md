@@ -17,41 +17,45 @@ With autoanki, you selectively add words to an Anki file to continue progressing
 
 ## Usage
 
-autoanki is both a library and a command-line tool.
-
 To get started, run 
 ```pip install autoanki```
 This should install all the requirements. Then, in a Python file, do ```from autoanki import AutoAnki```
 
-To get started, first, create a database for autoanki to use 
+To get started, create an autoanki instance with the 2-letter code of the language you want to use
+```
+aa = AutoAnki('zh')
+```
+Opitonally, include a path to a database file you want to use:
 ```    
 db_path = "AutoAnki.db"
 if not AutoAnki.is_database(db_path):
     AutoAnki.create_database(db_path)
 ```
-Then create an instance of autoanki using the database
-```
-aa = AutoAnki(db_path)
-```
-Add whatever books you want in your deck. These can be a single file, or a folder
+
+Add whatever books you want in your deck. These can be a single file, or a string
 ```
 bookpath = 'short-story.txt'
-aa.add_book(bookpath, 'My first book🍎')
+aa.add_book_from_string("...", 'My first book🍎')
+aa.add_book_from_string(bookpath, 'My first book🍎')
 ```
+
 Once all of your books are added, the definitions need to be found, and then you can create a deck!
 ```
 aa.complete_unfinished_definitions()
 aa.create_deck("AutoAnki Deck", "output")
 ```
+
 This will automatically have the .apkg extension, which Anki uses. 
 Import this file into Anki, and you're all set.
 
+
 #### Other commands
-If you want to see the status of the database, use:
+If you want to see the information of a database, use:
 ```
 aa.print_database_info()
 ```
-If you would like to create and use your own dictionary, you can pass it in when you 
+
+If you would like to create and use your own dictionary, you can pass it in:
 ```
 aa = AutoAnki(db_path, dictionary=CustomDictionary())
 ```
@@ -62,16 +66,16 @@ Some settings can be set regarding how cards will be formatted, and what will be
 aa.deck_settings(
 include_traditional=True,
 include_part_of_speech=True,
-word_frequency_filter=1e-05 # Float between 0 and 1. Filters using this library: https://pypi.org/project/wordfreq/
+word_frequency_filter=1e-05 # Filters using this library: https://pypi.org/project/wordfreq/
 )
 ```
+The filter is the percentage of words less frequent: 的 shows up 6% of the time in text, so putting a value of 7 will omit it
 
 ## How it works
 AutoAnki interfaces has 4 components on the back end:
-1. BookCleaner: Cleans the input coming in from files that the user supplies 
-2. DatabaseManager: Takes the cleaned input and puts it into the database
-3. Dictionary: Finds definitions for words in the database
-4. DeckManager: Creates Decks
+1. DatabaseManager: Takes the cleaned input and puts it into the database
+2. Dictionary: Finds definitions for words in the database
+3. DeckManager: Creates Decks
 
 ### Dictionary
 This is an abstract class that can be implemented with the following methods

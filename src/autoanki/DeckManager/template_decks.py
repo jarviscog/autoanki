@@ -2,30 +2,35 @@ from genanki import Model
 
 CHINESE_CARD_MODEL = Model(
     1559383145,
-    'autoanki-chinese',
+    "autoanki-chinese",
     fields=[
         {
-            'name': 'word',
-            'font': 'Arial',
+            "name": "word",
+            "font": "Arial",
         },
         {
-            'name': 'word_traditional',
-            'font': 'Arial',
+            "name": "word_traditional",
+            "font": "Arial",
         },
         {
-            'name': 'pinyin',
-            'font': 'Arial',
+            "name": "pinyin",
+            "font": "Arial",
         },
         {
-            'name': 'definition',
-            'font': 'Arial',
+            "name": "part_of_speech",
+            "font": "Arial",
+            "color": "red",
+        },
+        {
+            "name": "definition",
+            "font": "Arial",
         },
     ],
     templates=[
         {
-            'name': 'Card 1',
-            'qfmt': '{{word}}\n[{{word_traditional}}]',
-            'afmt': '{{FrontSide}}\n\n<hr id=answer>\n{{pinyin}}<br>\n{{definition}}',
+            "name": "Card 1",
+            "qfmt": "{{word}}\n[{{word_traditional}}]",
+            "afmt": """{{FrontSide}}\n\n<hr id=answer>\n{{pinyin}}<br><br><span style="color:gray">{{part_of_speech}}</span>{{definition}}<br>""",
         },
         # {
         # 'name': 'Card 2',
@@ -33,7 +38,7 @@ CHINESE_CARD_MODEL = Model(
         # 'afmt': '{{Front}}',
         # },
     ],
-    css='.card {\n font-family: arial;\n font-size: 30px;\n text-align: center;\n color: black;\n background-color: white;\n}\n',
+    css=".card {\n font-family: arial;\n font-size: 30px;\n text-align: center;\n color: black;\n background-color: white;\n}\n",
 )
 
 # # All the resources for finding the
@@ -84,4 +89,3 @@ CHINESE_CARD_MODEL = Model(
 #
 #         my_deck.add_note(my_note)
 #         genanki.Package(my_deck).write_to_file('output.apkg')
-

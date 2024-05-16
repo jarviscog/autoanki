@@ -1,1 +1,1 @@
-from .ChineseTokenizer import ChineseTokenizer 
+from .ChineseTokenizer import ChineseTokenizer

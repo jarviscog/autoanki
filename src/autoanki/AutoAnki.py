@@ -1,12 +1,14 @@
 import logging
 
 from autoanki.BookCleaner import BookCleaner
-from autoanki.DatabaseManager import DatabaseManager
+from autoanki.DatabaseManager import ChineseDatabaseManager
+from autoanki.DatabaseManager.DatabaseManager import DatabaseManager
 from autoanki.Dictionary import CEDictionary
 from autoanki.DeckManager import DeckManager
+from autoanki.Dictionary.Dictionary import Dictionary
 from autoanki.Tokenizer import ChineseTokenizer
 
-import datetime
+import time
 
 BLACK = "\u001b[30m"
 RED = "\u001b[31m"
@@ -20,57 +22,106 @@ RESET = "\u001b[0m"
 logging.basicConfig(
     # filename='HISTORY.log',
     level=logging.WARNING,
-    format=f'{GREEN}%(asctime)s{RESET} {RED}%(levelname)8s{RESET} {YELLOW}%(name)-16s{RESET}: %(message)s',
-    datefmt='%Y-%m-%d %H:%M:%S',
+    format=f"{GREEN}%(asctime)s{RESET} {RED}%(levelname)8s{RESET} {YELLOW}%(name)-16s{RESET}: %(message)s",
+    datefmt="%Y-%m-%d %H:%M:%S",
 )
 
 
-class AutoAnki:
+class LanguageResources:
+    database_manager: DatabaseManager
+    dictionary: Dictionary
+    deck_manager: DeckManager
 
-    def __init__(self, database_filepath=None, debug_level=20, force=False, dictionary=None):
+
+# class Chinese(LanguageResources):
+# database_manager: ChineseDatabaseManager
+# dictionary_manager: CEDictionary
+# deck_manager: DeckManager
+
+supported_languages = {"zh": "Yes"}
+
+
+class AutoAnki:
+    def __init__(
+        self,
+        language: str,
+        database_filepath: str = "",
+        debug_level=20,
+        force=False,
+        dictionary=None,
+    ):
         """
         Creates an instance of autoanki.
         This creates a book cleaner, database connection, dictioary connection, and deck maker
         Args:
+            `language`: The language to load, as per its ISO 639-1 two-letter code (en, zh, fr...)
             `database_filepath`: The filepath for the database. If none specified a new one will be created
             `logging_level`: between 0 (DEBUG) and 50(CRITICAL)
             `force`: Skip conformations for cleaning large numbers of files
         """
-        self.logger = logging.getLogger('autoanki')
+        self.logger = logging.getLogger("autoanki")
         self.logger.setLevel(debug_level)
         self.logger.debug(f"Autoanki logger active")
 
-        self.force = force
-        self.book_cleaner = BookCleaner(debug_level, self.force)
+        if len(language) != 2:
+            self.logger.warning(
+                f"Incorrect language input: [{language}]. Please use it's 2-letter code"
+            )
+            return
 
+        if not supported_languages.get(language):
+            self.logger.warning(f"Unsupported language: [{language}]")
+            return
+
+        self.logger.info(
+            f"===== {GREEN}Starting to load config: [{language}] {RESET}====="
+        )
+        total_start = time.time()
+        self.force = force
+
+        # self.book_cleaner = BookCleaner(debug_level, self.force)
+
+        start = time.time()
+        self.logger.info("Loading dictionary...")
         if dictionary:
             self.logger.info("Using custom dictionary")
         else:
             self.dictionary = CEDictionary(debug_level)
+        end = time.time()
+        self.logger.info(f"Done in {end - start:0.4f} seconds")
 
         self.database_filepath = database_filepath
-        if not database_filepath:
+        if database_filepath == "":
             self.logger.info("No database specified. Creating a new one...")
-            ct = datetime.datetime.now()
-            print("current time:-", ct)
-
-            # DatabaseManager.create_database(database_filepath)
+            timestr = time.strftime("%Y%m%d_%H%M%S")
+            self.database_filepath = str("autoanki_" + timestr + ".db")
+            ChineseDatabaseManager.create_database(self.database_filepath)
         else:
-            if not DatabaseManager.is_database(database_filepath):
+            if not ChineseDatabaseManager.is_database(self.database_filepath):
                 self.logger.info("Creating database...")
-                DatabaseManager.create_database(database_filepath)
+                ChineseDatabaseManager.create_database(self.database_filepath)
                 self.logger.info("Done creating database.")
 
+        start = time.time()
         self.logger.info("Connecting to database...")
-        self.database_manager = DatabaseManager(database_filepath, debug_level)
+        self.database_manager = ChineseDatabaseManager(
+            self.database_filepath, debug_level, dictionary=self.dictionary
+        )
+        end = time.time()
+        self.logger.info(f"Done in {end - start:0.4f} seconds")
 
+        start = time.time()
         self.logger.info("Connecting to DeckManager...")
         self.deck_manager = DeckManager(debug_level)
+        end = time.time()
+        self.logger.info(f"Done in {end - start:0.4f} seconds")
 
-        self.logger.info("Done init!")
+        total_end = time.time()
+        self.logger.info(
+            f"===== {GREEN}Done loading profile in {total_end - total_start:0.4f} seconds {RESET}====="
+        )
 
-
-    def add_book_from_string(self, contents: str, book_name: str = 'Book Name'):
+    def add_book_from_string(self, contents: str, book_name: str = "Book Name"):
         """
         Add a directory full of files to the database
         Args:
@@ -89,7 +140,6 @@ class AutoAnki:
 
         self.logger.info("autoanki: Added book from string.")
 
-
     def add_book_from_file(self, filepath: str, book_name: str = "Book Name"):
         """
         Add a directory full of files to the database
@@ -97,7 +147,9 @@ class AutoAnki:
             `filepath`: path to the directory that contains the files to add
             `book_name`: The name of the book being added e.g. "Lost Prince"
         """
-        self.logger.debug(f"autoanki: Adding book [{book_name}] from file: [{filepath}]")
+        self.logger.debug(
+            f"autoanki: Adding book [{book_name}] from file: [{filepath}]"
+        )
         if not filepath:
             self.logger.info(f"No filepath supplied")
             return
@@ -109,7 +161,6 @@ class AutoAnki:
 
         self.logger.info("autoanki: Added [" + filepath + "].")
 
-
     def complete_unfinished_definitions(self):
         """
         autoanki contains an internal definitions table that is scraped from the internet. As words are added to
@@ -117,14 +168,18 @@ class AutoAnki:
         This function finds definitions and adds them to the table
         """
         self.logger.info("Checking for records...")
-        self.database_manager.cursor.execute("SELECT word FROM dictionary WHERE definition IS NULL")
+        self.database_manager.cursor.execute(
+            "SELECT word FROM dictionary WHERE definition IS NULL"
+        )
         response_rows = self.database_manager.cursor.fetchall()
         if len(response_rows) == 0:
             self.logger.info("No new rows to complete in dictionary table")
             return
 
-        self.logger.info("Adding " + str(len(response_rows)) + " rows to dictionary table")
-        self.tokenizer = ChineseTokenizer()
+        self.logger.info(
+            "Adding " + str(len(response_rows)) + " rows to dictionary table"
+        )
+        self.tokenizer = ChineseTokenizer(dictionary=self.dictionary)
         for row in response_rows:
             word = str(row[0])
 
@@ -138,11 +193,12 @@ class AutoAnki:
 
             self.logger.info(f"❌Could not find: [{word}]")
 
-    def deck_settings(self,
-                      inclue_traditional = True,
-                      inclue_part_of_speech = True,
-                      word_frequency_filter = None,
-                      ):
+    def deck_settings(
+        self,
+        inclue_traditional=True,
+        inclue_part_of_speech=True,
+        word_frequency_filter=None,
+    ):
         """Configures settings for what's in the deck, and how it looks"
 
         `word_frequency_filter`: Float between 0 and 1. 1 being every word is included, 0 being none are included
@@ -158,11 +214,11 @@ class AutoAnki:
 
     @staticmethod
     def is_database(db_path):
-        return DatabaseManager.is_database(db_path)
+        return ChineseDatabaseManager.is_database(db_path)
 
     @staticmethod
     def create_database(db_path: str):
-        DatabaseManager.create_database(db_path)
+        ChineseDatabaseManager.create_database(db_path)
 
     def create_deck(self, deck_name: str, filepath: str):
         """
@@ -177,7 +233,9 @@ class AutoAnki:
 
         deck_path = self.deck_manager.generate_deck_file(words, deck_name, filepath)
         if deck_path is None:
-            self.logger.warning("Was not able to create deck file for [", deck_name, "]")
+            self.logger.warning(
+                "Was not able to create deck file for [", deck_name, "]"
+            )
         else:
             self.logger.info("Generated deck file [" + deck_path + "]")
 
@@ -200,5 +258,3 @@ class AutoAnki:
     @unfinished_entries.setter
     def unfinished_entries(self, _):
         pass
-
-

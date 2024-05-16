@@ -57,51 +57,55 @@ Current roadmap for the project.
 - [x] Add documentation
 
 ## v1.2.0
+- First website-ready version
 - Backend
-- [ ] Add option to use custom dictionary
-- [ ] Convert database magager to abstract class to prepare for multi-language
-- [ ] Improve dictionaries
-- [ ] Address TODOs
-- [ ] Remove BookCleaner and merge into Tokenizer/DatabaseManager
-- [ ] Issues installing:
-    - chinese-converter
-    - wordfreq
-    - pinyin
-    - genanki
-- [ ] Ability to omit database name
+- [x] Ability to omit database name
+- [x] Remove BookCleaner and merge into Tokenizer/DatabaseManager
+- [x] Issues installing libraries
 - [x] Add ability to add book from string
-- [ ] Find tools to do profiling on speed
+- [x] Add automated tests
+- [x] Convert database magager to abstract class to prepare for multi-language
+- [x] Add option to use custom dictionary
+- [x] Add language setting for AutoAnki constructor
+- [x] Faster load-up times
 
 - Improved Cards
-- [ ] Add part-of-speech to card
-- [ ] Option to include English -> Chinese cards
-- [ ] Add minimum number of repititions before getting added to the deck
-- [ ] Option to add book name as a tag
-- [?] Output books as subdecks
+- [x] Add part-of-speech to card
 
 - Docs/Non-code
-- [ ] Logo/Branding
+- [x] Logo/Branding
+- [x] Update README
 
 ## v1.2.1
+- Backend
+- [ ] Add back support for multi-file book
+- [ ] Address TODOs
+- [ ] Add more unit tests
 
-- [ ] Filter by HSK level
 - [ ] Faster book scraping
-- [ ] Update README
+
+- Improved Cards
+- [ ] Filter by HSK level
+- [ ] Option to include English -> Chinese cards
+- [ ] Add minimum number of repititions before getting added to the deck
+
+## v1.2.2 (Spanish Update?)
 
 ## Potential New Features
 
 - AutoAnki
 - [?] Progress bars for cleaner output
-- [?] Add terminal options back in/Update README
+- [?] Add terminal options back in
+- [?] Output books as subdecks
 
 - Debug/Testing
 - [?] Delete database definitions
-- [?] Add automated tests
 
 - Cards
 - [?] Add audio to cards
 - [?] Add images to cards
 - [?] Embed links to online dictionary in cards
+- [?] Option to add book name as a tag
 
 - Features
 - [?] Add ability to use epub files from kindle

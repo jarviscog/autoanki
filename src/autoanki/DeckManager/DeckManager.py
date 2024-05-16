@@ -5,6 +5,7 @@ from wordfreq import word_frequency
 
 from autoanki.DeckManager import template_decks
 
+
 class DeckManager:
     """
     The class to make anki decks. Create the file using generate_deck_file()
@@ -14,36 +15,33 @@ class DeckManager:
         is pretty significant for understanding this.
     """
 
-    def __init__(self, debug_level,
-                include_traditional=True,
-                 include_part_of_speech=True
-                 ):
-        self.logger = logging.getLogger('autoanki.dckmngr')
+    def __init__(
+        self, debug_level, include_traditional=True, include_part_of_speech=True
+    ):
+        self.logger = logging.getLogger("autoanki.dckmngr")
         self.logger.setLevel(debug_level)
-        self.deck = genanki.Deck(
-            2020000110,
-            "autoankiTesting"
-        )
+        self.deck = genanki.Deck(2020000110, "autoankiTesting")
         self.include_pinyin_numbers = False
         self.include_number_of_strokes = False
-        self.include_traditional = include_traditional 
+        self.include_traditional = include_traditional
         self.include_part_of_speech = include_part_of_speech
 
         self.word_frequency_filter = None
 
         self.book_list = []
 
-    def settings(self,
-                 include_traditional,
-                 include_part_of_speech,
-                 word_frequency_filter
-                 ):
+    def settings(
+        self,
+        include_traditional,
+        include_part_of_speech,
+        word_frequency_filter,
+    ):
         """
         Configures settings for what's in the deck, and how it looks
         """
         self.include_traditional = include_traditional
-        self.include_part_of_speech = include_part_of_speech 
-        self.word_frequency_filter = word_frequency_filter 
+        self.include_part_of_speech = include_part_of_speech
+        self.word_frequency_filter = word_frequency_filter
 
     def generate_deck_file(self, words, deck_name: str, filename: str):
         """
@@ -58,15 +56,12 @@ class DeckManager:
 
         # length = general_functions.file_len(definitions_filename)
         # self.deck.add_note()
-        self.deck = genanki.Deck(
-            2020000110,
-            deck_name
-        )
+        self.deck = genanki.Deck(2020000110, deck_name)
 
         for row in words:
 
             if self.word_frequency_filter:
-                if self.word_frequency_filter < row['frequency']:
+                if self.word_frequency_filter < row["frequency"]:
                     continue
 
             word = row["word"]
@@ -77,9 +72,11 @@ class DeckManager:
                 word_traditional = ""
 
             if len(word) != len(word_traditional):
-                self.logger.error(f"{word} and {word_traditional} should be the same length")
+                self.logger.error(
+                    f"{word} and {word_traditional} should be the same length"
+                )
 
-            # Replace all matching characters with a dash 
+            # Replace all matching characters with a dash
             formatted_word_traditional = ""
             for i in range(len(word)):
                 if word[i] == word_traditional[i]:
@@ -106,6 +103,7 @@ class DeckManager:
             # word["audio_path"]
             # word["image_path"]
             # word["definition"]
+            part_of_speech = row["word_type"]
 
             if not word:
                 word = "Not found"
@@ -116,14 +114,21 @@ class DeckManager:
             if not definition:
                 definition = "Not found"
 
+            card_tags = ["autoanki"]
+
             note = genanki.Note(
                 model=template_decks.CHINESE_CARD_MODEL,
-                tags=['autoanki'],
-                fields=[word, formatted_word_traditional, pinyin, definition],
+                tags=card_tags,
+                fields=[
+                    word,
+                    formatted_word_traditional,
+                    pinyin,
+                    part_of_speech,
+                    definition,
+                ],
                 # sort_field can be used to sort when the cards appear.
                 # By default they are shown in the order they are addeed, so this is not currently used
                 sort_field=1,
-
             )
             self.deck.add_note(note)
             num_of_valid_cards_added += 1
@@ -132,6 +137,11 @@ class DeckManager:
             filename += ".apkg"
 
         genanki.Package(self.deck).write_to_file(filename)
-        self.logger.info("Deck " + deck_name + " created with " + str(num_of_valid_cards_added) + " cards")
+        self.logger.info(
+            "Deck "
+            + deck_name
+            + " created with "
+            + str(num_of_valid_cards_added)
+            + " cards"
+        )
         return filename
-

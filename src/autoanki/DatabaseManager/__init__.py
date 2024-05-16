@@ -1,1 +1,1 @@
-from .DatabaseManager import DatabaseManager
+from .ChineseDatabaseManager import ChineseDatabaseManager

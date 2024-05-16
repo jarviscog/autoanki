@@ -1,6 +1,22 @@
 # Changelog
 - All notable changes to this project will be documented here
 
+## v1.2.0
+- Updated documentation
+- Updated readme
+- Changed add_book() to add_book_from_string() and add_book_from_file()
+- Removed support for multiple files...Will be added back later
+- database name is no longer a required field. A new database using timestamp will be made
+- Removed __pycache__
+- Removed legacy web scraper
+- Fixed imports
+- Added linting
+- Removed need for BookCleaner
+- Converted DatabaseManager to abstract class to prepare for multi-language
+- Improved top-level logs and added timing information
+- Added part of speech to card
+- Improved load up and runtime by not re-importing dictionary
+
 ## v1.1.91 (2024/05/11)
 - Updated documentation for classes/functions
 - Fixed bug in book cleaner due to nested relative imports

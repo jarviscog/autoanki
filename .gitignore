@@ -1,4 +1,5 @@
 .idea/
+.tox/
 dist/
 venv
 __pycache__
@@ -12,3 +13,4 @@ Lib
 .DS_Store
 .idea/.name
 .python-version
+/src/autoanki.egg-info

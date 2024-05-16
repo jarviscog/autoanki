@@ -3,6 +3,7 @@ import logging
 
 import pinyin
 import jieba
+
 logging.getLogger("jieba").setLevel(logging.WARNING)
 import jieba.posseg as pseg
 import chinese_converter
@@ -10,40 +11,54 @@ from wordfreq import word_frequency
 
 from autoanki.Dictionary.Dictionary import Dictionary
 
-PATH_TO_FILE = path.join(path.dirname(__file__), 'cedict_ts.u8')
+PATH_TO_FILE = path.join(path.dirname(__file__), "cedict_ts.u8")
 
 # Use the lookup table here: https://github.com/fxsjy/jieba
-NOUN = ['n', 'nt', 'nrt', 'ORG', 'nr', 'PER', 'ns', 'nw', 'nz', 'f', 's', 'an', 'zg', 'j']
-TIME = ['t', 'TIME', 'tg', 'g']
-ADPOSITION = ['p']
-PRONOUN = ['r', 'rz', 'rg']
-QUANTIFIER = ['q', 'm']
-VERB = ['v', 'vd', 'vn', 'e', 'vg', 'h']
-ADVERB = ['ad', 'd', 'aq', 'df']
-OTHER = ['vn', 'xc', 'x']
-ADJECTIVE = ['a', 'b', 'ng', 'ag']
-CONJUNCTION = ['c']
-PARTICLE = ['y', 'u', 'uj', 'uz', 'ul', 'uv', 'ud', 'ug']
-PUNCTUATION = ['w']
-IDIOM = ['i', 'l']
-SUFFIX = ['k']
-OTHER = ['z', 'o', 'x']
+NOUN = [
+    "n",
+    "nt",
+    "nrt",
+    "ORG",
+    "nr",
+    "PER",
+    "ns",
+    "nw",
+    "nz",
+    "f",
+    "s",
+    "an",
+    "zg",
+    "j",
+]
+TIME = ["t", "TIME", "tg", "g"]
+ADPOSITION = ["p"]
+PRONOUN = ["r", "rz", "rg"]
+QUANTIFIER = ["q", "m"]
+VERB = ["v", "vd", "vn", "e", "vg", "h"]
+ADVERB = ["ad", "d", "aq", "df"]
+OTHER = ["vn", "xc", "x"]
+ADJECTIVE = ["a", "b", "ng", "ag"]
+CONJUNCTION = ["c"]
+PARTICLE = ["y", "u", "uj", "uz", "ul", "uv", "ud", "ug"]
+PUNCTUATION = ["w"]
+IDIOM = ["i", "l"]
+SUFFIX = ["k"]
+OTHER = ["z", "o", "x"]
 
 
 class CEDictionary(Dictionary):
-
     def __init__(self, debug_level):
         """Chinese to English Dictionary
         Parser for the CC-CEDICT Dictionary:
             https://www.mdbg.net/chinese/dictionary?page=cedict
         This is a file containing 122,839 entries
         """
-        self.logger = logging.getLogger('autoanki.cedict') 
+        self.logger = logging.getLogger("autoanki.cedict")
         self.logger.setLevel(debug_level)
         self.logger.info("Loading Chinese Dictionary (CEDictionary)")
         self.dict = self._parse_file()
         self.logger.debug("Done!")
-        
+
         pass
 
     def _parse_file(self) -> dict[str, dict]:
@@ -63,44 +78,49 @@ class CEDictionary(Dictionary):
 
         with open(PATH_TO_FILE, "r") as dict_file:
             for line in dict_file:
-                if line[0] == '#':
+                if line[0] == "#":
                     continue
                 parts = line.split(" ")
                 trad_word = parts[0]
                 current_word = parts[1]
 
-                definition = line[line.find("]")+2:]
+                definition = line[line.find("]") + 2 :]
 
                 if current_word != last_word:
                     # self.logger.debug(f"Creating entry: {current_word}")
                     definitions[current_word] = {
-                        'trad_word': "", 
-                        'pinyin_numbers':"", 
-                        'definition':"", 
-                        'pinyin':"",
-                        'frequency':"",
+                        "trad_word": "",
+                        "pinyin_numbers": "",
+                        "definition": "",
+                        "pinyin": "",
+                        "frequency": "",
                     }
-                
+
                 # These only need to be done the first time the word is seen
                 if last_word != current_word:
-                    definitions[current_word]['trad_word'] = trad_word
-                    definitions[current_word]['pinyin'] = pinyin.get(current_word)
-                    definitions[current_word]['pinyin_numbers'] = pinyin.get(current_word, format="numerical")
-                    definitions[current_word]['frequency'] = str(word_frequency(current_word, 'zh'))
+                    definitions[current_word]["trad_word"] = trad_word
+                    definitions[current_word]["pinyin"] = pinyin.get(current_word)
+                    definitions[current_word]["pinyin_numbers"] = pinyin.get(
+                        current_word, format="numerical"
+                    )
+                    definitions[current_word]["frequency"] = str(
+                        100 * word_frequency(current_word, "zh")
+                    )
 
-                definitions[current_word]['definition'] += '<br>' + definition 
+                definitions[current_word]["definition"] += "<br>" + definition
                 last_word = current_word
 
         for key, _ in definitions.items():
-            definitions[key]['definition'].strip('\n')
-            definitions[key]['definition'] = definitions[key]['definition'].lstrip('<br>')
-            definitions[key]['definition'] = definitions[key]['definition'].lstrip('/')
+            definitions[key]["definition"].strip("\n")
+            definitions[key]["definition"] = definitions[key]["definition"].lstrip(
+                "<br>"
+            )
+            definitions[key]["definition"] = definitions[key]["definition"].lstrip("/")
 
-            definitions[key]['definition'] = definitions[key]['definition'].rstrip('\n')
-            definitions[key]['definition'] = definitions[key]['definition'].rstrip('/')
+            definitions[key]["definition"] = definitions[key]["definition"].rstrip("\n")
+            definitions[key]["definition"] = definitions[key]["definition"].rstrip("/")
             # self.logger.info('[' + definitions[key]['definition'] + ']')
         return definitions
-
 
     def find_word(self, word: str) -> None | list[str]:
         """
@@ -132,20 +152,20 @@ class CEDictionary(Dictionary):
         if part_of_speech != None:
             params[1] = part_of_speech
 
-        params[0] = self.dict[word]['trad_word'] 
-        params[2] = self.dict[word]['pinyin'] 
-        params[3] = self.dict[word]['pinyin_numbers'] 
-        params[7] = self.dict[word]['definition'] 
+        params[0] = self.dict[word]["trad_word"]
+        params[2] = self.dict[word]["pinyin"]
+        params[3] = self.dict[word]["pinyin_numbers"]
+        params[7] = self.dict[word]["definition"]
         # self.logger.debug(f"Word: {word}")
-        params[8] = self.dict[word]['frequency'] 
+        params[8] = self.dict[word]["frequency"]
         params[9] = word
         return params
 
     def size(self):
-        with open(PATH_TO_FILE,"r") as f:
-            return len(f.readlines()) 
+        with open(PATH_TO_FILE, "r") as f:
+            return len(f.readlines())
 
-    def get_part_of_speech(self, word:str, code:str) -> str:
+    def get_part_of_speech(self, word: str, code: str) -> str:
         if code in NOUN:
             return "noun"
         if code in TIME:
@@ -181,6 +201,3 @@ class CEDictionary(Dictionary):
 
         self.logger.warning(f"Part of speech code not covered: {word}:{code}")
         return "other"
-
-
-
