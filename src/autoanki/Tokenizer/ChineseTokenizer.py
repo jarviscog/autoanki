@@ -11,7 +11,7 @@ from string import punctuation
 PUNCTUATION = """
 +,;:'()[]{}&*^%$#@!◇♦•·■◎∞=™©×
 """
-CHINESE_PUNC = "！？｡。．.…、＂＃＄％＆＇（）＊＋，－／：；＜＝＞＠［＼］＾＿｀｛｜｝～｟｠｢｣､、〃《》「」『』【】〔〕〖〗〘〙〚〛〜〝〞〟〰〾〿–—‘’‛“”„‟…‧﹏  ① ② ③ ④ ⑽ "
+CHINESE_PUNC = "　！？｡。．.…、＂＃＄％＆＇（）＊＋，－／：；＜＝＞＠［＼］＾＿｀｛｜｝～｟｠｢｣､、〃《》「」『』【】〔〕〖〗〘〙〚〛〜〝〞〟〰〾〿–—‘’‛“”„‟…‧﹏  ① ② ③ ④ ⑽ "
 
 # TODO: This can be extened and implemented
 OTHER = "ｗ９ｌｉｔｂｎｅｐｈⅠ Ⅱ Ⅲ Ⅳ "
@@ -59,7 +59,7 @@ class ChineseTokenizer:
             # If there is a definition in the dictionary, skip any more processing
             if not word:
                 continue
-            if self.dictionary.find_word(word):
+            if self.dictionary.find_word(word).get("definition"):
                 clean_words.append(word)
                 continue
 
@@ -77,21 +77,21 @@ class ChineseTokenizer:
             word = new_word
             if not word:
                 continue
-            if self.dictionary.find_word(word):
+            if self.dictionary.find_word(word).get("definition"):
                 clean_words.append(word)
                 continue
 
             word = self.remove_modifiers(word)
             if not word:
                 continue
-            if self.dictionary.find_word(word):
+            if self.dictionary.find_word(word).get("definition"):
                 clean_words.append(word)
                 continue
 
             word = self.remove_numbers(word)
             if not word:
                 continue
-            if self.dictionary.find_word(word):
+            if self.dictionary.find_word(word).get("definition"):
                 clean_words.append(word)
                 continue
 
@@ -101,7 +101,7 @@ class ChineseTokenizer:
                 word = word[0]
             if not word:
                 continue
-            if self.dictionary.find_word(word):
+            if self.dictionary.find_word(word).get("definition"):
                 clean_words.append(word)
                 continue
 
@@ -126,13 +126,13 @@ class ChineseTokenizer:
                 continue
 
             if len(word) == 4:
-                if self.dictionary.find_word(word[0:1]):
+                if self.dictionary.find_word(word[0:1]).get("definition"):
                     clean_words.append(word[0:1])
                 else:
                     clean_words.append(word[0])
                     clean_words.append(word[1])
 
-                if self.dictionary.find_word(word[2:3]):
+                if self.dictionary.find_word(word[2:3]).get("definition"):
                     clean_words.append(word[2:3])
                 else:
                     clean_words.append(word[2])

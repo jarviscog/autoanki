@@ -44,6 +44,10 @@ class DatabaseManager(ABC):
         pass
 
     @abstractmethod
+    def get_columns(self) -> list:
+        pass
+
+    @abstractmethod
     def print_info(self):
         pass
 
@@ -60,7 +64,7 @@ class DatabaseManager(ABC):
         pass
 
     @abstractmethod
-    def update_definition(self, params: list):
+    def update_definition(self, params: dict[str, str]):
         pass
 
     @abstractmethod

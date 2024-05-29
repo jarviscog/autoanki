@@ -7,7 +7,7 @@ class Dictionary(ABC):
         pass
 
     @abstractmethod
-    def find_word(self, word: str) -> None | list[str]:
+    def find_word(self, word: str) -> None | dict[str, str]:
         pass
 
     @abstractmethod

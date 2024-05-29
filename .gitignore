@@ -14,3 +14,4 @@ Lib
 .idea/.name
 .python-version
 /src/autoanki.egg-info
+/src/autoanki/DeckManager/mandarin_sounds/

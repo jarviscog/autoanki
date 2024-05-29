@@ -76,46 +76,80 @@ Current roadmap for the project.
 - [x] Logo/Branding
 - [x] Update README
 
-## v1.2.1
+## v1.2.1 (Mandarin+ Update)
 - Backend
-- [ ] Add back support for multi-file book
-- [ ] Address TODOs
+- [x] Dictionary use dict instead of list
+- [x] Address TODOs
+- [x] Confirm pass in dictionary works
+- [x] Add back support for multi-file book
+- [x] Faster book scraping
+- [x] Finish part of speech analysis
+- [x] Don't run db populate based on settings
+
+- Database
+- [x] Dedicated Chinese database
+- [x] rename cantonese column to juytping
+- [x] Zhuyin
+- [x] Audio
+
+- Cards
+- [x] Filter by HSK level
+- [x] Filter by word frequency
+
+- Imports/Exports
+- [x] Import txt files (Pleco)
+- [x] Import epub files
+- [x] Import Pdf files
+- [x] Export as csv
+
+## v1.2.3 (Spanish Update)
 - [ ] Add more unit tests
+- [ ] Dictionary
+- [ ] Database Manager
+- [ ] Deck Manager
 
-- [ ] Faster book scraping
+## Planned features
 
-- Improved Cards
-- [ ] Filter by HSK level
-- [ ] Option to include English -> Chinese cards
-- [ ] Add minimum number of repititions before getting added to the deck
+- [ ] Show word from the context in which it showed up
+- [ ] Fill HSK level for all sub-chars of available chars
+- [ ] Colored characters
+- [ ] Filter by most common Xk words
 
-## v1.2.2 (Spanish Update?)
+- [ ] Store logs as file
+
+- Card types
+- [ ] Cloze deletion card
+- [ ] Reverse card type
+
+- [ ] Batch 2: Add HSK decks
+- [ ] Add more tests
+- [ ] Restructure so each file can be passed to database_manager and still get added to the same book
+- [ ] Handwritten characters
+- [ ] Other card types
+- [ ] Add images to cards
+- [ ] Import epub files from kindle
+- [ ] Exapmle sentances
 
 ## Potential New Features
-
 - AutoAnki
 - [?] Progress bars for cleaner output
 - [?] Add terminal options back in
 - [?] Output books as subdecks
-
-- Debug/Testing
-- [?] Delete database definitions
+- [?] Option to add book name as a tag
+- [?] Add minimum number of repititions before getting added to the deck
+Process/
+- [?] Auto documentation using 'Read the Docs'
+- [?] Automatic profiling system to see performance
+- [?] Outsource faster running times for process
 
 - Cards
-- [?] Add audio to cards
-- [?] Add images to cards
-- [?] Embed links to online dictionary in cards
-- [?] Option to add book name as a tag
+- [?] Embed links to online dictionary (pleco) in cards
 
 - Features
-- [?] Add ability to use epub files from kindle
 - [?] Chinese Idioms?
 - [?] Song lyrics?
 - [?] English word + definition style cards?
-- [?] Multiple supported languages?
-- [?] Show word from the context in which it showed up
 
 - [?] Grammatical patterns?
 - [?] 成语?
-- [?] Estimate HSK level of word from sub-words
 

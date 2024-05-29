@@ -17,6 +17,14 @@ CHINESE_CARD_MODEL = Model(
             "font": "Arial",
         },
         {
+            "name": "audio",
+            "font": "Arial",
+        },
+        {
+            "name": "zhuyin",
+            "font": "Arial",
+        },
+        {
             "name": "part_of_speech",
             "font": "Arial",
             "color": "red",
@@ -30,7 +38,18 @@ CHINESE_CARD_MODEL = Model(
         {
             "name": "Card 1",
             "qfmt": "{{word}}\n[{{word_traditional}}]",
-            "afmt": """{{FrontSide}}\n\n<hr id=answer>\n{{pinyin}}<br><br><span style="color:gray">{{part_of_speech}}</span>{{definition}}<br>""",
+            "afmt": """
+            {{FrontSide}}\n
+            \n
+            <hr id=answer>\n
+            {{pinyin}}
+            {{audio}}
+            {{zhuyin}}
+            <br>
+            <br>
+            <span style="color:gray">{{part_of_speech}}</span>
+            {{definition}}<br>
+            """,
         },
         # {
         # 'name': 'Card 2',
@@ -38,7 +57,14 @@ CHINESE_CARD_MODEL = Model(
         # 'afmt': '{{Front}}',
         # },
     ],
-    css=".card {\n font-family: arial;\n font-size: 30px;\n text-align: center;\n color: black;\n background-color: white;\n}\n",
+    css="""
+    .card { \n 
+    font-family: arial; \n 
+    font-size: 30px;\n 
+    text-align: center;\n 
+    color: black;\n 
+    background-color: white;\n
+    }\n""",
 )
 
 # # All the resources for finding the

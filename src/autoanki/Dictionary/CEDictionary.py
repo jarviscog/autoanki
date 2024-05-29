@@ -98,7 +98,7 @@ class CEDictionary(Dictionary):
 
                 # These only need to be done the first time the word is seen
                 if last_word != current_word:
-                    definitions[current_word]["trad_word"] = trad_word
+                    definitions[current_word]["traditional_word"] = trad_word
                     definitions[current_word]["pinyin"] = pinyin.get(current_word)
                     definitions[current_word]["pinyin_numbers"] = pinyin.get(
                         current_word, format="numerical"
@@ -106,6 +106,10 @@ class CEDictionary(Dictionary):
                     definitions[current_word]["frequency"] = str(
                         100 * word_frequency(current_word, "zh")
                     )
+                    slice = next(pseg.cut(current_word))
+                    definitions[current_word][
+                        "part_of_speech"
+                    ] = self.get_part_of_speech(current_word, slice.flag)
 
                 definitions[current_word]["definition"] += "<br>" + definition
                 last_word = current_word
@@ -122,43 +126,40 @@ class CEDictionary(Dictionary):
             # self.logger.info('[' + definitions[key]['definition'] + ']')
         return definitions
 
-    def find_word(self, word: str) -> None | list[str]:
+    def find_word(self, word: str) -> None | dict[str, str]:
         """
         Find a word in the dictionary. This can be simplified, or traditional
         `return` Paramaters that get passed to the database
         """
         # Convert the word to simplified if needed
+        # TODO: This should happen during load, not runtime
         word = chinese_converter.to_simplified(word)
         # self.logger.info(f"[{word}] [{word in self.dict}]")
-        if not word in self.dict:
+        word_found = self.dict.get(word)
+        if not word_found:
             return None
 
-        """
-        traditional_script = params[0]\n
-        word_type = params[1]\n
-        pinyin = params[2]\n
-        pinyin_numbers = params[3]\n
-        sub_components = params[4]\n
-        hsk_level = params[5]\n
-        top_level = params[6]\n
-        definition = params[7]\n
-        frequency = params[8]
-        word = params[9]
-        """
-        params = ["", "", "", "", "", "", "", "", "", ""]
+        params = {}
 
-        slice = next(pseg.cut(word))
-        part_of_speech = self.get_part_of_speech(word, slice.flag)
-        if part_of_speech != None:
-            params[1] = part_of_speech
+        params["word"] = word
+        params["word_traditional"] = word_found["traditional_word"]
+        params["pinyin"] = word_found["pinyin"]
+        params["pinyin_numbers"] = word_found["pinyin_numbers"]
+        params["zhuyin"] = None
+        params["jyutping"] = None
+        params["part_of_speech"] = word_found["part_of_speech"]
+        params["number_of_strokes"] = None
+        params["sub_components"] = None
+        params["definition"] = word_found["definition"]
+        params["frequency"] = word_found["frequency"]
+        params["HSK_level"] = None
+        params["tocfl_level"] = None
+        params["audio_path"] = None
+        params["image_path"] = None
+        params["character_graphic"] = None
+        params["examples"] = None
 
-        params[0] = self.dict[word]["trad_word"]
-        params[2] = self.dict[word]["pinyin"]
-        params[3] = self.dict[word]["pinyin_numbers"]
-        params[7] = self.dict[word]["definition"]
         # self.logger.debug(f"Word: {word}")
-        params[8] = self.dict[word]["frequency"]
-        params[9] = word
         return params
 
     def size(self):

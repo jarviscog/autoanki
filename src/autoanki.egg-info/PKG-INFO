@@ -1,6 +1,6 @@
 Metadata-Version: 2.1
 Name: autoanki
-Version: 1.2.0
+Version: 1.2.1
 Summary: Automatically make Anki Decks for Chinese text
 Home-page: https://github.com/timmy6figures/autoanki
 Author: Jarvis Coghlin
@@ -14,9 +14,13 @@ Description-Content-Type: text/markdown
 License-File: LICENSE.txt
 Requires-Dist: chinese-converter>=1.1.1
 Requires-Dist: beautifulsoup4~=4.12.2
+Requires-Dist: ebooklib
 Requires-Dist: genanki~=0.13.0
 Requires-Dist: jieba~=0.42.1
+Requires-Dist: pandas
+Requires-Dist: pdfplumber~=0.11.0
 Requires-Dist: pinyin~=0.4.0
+Requires-Dist: pydub
 Requires-Dist: requests~=2.31.0
 Requires-Dist: wordfreq
 

@@ -1,6 +1,29 @@
 # Changelog
 - All notable changes to this project will be documented here
 
+## v1.2.1
+- Removed old test files
+
+- Dictionary abstract class now uses dict instead of list
+- Pass in dictionary verification
+- Added back support for multi-file books
+- Faster book scraping
+- Finish part-of-speech analysis
+- Don't run db populate based on settings
+
+- Dedicated Chinese database
+- Rename cantonese column to juytping
+- Zhuyin
+- Audio
+
+- Filter by HSK level
+- Filter by word frequency
+
+- Import txt files (Pleco exports)
+- Import epub files
+- Import Pdf files
+- Export as csv
+
 ## v1.2.0
 - Updated documentation
 - Updated readme

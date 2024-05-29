@@ -1,6 +1,7 @@
 import os
 import sqlite3
 import logging
+from glob import glob
 
 from pathlib import Path
 
@@ -178,8 +179,11 @@ class ChineseDatabaseManager(DatabaseManager):
 
     def remove_word(self, word: str):
         # TODO: Make more stringent constraints on removing words. This should be extremely rare
+        if len(word) > 10:
+            self.logger.warning(f"Not executing: [{word}]. Suspiciously large")
+            return
         if "*" in word:
-            self.logger.info(f"Not executing: [{word}]. Star in command")
+            self.logger.warning(f"Not executing: [{word}]. Star in command")
             return
         self.cursor.execute(f"DELETE FROM dictionary WHERE word=(?)", [word])
         self.connection.commit()
@@ -196,17 +200,30 @@ class ChineseDatabaseManager(DatabaseManager):
             contents = file.read()
             return self._add_book(contents, book_name)
 
-    # def add_book_from_folder(directory):
-    # TODO This
+    def add_book_from_folder(self, directory: str, book_name: str) -> bool:
+        """Adds a book from a folder full of files
+        Only opens any .txt files in the subdirectory
+        """
+        self.logger.info(f"Adding folder [{directory}] to database")
 
-    # Legacy code from _add_book()
-    # self.logger.debug("Bookpath: " + filepath)
-    # if os.path.isdir(filepath):
-    #     self.logger.debug("Directory found:")
-    #     result = [y for x in os.walk(filepath + '/' + CLEANED_FILES_DIRECTORY) for y in glob(os.path.join(x[0], '*.txt'))]
-    #     for path in result:
-    #         self.logger.debug(path)
-    #         self.add_file_to_database(path, book_tablename)
+        # Read all files into a string, and use to add from string
+        all_files_contents = ""
+
+        self.logger.debug("Bookpath: " + directory)
+        if os.path.isdir(directory):
+            self.logger.debug("Directory found:")
+            text_files = [
+                y for x in os.walk(directory) for y in glob(os.path.join(x[0], "*.txt"))
+            ]
+            for path in text_files:
+                self.logger.debug(path)
+                # Open and append to string
+                with open(path) as f:
+                    contents = f.read()
+                    all_files_contents += contents
+
+        self.add_book_from_string(all_files_contents, book_name)
+        return True
 
     def _add_book(self, contents: str, book_name: str) -> bool:
         """Adds a file to the autoanki database.
@@ -232,6 +249,29 @@ class ChineseDatabaseManager(DatabaseManager):
         self.logger.info("Done adding book.")
         return True
 
+    def get_columns(self) -> list:
+
+        return [
+            "word_id",
+            "word",
+            "word_traditional",
+            "pinyin",
+            "pinyin_numbers",
+            "zhuyin",
+            "jyutping",
+            "part_of_speech",
+            "number_of_strokes",
+            "sub_components",
+            "definition",
+            "frequency",
+            "hsk_level",
+            "tocfl_level",
+            "audio_path",
+            "image_path",
+            "character_graphic",
+            "examples",
+        ]
+
     def print_info(self):
         """Print basic information about the database"""
         self.cursor.execute("SELECT word FROM dictionary")
@@ -256,74 +296,90 @@ class ChineseDatabaseManager(DatabaseManager):
             format_string_int.format("Number of unfinished rows:", len(unfinished_rows))
         )
 
-    def update_definition(self, params: list):
+    def update_definition(self, params: dict[str, str]):
+        """ """
         f"""Complete a definition for one word in the dictionary table\n
-        traditional_script = params[0]\n
-        word_type = params[1]\n
-        pinyin = params[2]\n
-        pinyin_numbers = params[3]\n
-        sub_components = params[4]\n
-        hsk_level = params[5]\n
-        top_level = params[6]\n
-        definition = params[7]\n
-        frequency = params[8]
-        word = params[9]
+		Here is all of the fields that a card could have:
+			word
+			word traditional 
+			pinyin
+			pinyin numbers
+			zhuyin
+			jyutping
+			part of speech
+			number of strokes
+			sub components
+			definition
+			frequency
+			HSK level
+			tocfl level
+			audio path
+			image path
+			stroke order graphic
+			examples
         :param params: A list of params for the database:
         :return:
         """
-        # TODO Some sanatization here might be a good idea
-        #   Make sure junk data can't crash this function
-        self.cursor.execute(
-            "UPDATE dictionary "
-            "SET word_traditional = ?, "
-            "word_type = ?,"
-            "pinyin = ?, "
-            "pinyin_numbers = ?,"
-            "sub_components = ?,"
-            "hsk_level = ?,"
-            "top_level = ?,"
-            "definition = ?,"
-            "frequency = ?"
-            "WHERE word = ?",
-            params,
-        )
-        self.connection.commit()
 
-    def get_all_completed_definitions(self):
+        try:
+            self.cursor.execute(
+                "UPDATE dictionary SET "
+                "word_traditional = ?,"
+                "pinyin = ?,"
+                "pinyin_numbers = ?,"
+                "zhuyin = ?,"
+                "jyutping = ?,"
+                "part_of_speech = ?,"
+                "number_of_strokes = ?,"
+                "sub_components = ?,"
+                "definition = ?,"
+                "frequency = ?,"
+                "HSK_level = ?,"
+                "tocfl_level = ?,"
+                "audio_path = ?,"
+                "image_path = ?,"
+                "character_graphic= ?,"
+                "examples = ?"
+                "WHERE word = ?",
+                [
+                    params.get("word_traditional"),
+                    params.get("pinyin"),
+                    params.get("pinyin_numbers"),
+                    params.get("zhuyin"),
+                    params.get("jyutping"),
+                    params.get("part_of_speech"),
+                    params.get("number_of_strokes"),
+                    params.get("sub_components"),
+                    params.get("definition"),
+                    params.get("frequency"),
+                    params.get("HSK_level"),
+                    params.get("tocfl_level"),
+                    params.get("audio_path"),
+                    params.get("image_path"),
+                    params.get("character_graphic"),
+                    params.get("examples"),
+                    params.get("word"),
+                ],
+            )
+            self.connection.commit()
+        except Exception as e:
+            self.logger.error(f"Error updating database definition. Params:\n {params}")
+            self.logger.error(f"Error: {e}")
 
-        self.cursor.execute("SELECT * FROM dictionary WHERE definition IS NOT NULL")
-        raw_words = self.cursor.fetchall()
-
-        # pprint.pp(raw_words)
-        words = []
-        for row in raw_words:
-            word = {
-                "word_id": row[0],
-                "word": row[1],
-                "word_traditional": row[2],
-                "word_type": row[3],
-                "pinyin": row[4],
-                "pinyin_numbers": row[5],
-                "number_of_strokes": row[6],
-                "sub_components": row[7],
-                "frequency": row[8],
-                "hsk_level": row[9],
-                "top_level": row[10],
-                "audio_path": row[11],
-                "image_path": row[12],
-                "definition": row[13],
-            }
-            # print(word["word"])
-            # pprint.pp(word)
-            # words.append(word)
-            words.append(word)
-        # pprint.pp(words)
+    def get_all_definitions(self):
+        self.cursor.execute("SELECT * FROM dictionary")
+        words = self.cursor.fetchall()
         return words
 
-    def unfinished_definitions(self) -> int:
-        self.cursor.execute("SELECT word FROM dictionary WHERE definition IS NULL")
+    def get_all_completed_definitions(self):
+        self.cursor.execute("SELECT * FROM dictionary WHERE definition IS NOT NULL")
+        words = self.cursor.fetchall()
+        return words
+
+    def unfinished_definitions(self, column: str = "definition"):
+        self.cursor.execute(f"SELECT word FROM dictionary WHERE {column} IS NULL")
         unfinished_rows = self.cursor.fetchall()
-        return len(unfinished_rows)
+        return unfinished_rows
 
     @property
     def books(self):

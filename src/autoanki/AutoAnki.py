@@ -1,4 +1,10 @@
 import logging
+import pandas as pd
+import pdfplumber
+import os
+import ebooklib
+from ebooklib import epub
+from bs4 import BeautifulSoup
 
 from autoanki.BookCleaner import BookCleaner
 from autoanki.DatabaseManager import ChineseDatabaseManager
@@ -85,6 +91,7 @@ class AutoAnki:
         self.logger.info("Loading dictionary...")
         if dictionary:
             self.logger.info("Using custom dictionary")
+            self.dictionary = dictionary
         else:
             self.dictionary = CEDictionary(debug_level)
         end = time.time()
@@ -123,15 +130,18 @@ class AutoAnki:
 
     def add_book_from_string(self, contents: str, book_name: str = "Book Name"):
         """
-        Add a directory full of files to the database
+        Add a book as a string to the database
         Args:
-            `contents`: path to the directory that contains the files to add
+            `contents`: the contents of the book
             `book_name`: The name of the book being added e.g. "Lost Prince"
         """
         self.logger.debug(f"autoanki: Adding book [{book_name}] from string")
         if not contents:
             self.logger.info(f"No contents supplied")
             return
+
+        # TODO Handle pdfs in file
+        # TODO Restructure so each file can be passed to database_manager and still get added to the same book
 
         # Add the book to the database
         if not self.database_manager.add_book_from_string(contents, book_name):
@@ -141,8 +151,7 @@ class AutoAnki:
         self.logger.info("autoanki: Added book from string.")
 
     def add_book_from_file(self, filepath: str, book_name: str = "Book Name"):
-        """
-        Add a directory full of files to the database
+        """Add a file to the database
         Args:
             `filepath`: path to the directory that contains the files to add
             `book_name`: The name of the book being added e.g. "Lost Prince"
@@ -153,13 +162,111 @@ class AutoAnki:
         if not filepath:
             self.logger.info(f"No filepath supplied")
             return
+        # pip3 install pdfplumber
+
+        # Handle pdf
+        extension = os.path.splitext(filepath)[1]
+
+        if extension == ".pdf":
+            self.logger.info(f"PDF detected")
+            # for every page
+            print(filepath)
+            print(os.path.exists(filepath))
+
+            with pdfplumber.open(filepath) as pdf:
+                print(pdf)
+                for pages in pdf.pages:
+                    print(pages.pages)
+                    print(pages.extract_text())
+                    if not self.database_manager.add_book_from_string(
+                        pages.extract_text(), book_name
+                    ):
+                        self.logger.warning(
+                            "Unable to add [" + book_name + "] to database."
+                        )
+                        return
+        elif extension == ".epub":
+            book = epub.read_epub(filepath)
+            # Get the chapters
+            chapters = ""
+            for html_element in book.get_items_of_type(ebooklib.ITEM_DOCUMENT):
+                self.logger.info(html_element)
+                chapters += str(html_element.get_content(), "utf-8")
+            blacklist = [
+                "[document]",
+                "noscript",
+                "header",
+                "html",
+                "meta",
+                "head",
+                "input",
+                "script",
+            ]
+            # These come out as html, so convert to text
+            contents = ""
+            soup = BeautifulSoup(chapters, "html.parser")
+            text = soup.get_text()
+
+            text = soup.find_all(text=True)
+            for t in text:
+                if t.parent.name not in blacklist:
+                    contents += "{} ".format(t)
+            if not self.database_manager.add_book_from_string(contents, book_name):
+                self.logger.warning("Unable to add [" + book_name + "] to database.")
+                return
+        elif extension == ".txt":
+            self.logger.info(f"txt detected")
+            # Add the book to the database
+            if not self.database_manager.add_book_from_file(filepath, book_name):
+                self.logger.warning("Unable to add [" + book_name + "] to database.")
+                return
+
+        self.logger.info("autoanki: Added [" + filepath + "].")
+
+    def add_book_from_folder(self, directory: str, book_name: str = "Book Name"):
+        """
+        Add a directory full of files to the database
+        Args:
+            `filepath`: path to the directory that contains the files to add
+            `book_name`: The name of the book being added e.g. "Lost Prince"
+        """
+        self.logger.debug(
+            f"autoanki: Adding book [{book_name}] from directory: [{directory}]"
+        )
+        if not directory:
+            self.logger.info(f"No directory supplied")
+            return
 
         # Add the book to the database
-        if not self.database_manager.add_book_from_file(filepath, book_name):
+        if not self.database_manager.add_book_from_folder(directory, book_name):
             self.logger.warning("Unable to add [" + book_name + "] to database.")
             return
 
-        self.logger.info("autoanki: Added [" + filepath + "].")
+        self.logger.info("autoanki: Added [" + directory + "].")
+
+    def add_book_from_pleco(self, filepath: str, book_name: str):
+        """Reads the contents of a Pleco export file (txt, not xml)
+        Args:
+            `filepath`: path to the directory that contains the files to add
+            `book_name`: The name of the book being added e.g. "Lost Prince"
+        """
+        self.logger.debug(
+            f"autoanki: Adding book [{book_name}] from pleco: [{filepath}]"
+        )
+        if not filepath:
+            self.logger.info(f"No filepath supplied")
+            return
+
+        with open(filepath, "r") as file:
+            contents = file.read()
+            for line in file.readlines():
+                split_line = line.split(" ")
+                if split_line:
+                    contents += split_line[0]
+
+        contents = ""
+        self.logger.debug(f"Done reading Pleco. len: {len(contents)}")
+        self.database_manager.add_book_from_string(contents, book_name)
 
     def complete_unfinished_definitions(self):
         """
@@ -167,11 +274,9 @@ class AutoAnki:
         autoanki, their definitions must be found.
         This function finds definitions and adds them to the table
         """
+        start = time.time()
         self.logger.info("Checking for records...")
-        self.database_manager.cursor.execute(
-            "SELECT word FROM dictionary WHERE definition IS NULL"
-        )
-        response_rows = self.database_manager.cursor.fetchall()
+        response_rows = self.database_manager.unfinished_definitions()
         if len(response_rows) == 0:
             self.logger.info("No new rows to complete in dictionary table")
             return
@@ -186,17 +291,26 @@ class AutoAnki:
             # self.logger.debug(f"Finding: [{word}]")
             # self.logger.debug("Trying local dictionary...")
             params = self.dictionary.find_word(word)
+            # self.logger.info(params)
             if params:
                 # self.logger.debug(f"✅Found: [{params[8]}]")
                 self.database_manager.update_definition(params)
                 continue
 
             self.logger.info(f"❌Could not find: [{word}]")
+        end = time.time()
+        self.logger.info(
+            f"Finished collecting definitions in {end - start:0.4f} seconds"
+        )
 
     def deck_settings(
         self,
-        inclue_traditional=True,
-        inclue_part_of_speech=True,
+        include_traditional=True,
+        include_part_of_speech=True,
+        include_audio=False,
+        include_pinyin=True,
+        include_zhuyin=False,
+        hsk_filter=None,
         word_frequency_filter=None,
     ):
         """Configures settings for what's in the deck, and how it looks"
@@ -204,9 +318,13 @@ class AutoAnki:
         `word_frequency_filter`: Float between 0 and 1. 1 being every word is included, 0 being none are included
         """
         self.deck_manager.settings(
-            inclue_traditional,
-            inclue_part_of_speech,
-            word_frequency_filter,
+            include_traditional=include_traditional,
+            include_pinyin=include_pinyin,
+            include_zhuyin=include_zhuyin,
+            include_part_of_speech=include_part_of_speech,
+            include_audio=include_audio,
+            word_frequency_filter=word_frequency_filter,
+            hsk_filter=hsk_filter,
         )
 
     def print_database_info(self):
@@ -238,6 +356,17 @@ class AutoAnki:
             )
         else:
             self.logger.info("Generated deck file [" + deck_path + "]")
+
+    def save_dictionary_as_csv(self, filepath: str):
+        self.logger.info("Saving to csv...")
+        all = self.database_manager.get_all_definitions()
+        # pprint(all)
+
+        df = pd.DataFrame(all)
+        headers = self.database_manager.get_columns()
+        df.columns = headers
+        df.to_csv(filepath)
+        self.logger.info("Done saving to csv...")
 
     @property
     def book_list(self):
