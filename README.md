@@ -19,9 +19,8 @@ With autoanki, you selectively add words to an Anki file to continue progressing
 
 To get started, run 
 ```pip install autoanki```
-This should install all the requirements
 
-To get started, create an autoanki instance with the 2-letter code of the language you want to use
+Create an autoanki instance with the 2-letter code of the language you want to use
 ```python
 from autoanki import AutoAnki
 
