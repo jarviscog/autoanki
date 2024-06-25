@@ -4,6 +4,7 @@ import pytest
 from autoanki.AutoAnki import AutoAnki
 
 TEST_DB_NAME = "tests/UnitTest.db"
+TEST_DECK_NAME = "tests/test.apkg"
 
 
 class TestAutoAnki:
@@ -44,5 +45,20 @@ class TestAutoAnki:
         # Add book incorrectly
         aa.add_book_from_file("你好。再见", "Test Book")
         assert len(aa.book_list) == 1
+
+        self.tearDown()
+
+    def test_example_code(self):
+        if not AutoAnki.is_database(TEST_DB_NAME):
+            AutoAnki.create_database(TEST_DB_NAME)
+
+        aa = AutoAnki("zh", database_filepath="test_autoanki.db")
+
+        # Add whatever books you want in your deck. These can be a single file, or a string
+        aa.add_book_from_string("你好。我的名字是朝霖", "My first book🍎")
+
+        # Once all of your books are added, the definitions need to be found, and then you can create a deck!
+        aa.complete_unfinished_definitions()
+        aa.create_deck("AutoAnki Deck", TEST_DECK_NAME)
 
         self.tearDown()
