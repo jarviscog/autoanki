@@ -19,50 +19,42 @@ With autoanki, you selectively add words to an Anki file to continue progressing
 
 To get started, run 
 ```pip install autoanki```
-This should install all the requirements. Then, in a Python file, do ```from autoanki import AutoAnki```
 
-To get started, create an autoanki instance with the 2-letter code of the language you want to use
-```
-aa = AutoAnki('zh')
-```
-Opitonally, include a path to a database file you want to use:
-```    
-db_path = "AutoAnki.db"
-if not AutoAnki.is_database(db_path):
-    AutoAnki.create_database(db_path)
-```
+Create an autoanki instance with the 2-letter code of the language you want to use
+```python
+from autoanki import AutoAnki
 
-Add whatever books you want in your deck. These can be a single file, or a string
-```
-bookpath = 'short-story.txt'
+if not AutoAnki.is_database("AutoAnki.db"):
+    AutoAnki.create_database("AutoAnki.db")
+
+aa = AutoAnki('zh', database_filepath="AutoAnki.db")
+
+# Add whatever books you want in your deck. These can be a single file, or a string
 aa.add_book_from_string("...", 'My first book🍎')
-aa.add_book_from_string(bookpath, 'My first book🍎')
-```
+aa.add_book_from_string('short-story.txt', 'My first book🍎')
 
-Once all of your books are added, the definitions need to be found, and then you can create a deck!
-```
+# Once all of your books are added, the definitions need to be found, and then you can create a deck!
 aa.complete_unfinished_definitions()
 aa.create_deck("AutoAnki Deck", "output")
 ```
-
-This will automatically have the .apkg extension, which Anki uses. 
+The `.apkg` extension will be added, which Anki uses. 
 Import this file into Anki, and you're all set.
 
 
 #### Other commands
 If you want to see the information of a database, use:
-```
+```python
 aa.print_database_info()
 ```
 
 If you would like to create and use your own dictionary, you can pass it in:
-```
+```python
 aa = AutoAnki(db_path, dictionary=CustomDictionary())
 ```
 This dictionary must implement functions from the abstract class `autoanki/Dictionary.py`
 
-Some settings can be set regarding how cards will be formatted, and what will be shown. They can be seen here:
-```
+Some settings can be set regarding how cards will be formatted, and what will be shown. They can be set here:
+```python
 aa.deck_settings(
 include_traditional=True,
 include_part_of_speech=True,
@@ -77,15 +69,6 @@ AutoAnki interfaces has 4 components on the back end:
 2. Dictionary: Finds definitions for words in the database
 3. DeckManager: Creates Decks
 
-### Dictionary
-This is an abstract class that can be implemented with the following methods
-- `__init__(debug_level)`
-- `find_word(word)` - Returns None, or a list of paramaters that match the input of DatabaseManager.update_definition()
-- `size()` - Number of entries in the dictionary
-
-There is one dictionary included as the default: an endpoint to [CC-CEDICT](https://www.mdbg.net/chinese/dictionary?page=cedict). 
-I have local versions of other dictionaries with copyrighted data, which I can not upload.
-
 ### Database
 There are 3 different types of tables in the DB:
 - `dictionary` contains a information about each word, including the pinyin, traditional characters, and a definition
@@ -95,6 +78,15 @@ There are 3 different types of tables in the DB:
 <img src="https://github.com/timmy6figures/autoanki/blob/main/media/images/dictionary-table.jpg?raw=true" alt="Dictionary table" width="60%"/>
 <img src="https://github.com/timmy6figures/autoanki/blob/main/media/images/book_list_table.jpg?raw=true" alt="Book list table" width="50%"/>
 <img src="https://github.com/timmy6figures/autoanki/blob/main/media/images/book_table.jpg?raw=true" alt="Book table" width="40%"/>
+
+### Dictionary
+This is an abstract class that can be implemented with the following methods
+- `__init__(debug_level)`
+- `find_word(word)` - Returns None, or a list of paramaters that match the input of DatabaseManager.update_definition()
+- `size()` - Number of entries in the dictionary
+
+There is one dictionary included as the default: an endpoint to [CC-CEDICT](https://www.mdbg.net/chinese/dictionary?page=cedict). 
+I have local versions of other dictionaries with copyrighted data, which I can not upload.
 
 ## Planned features
 - See ROADMAP.md
