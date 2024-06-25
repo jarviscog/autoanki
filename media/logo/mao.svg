@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="24.930231mm"
+   height="51.342644mm"
+   viewBox="0 0 24.930231 51.342644"
+   version="1.1"
+   id="svg5"
+   inkscape:version="1.2.1 (9c6d41e4, 2022-07-14)"
+   sodipodi:docname="mao.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview7"
+     pagecolor="#505050"
+     bordercolor="#eeeeee"
+     borderopacity="1"
+     inkscape:showpageshadow="0"
+     inkscape:pageopacity="0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#505050"
+     inkscape:document-units="mm"
+     showgrid="false"
+     showguides="false"
+     inkscape:zoom="1.1976579"
+     inkscape:cx="167.41008"
+     inkscape:cy="245.06163"
+     inkscape:window-width="1728"
+     inkscape:window-height="1051"
+     inkscape:window-x="0"
+     inkscape:window-y="38"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="g12659" />
+  <defs
+     id="defs2" />
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <g
+       id="g12659"
+       transform="matrix(1.0176107,0,0,1.0176107,-0.82899887,-1.9327463)">
+      <g
+         id="g4258-0"
+         transform="matrix(1.1220956,0,0,1.1220956,-62.05278,-4.9109238)">
+        <rect
+           style="fill:#fefefe;stroke:#020102;stroke-width:2.16356;stroke-linecap:round;stroke-miterlimit:1.1;stroke-dasharray:none"
+           id="rect2097-8"
+           width="19.669508"
+           height="28.36377"
+           x="57.108585"
+           y="7.1509795"
+           ry="4.2419176" />
+        <text
+           xml:space="preserve"
+           style="font-size:14.3221px;font-family:Courier;-inkscape-font-specification:Courier;text-align:center;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:#020102;stroke-width:0.75;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:1.1;stroke-dasharray:none;stroke-dashoffset:0"
+           x="66.936165"
+           y="26.775274"
+           id="text2155-2"><tspan
+             sodipodi:role="line"
+             id="tspan2153-0"
+             style="fill:#000000;fill-opacity:1;stroke-width:0.75;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-dashoffset:0"
+             x="66.936165"
+             y="26.775274">猫</tspan></text>
+        <path
+           style="fill:#000000;fill-opacity:1;stroke:#020102;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:1.1;stroke-dasharray:none;stroke-dashoffset:0"
+           d="m 62.474096,35.514748 v 8.622093"
+           id="path4177-6"
+           sodipodi:nodetypes="cc" />
+        <path
+           style="fill:#000000;fill-opacity:1;stroke:#020102;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:1.1;stroke-dasharray:none;stroke-dashoffset:0"
+           d="m 71.412581,35.514748 v 3.70831"
+           id="path4177-3-0"
+           sodipodi:nodetypes="cc" />
+        <path
+           style="fill:#000000;fill-opacity:1;stroke:#020102;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:1.1;stroke-dasharray:none;stroke-dashoffset:0"
+           d="m 71.41258,42.614709 v 3.881737"
+           id="path4177-35-7"
+           sodipodi:nodetypes="cc" />
+        <path
+           style="fill:#000000;fill-opacity:1;stroke:#020102;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:1.1;stroke-dasharray:none;stroke-dashoffset:0"
+           d="M 66.943338,35.514748 V 50.033381"
+           id="path4177-9-2"
+           sodipodi:nodetypes="cc" />
+      </g>
+    </g>
+  </g>
+</svg>
