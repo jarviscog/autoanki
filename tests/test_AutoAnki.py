@@ -23,6 +23,8 @@ class TestAutoAnki:
         # If the test generated a database, delete it
         if os.path.exists(TEST_DB_NAME):
             os.remove(TEST_DB_NAME)  # one file at a time
+        if os.path.exists(TEST_DECK_NAME):
+            os.remove(TEST_DECK_NAME)  # one file at a time
 
     ### make sure to add => test_ <= as prefix to all test cases otherwise they won't work ###
     def test_init(self):

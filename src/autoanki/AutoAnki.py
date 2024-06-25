@@ -5,6 +5,8 @@ import os
 import ebooklib
 from ebooklib import epub
 from bs4 import BeautifulSoup
+import importlib.metadata
+import importlib.metadata
 
 from autoanki.BookCleaner import BookCleaner
 from autoanki.DatabaseManager import ChineseDatabaseManager
@@ -79,9 +81,9 @@ class AutoAnki:
             self.logger.warning(f"Unsupported language: [{language}]")
             return
 
-        self.logger.info(
-            f"===== {GREEN}Starting to load config: [{language}] {RESET}====="
-        )
+        __version__ = importlib.metadata.version(__package__ or __name__)
+        self.logger.info( f"===== {GREEN}autoanki version: {__version__} {RESET}=====")
+        self.logger.info( f"===== {GREEN}Starting to load config: [{language}] {RESET}=====")
         total_start = time.time()
         self.force = force
 
