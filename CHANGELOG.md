@@ -1,6 +1,11 @@
 # Changelog
 - All notable changes to this project will be documented here
 
+## v1.2.2
+- Added autoanki version to logs
+- Added more unit tests
+- Added progress bars for better feedback
+
 ## v1.2.1
 - Removed old test files
 

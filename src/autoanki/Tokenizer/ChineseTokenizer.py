@@ -5,6 +5,7 @@ import jieba
 logging.getLogger("jieba").setLevel(logging.WARNING)
 import chinese_converter
 from string import punctuation
+from autoanki.DatabaseManager.DatabaseManager import progressBar
 
 
 # TODO Is there a way to do this in a smarter way? Maybe check if the characters are in a certian UTF-8 block?
@@ -41,8 +42,10 @@ class ChineseTokenizer:
         dirty_words = jieba.lcut(line)
         clean_words = []
         self.logger.debug("Dirty words:")
-        self.logger.debug(dirty_words)
-        for word in dirty_words:
+        # self.logger.debug(dirty_words)
+        jieba.enable_parallel(4)
+        for word in progressBar(dirty_words, prefix="Progress:", length=50):
+            # for word in dirty_words:
             word = word.strip("\n")
             if not word:
                 continue
@@ -56,6 +59,8 @@ class ChineseTokenizer:
                 if word in OTHER:
                     continue
 
+            clean_words.append(word)
+            continue
             # If there is a definition in the dictionary, skip any more processing
             if not word:
                 continue
@@ -151,7 +156,7 @@ class ChineseTokenizer:
 
         if clean_words:
             self.logger.debug("Clean words")
-            self.logger.debug(clean_words)
+            # self.logger.debug(clean_words)
         return clean_words
 
     def remove_numbers(self, word: str):

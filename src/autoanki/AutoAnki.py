@@ -16,6 +16,8 @@ from autoanki.DeckManager import DeckManager
 from autoanki.Dictionary.Dictionary import Dictionary
 from autoanki.Tokenizer import ChineseTokenizer
 
+from autoanki.DatabaseManager.DatabaseManager import progressBar
+
 import time
 
 BLACK = "\u001b[30m"
@@ -82,8 +84,10 @@ class AutoAnki:
             return
 
         __version__ = importlib.metadata.version(__package__ or __name__)
-        self.logger.info( f"===== {GREEN}autoanki version: {__version__} {RESET}=====")
-        self.logger.info( f"===== {GREEN}Starting to load config: [{language}] {RESET}=====")
+        self.logger.info(f"===== {GREEN}autoanki version: {__version__} {RESET}=====")
+        self.logger.info(
+            f"===== {GREEN}Starting to load config: [{language}] {RESET}====="
+        )
         total_start = time.time()
         self.force = force
 
@@ -287,7 +291,8 @@ class AutoAnki:
             "Adding " + str(len(response_rows)) + " rows to dictionary table"
         )
         self.tokenizer = ChineseTokenizer(dictionary=self.dictionary)
-        for row in response_rows:
+
+        for row in progressBar(response_rows, prefix="Progress:", length=50):
             word = str(row[0])
 
             # self.logger.debug(f"Finding: [{word}]")

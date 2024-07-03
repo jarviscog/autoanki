@@ -1,4 +1,4 @@
-Current roadmap for the project. 
+Current roadmap for the project.
 - [x] Means completed
 - [ ] Means an unfinished item
 - [?] Means a potential feature. Decide if needed, and act accordingly
@@ -102,33 +102,43 @@ Current roadmap for the project.
 - [x] Import Pdf files
 - [x] Export as csv
 
-## v1.2.3 (Spanish Update)
+## v1.2.2
+- [x] Add aa version number to logs
 - [ ] Add more unit tests
-- [ ] Dictionary
-- [ ] Database Manager
-- [ ] Deck Manager
+    - [ ] Tests for all fields of the card exist, and that settings work
+- [ ] Example Sentences
+    - [ ] From book
+    - [ ] From dictionary
+- [ ] Store logs as file
+- [ ] Add number of cards added to deck to logs
+- [ ] Filter by most common Xk words
+- [ ] Metric tracking from logs
+    - How many cards, how long did it take, what was the input?
+
+- [ ] Fix Q, P from airplanes
+
+- Bulk requests
+
+- Other decks:
+- [ ] More books
+- [ ] HSK Decks
 
 ## Planned features
 
+- [ ] Update but don't override entry in database
+
 - [ ] Show word from the context in which it showed up
 - [ ] Fill HSK level for all sub-chars of available chars
-- [ ] Colored characters
-- [ ] Filter by most common Xk words
-
-- [ ] Store logs as file
 
 - Card types
 - [ ] Cloze deletion card
 - [ ] Reverse card type
 
-- [ ] Batch 2: Add HSK decks
-- [ ] Add more tests
 - [ ] Restructure so each file can be passed to database_manager and still get added to the same book
 - [ ] Handwritten characters
 - [ ] Other card types
 - [ ] Add images to cards
-- [ ] Import epub files from kindle
-- [ ] Exapmle sentances
+- [ ] Add test case for readme example
 
 ## Potential New Features
 - AutoAnki
@@ -139,7 +149,6 @@ Current roadmap for the project.
 - [?] Add minimum number of repititions before getting added to the deck
 Process/
 - [?] Auto documentation using 'Read the Docs'
-- [?] Automatic profiling system to see performance
 - [?] Outsource faster running times for process
 
 - Cards

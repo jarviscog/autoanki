@@ -7,6 +7,7 @@ from pathlib import Path
 
 from autoanki.Tokenizer.ChineseTokenizer import ChineseTokenizer
 from autoanki.DatabaseManager.DatabaseManager import DatabaseManager
+from autoanki.DatabaseManager.DatabaseManager import progressBar
 
 
 class ChineseDatabaseManager(DatabaseManager):
@@ -93,18 +94,21 @@ class ChineseDatabaseManager(DatabaseManager):
         """
         self.logger.info(f"Adding contents to database...")
         word_appearances = {}
-        lines = contents.splitlines()
-        for line in lines:
-            if not line:
-                continue
-            words = self.tokenizer.tokenize(line)
-            if not words:
-                continue
-            for word in words:
-                if word_appearances.get(word) == None:
-                    word_appearances[word] = 1
-                else:
-                    word_appearances[word] += 1
+        # lines = contents.splitlines()
+        self.logger.info(f"Tokenizing...")
+        tokens = self.tokenizer.tokenize(contents)
+
+        if not tokens:
+            return
+        dedup_tokens = set(tokens)
+        self.logger.info(f"Creating word appearance list...")
+        #        for token in progressBar(tokens, prefix = 'Progress:', length = 50):
+        #            if not token:
+        #                continue
+        #            if word_appearances.get(token) == None:
+        #                word_appearances[token] = 1
+        #            else:
+        #                word_appearances[token] += 1
 
         # Add the words to the dictionary if they are not already there
         self.cursor.execute(f"SELECT word FROM dictionary")
@@ -114,10 +118,12 @@ class ChineseDatabaseManager(DatabaseManager):
             f"{len(word_appearances.items())} words in file. {len(dictionary_words)} in dictionary."
         )
 
-        for word, appearances in word_appearances.items():
+        for word in progressBar(dedup_tokens, prefix="Progress:", length=50):
+            # for word, appearances in word_appearances.items():
             if (word,) not in dictionary_words:
                 self.insert_word(word)
 
+        return
         # Make a dictionary of word ids from dictionary
         self.cursor.execute(f"SELECT word_id, word FROM dictionary")
         result = self.cursor.fetchall()
@@ -137,7 +143,11 @@ class ChineseDatabaseManager(DatabaseManager):
         # pprint.pprint(book_table_appearances)
 
         # Add all words to the book_table
-        for word, appearances in word_appearances.items():
+        self.logger.info(f"Inserting...")
+        for word, appearances in progressBar(
+            word_appearances.items(), prefix="Progress:", length=50
+        ):
+            # for word, appearances in word_appearances.items():
 
             dictionary_word_id = word_id_dict[word]
 

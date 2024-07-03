@@ -62,6 +62,7 @@ class DeckManager:
         self.include_traditional = include_traditional
         self.include_part_of_speech = include_part_of_speech
         self.include_audio = include_audio
+        self.logger.debug(f"Audio: {self.include_audio}")
         self.include_pinyin = include_pinyin
         self.include_zhuyin = include_zhuyin
         self.word_frequency_filter = word_frequency_filter
