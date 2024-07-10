@@ -1,4 +1,4 @@
-# autoanki
+![AutoAnki Logo](media/logo/autoanki.svg)  
 Tool for generating Chinese flashcards for Anki
 
 ![PyPI - Version](https://img.shields.io/pypi/v/autoanki)
@@ -89,7 +89,7 @@ There is one dictionary included as the default: an endpoint to [CC-CEDICT](http
 I have local versions of other dictionaries with copyrighted data, which I can not upload.
 
 ## Planned features
-- See ROADMAP.md
+See [ROADMAP.md](ROADMAP.md)
 
 ## Other Info
 
