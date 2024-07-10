@@ -42,7 +42,7 @@ Import this file into Anki, and you're all set.
 
 
 #### Other commands
-If you want to see the information of a database, use:
+Print information about the database:
 ```python
 aa.print_database_info()
 ```
@@ -55,13 +55,17 @@ This dictionary must implement functions from the abstract class `autoanki/Dicti
 
 Some settings can be set regarding how cards will be formatted, and what will be shown. They can be set here:
 ```python
-aa.deck_settings(
-include_traditional=True,
-include_part_of_speech=True,
-word_frequency_filter=1e-05 # Filters using this library: https://pypi.org/project/wordfreq/
-)
+aa.deck_settings(...)
 ```
-The filter is the percentage of words less frequent: 的 shows up 6% of the time in text, so putting a value of 7 will omit it
+| Setting                | Default  | Description          |
+|------------------------|:--------:|:---------------------|
+| include_traditional    | True     | Include Traditional version on card |
+| include_part_of_speech | True     | Include part of speech (Noun, verb, etc.) |
+| include_audio          | False    | Include audio files and play button on each card |
+| include_pinyin         | True     | Include the pinyin of a word |
+| include_zhuyin         | False    | Include the Zhuyin of a word |
+| hsk_filter             | None     | HSK Level. Any word with a lower level will not be added |
+| word_frequency_filter  | None     | Frequency of word. e.g. 2000 will ignore 2000 most common words |
 
 ## How it works
 AutoAnki interfaces has 4 components on the back end:
@@ -88,7 +92,7 @@ This is an abstract class that can be implemented with the following methods
 There is one dictionary included as the default: an endpoint to [CC-CEDICT](https://www.mdbg.net/chinese/dictionary?page=cedict). 
 I have local versions of other dictionaries with copyrighted data, which I can not upload.
 
-## Planned features
+## Planned Features
 See [ROADMAP.md](ROADMAP.md)
 
 ## Other Info
