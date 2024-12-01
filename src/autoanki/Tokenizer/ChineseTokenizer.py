@@ -5,17 +5,16 @@ import jieba
 logging.getLogger("jieba").setLevel(logging.WARNING)
 import chinese_converter
 from string import punctuation
-from autoanki.DatabaseManager.DatabaseManager import progressBar
 
 
 # TODO Is there a way to do this in a smarter way? Maybe check if the characters are in a certian UTF-8 block?
 PUNCTUATION = """
-+,;:'()[]{}&*^%$#@!◇♦•·■◎∞=™©×
++,;:'()[]{}&*^%$#@!◇♦•·■◎∞=¥™©×
 """
-CHINESE_PUNC = "　！？｡。．.…、＂＃＄％＆＇（）＊＋，－／：；＜＝＞＠［＼］＾＿｀｛｜｝～｟｠｢｣､、〃《》「」『』【】〔〕〖〗〘〙〚〛〜〝〞〟〰〾〿–—‘’‛“”„‟…‧﹏  ① ② ③ ④ ⑽ "
+CHINESE_PUNC = "　！？®｡。．.…、＂＃＄％＆＇（）＊＋，－／：；＜＝＞＠［＼］＾＿｀｛｜｝～｟｠｢｣､、〃《》「」『』【】〔〕〖〗〘〙〚〛〜〝〞«〟〰〾〿–—‘’‛“”„‟…‧﹏  ① ② ③ ④ ⑽ "
 
 # TODO: This can be extened and implemented
-OTHER = "ｗ９ｌｉｔｂｎｅｐｈⅠ Ⅱ Ⅲ Ⅳ "
+OTHER = "123456789ｗ９ｌｉｔｂｎｅｐｈⅠ Ⅱ Ⅲ Ⅳ "
 
 # TODO Remove straight numbers and english words
 
@@ -44,7 +43,7 @@ class ChineseTokenizer:
         self.logger.debug("Dirty words:")
         # self.logger.debug(dirty_words)
         jieba.enable_parallel(4)
-        for word in progressBar(dirty_words, prefix="Progress:", length=50):
+        for word in dirty_words:
             # for word in dirty_words:
             word = word.strip("\n")
             if not word:
@@ -57,6 +56,8 @@ class ChineseTokenizer:
                 if word in CHINESE_PUNC:
                     continue
                 if word in OTHER:
+                    continue
+                if word.isascii():
                     continue
 
             clean_words.append(word)
