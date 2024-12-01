@@ -2,7 +2,7 @@
 Tool for generating Chinese flashcards for Anki
 
 ![PyPI - Version](https://img.shields.io/pypi/v/autoanki)
-![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/timmy6figures/autoanki/python-package.yml)
+![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/jarviscog/autoanki/python-package.yml)
 
 ## About
 
@@ -20,14 +20,10 @@ With autoanki, you selectively add words to an Anki file to continue progressing
 To get started, run 
 ```pip install autoanki```
 
-Create an autoanki instance with the 2-letter code of the language you want to use
 ```python
 from autoanki import AutoAnki
 
-if not AutoAnki.is_database("AutoAnki.db"):
-    AutoAnki.create_database("AutoAnki.db")
-
-aa = AutoAnki('zh', database_filepath="AutoAnki.db")
+aa = AutoAnki()
 
 # Add whatever books you want in your deck. These can be a single file, or a string
 aa.add_book_from_string("...", 'My first book🍎')
@@ -57,40 +53,30 @@ Some settings can be set regarding how cards will be formatted, and what will be
 ```python
 aa.deck_settings(...)
 ```
-| Setting                | Default  | Description          |
-|------------------------|:--------:|:---------------------|
-| include_traditional    | True     | Include Traditional version on card |
-| include_part_of_speech | True     | Include part of speech (Noun, verb, etc.) |
+| Setting                | Default  | Description                                      |
+|------------------------|:--------:|:-------------------------------------------------|
+| include_traditional    | True     | Include Traditional version on card              |
+| include_part_of_speech | True     | Include part of speech (Noun, verb, etc.)        |
 | include_audio          | False    | Include audio files and play button on each card |
-| include_pinyin         | True     | Include the pinyin of a word |
-| include_zhuyin         | False    | Include the Zhuyin of a word |
-| hsk_filter             | None     | HSK Level. Any word with a lower level will not be added |
+| include_pinyin         | True     | Include the pinyin of a word                     |
+| include_zhuyin         | False    | Include the Zhuyin of a word                     |
+| hsk_filter             | None     | HSK Level. Any word with a lower level will not be added e.g. 4 will filter HSK 1-3 |
 | word_frequency_filter  | None     | Frequency of word. e.g. 2000 will ignore 2000 most common words |
 
-## How it works
-AutoAnki interfaces has 4 components on the back end:
-1. DatabaseManager: Takes the cleaned input and puts it into the database
-2. Dictionary: Finds definitions for words in the database
-3. DeckManager: Creates Decks
+## Contributing
 
-### Database
-There are 3 different types of tables in the DB:
-- `dictionary` contains a information about each word, including the pinyin, traditional characters, and a definition
-- `book_list` contains the book name, table name, and language for each book added
-- `book` contains the book table id, dictionary word id, and the number of appearances for each word in the book
-  
-<img src="https://github.com/timmy6figures/autoanki/blob/main/media/images/dictionary-table.jpg?raw=true" alt="Dictionary table" width="60%"/>
-<img src="https://github.com/timmy6figures/autoanki/blob/main/media/images/book_list_table.jpg?raw=true" alt="Book list table" width="50%"/>
-<img src="https://github.com/timmy6figures/autoanki/blob/main/media/images/book_table.jpg?raw=true" alt="Book table" width="40%"/>
+Autoanki is open to pull requests. Please open an issue on github first to discuss.
+For any new feature added, please also add unit tests
 
-### Dictionary
-This is an abstract class that can be implemented with the following methods
-- `__init__(debug_level)`
-- `find_word(word)` - Returns None, or a list of paramaters that match the input of DatabaseManager.update_definition()
-- `size()` - Number of entries in the dictionary
+If you do contribute, here are some useful commands to run before making a pull request
+```bash
+# List tests
+pytest --collect-only
 
-There is one dictionary included as the default: an endpoint to [CC-CEDICT](https://www.mdbg.net/chinese/dictionary?page=cedict). 
-I have local versions of other dictionaries with copyrighted data, which I can not upload.
+# Run linting, tests
+tox
+```
+
 
 ## Planned Features
 See [ROADMAP.md](ROADMAP.md)
