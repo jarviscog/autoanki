@@ -13,5 +13,8 @@ Lib
 .DS_Store
 .idea/.name
 .python-version
+
 /src/autoanki.egg-info
+
 /src/autoanki/DeckManager/mandarin_sounds/
+/src/autoanki/audio/
