@@ -7,18 +7,16 @@ from ebooklib import epub
 from bs4 import BeautifulSoup
 import importlib.metadata
 import importlib.metadata
+import time
+import sys
+from pprint import pprint
 
-from autoanki.BookCleaner import BookCleaner
 from autoanki.DatabaseManager import ChineseDatabaseManager
 from autoanki.DatabaseManager.DatabaseManager import DatabaseManager
-from autoanki.Dictionary import CEDictionary
 from autoanki.DeckManager import DeckManager
 from autoanki.Dictionary.Dictionary import Dictionary
 from autoanki.Tokenizer import ChineseTokenizer
 
-from autoanki.DatabaseManager.DatabaseManager import progressBar
-
-import time
 
 BLACK = "\u001b[30m"
 RED = "\u001b[31m"
@@ -48,21 +46,22 @@ class LanguageResources:
 # dictionary_manager: CEDictionary
 # deck_manager: DeckManager
 
-supported_languages = {"zh": "Yes"}
+supported_languages = ['zh', 'fr']
 
 
 class AutoAnki:
     def __init__(
         self,
-        language: str,
-        database_filepath: str = "",
+        language: str = 'zh',
         debug_level=20,
+        log_file=None,
         force=False,
         dictionary=None,
     ):
+        # TODO Cleaning is gone; do we still need --force?
         """
         Creates an instance of autoanki.
-        This creates a book cleaner, database connection, dictioary connection, and deck maker
+        This creates a database connection, dictionary connection, and deck maker
         Args:
             `language`: The language to load, as per its ISO 639-1 two-letter code (en, zh, fr...)
             `database_filepath`: The filepath for the database. If none specified a new one will be created
@@ -73,14 +72,10 @@ class AutoAnki:
         self.logger.setLevel(debug_level)
         self.logger.debug(f"Autoanki logger active")
 
-        if len(language) != 2:
-            self.logger.warning(
-                f"Incorrect language input: [{language}]. Please use it's 2-letter code"
-            )
-            return
+        self.logger.debug(f"Autoanki logger active")
 
-        if not supported_languages.get(language):
-            self.logger.warning(f"Unsupported language: [{language}]")
+        if language not in supported_languages:
+            self.logger.error(f"Unsupported language: [{language}]")
             return
 
         __version__ = importlib.metadata.version(__package__ or __name__)
