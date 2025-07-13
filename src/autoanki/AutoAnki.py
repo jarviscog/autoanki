@@ -94,14 +94,14 @@ class AutoAnki:
         total_end = time.time()
         self.logger.info(f"===== {GREEN}Done init in {total_end - total_start:0.4f} seconds {RESET}=====")
 
-    def add_book_from_string(self, contents: str, book_name: str = "Book Name"):
+    def add_book_from_string(self, contents: str, book_name: str = "unnamedbook"):
         """
         Add a book as a string to the database
         Args:
             `contents`: the contents of the book
             `book_name`: The name of the book being added e.g. "Lost Prince"
         """
-        self.logger.debug(f"autoanki: Adding book [{book_name}] from string")
+        self.logger.debug(f"autoanki: Adding [{book_name}] from string")
         if not contents:
             self.logger.info(f"No contents supplied")
             return
@@ -116,7 +116,7 @@ class AutoAnki:
 
         self.logger.info("autoanki: Added book from string.")
 
-    def add_book_from_file(self, filepath: str, book_name: str = "Book Name"):
+    def add_book_from_file(self, filepath: str, book_name: str = "unnamedbook"):
         """Add a file to the database
         Args:
             `filepath`: path to the directory that contains the files to add
@@ -189,7 +189,7 @@ class AutoAnki:
 
         self.logger.info("autoanki: Added [" + filepath + "].")
 
-    def add_book_from_folder(self, directory: str, book_name: str = "Book Name"):
+    def add_book_from_folder(self, directory: str, book_name: str = "unnamedbook"):
         """
         Add a directory full of files to the database
         Args:
@@ -197,10 +197,11 @@ class AutoAnki:
             `book_name`: The name of the book being added e.g. "Lost Prince"
         """
         self.logger.debug(
-            f"autoanki: Adding book [{book_name}] from directory: [{directory}]"
+            f"autoanki: Adding [{book_name}] from directory: [{directory}]"
         )
+
         if not directory:
-            self.logger.info(f"No directory supplied")
+            self.logger.warning(f"No directory supplied")
             return
 
         # Add the book to the database
@@ -210,7 +211,7 @@ class AutoAnki:
 
         self.logger.info("autoanki: Added [" + directory + "].")
 
-    def add_book_from_pleco(self, filepath: str, book_name: str):
+    def add_book_from_pleco(self, filepath: str, book_name: str = "unnamedbook"):
         """Reads the contents of a Pleco export file (txt, not xml)
         Args:
             `filepath`: path to the directory that contains the files to add
@@ -220,7 +221,7 @@ class AutoAnki:
             f"autoanki: Adding book [{book_name}] from pleco: [{filepath}]"
         )
         if not filepath:
-            self.logger.info(f"No filepath supplied")
+            self.logger.warning(f"No filepath supplied")
             return
 
         with open(filepath, "r") as file:
@@ -241,7 +242,7 @@ class AutoAnki:
         This function finds definitions and adds them to the table
         """
         start = time.time()
-        self.logger.info("Checking for records...")
+        self.logger.debug("Checking for records...")
         response_rows = self.database_manager.unfinished_definitions()
         if len(response_rows) == 0:
             self.logger.info("No new rows to complete in dictionary table")
