@@ -2,9 +2,11 @@ import os
 import pytest
 
 from autoanki.AutoAnki import AutoAnki
+from autoanki.Dictionary import Dictionary
 
 TEST_DB_NAME = "tests/UnitTest.db"
 TEST_DECK_NAME = "tests/test.apkg"
+TEST_CSV_NAME = "tests/test.csv"
 
 
 class TestAutoAnki:
@@ -20,22 +22,20 @@ class TestAutoAnki:
         pass
 
     def tearDown(self):  ### run after each test case ###
-        # If the test generated a database, delete it
-        if os.path.exists(TEST_DB_NAME):
-            os.remove(TEST_DB_NAME)  # one file at a time
+        # If the test generated a deck, delete it
         if os.path.exists(TEST_DECK_NAME):
             os.remove(TEST_DECK_NAME)  # one file at a time
 
     ### make sure to add => test_ <= as prefix to all test cases otherwise they won't work ###
     def test_init(self):
-        aa = AutoAnki("zh", TEST_DB_NAME, debug_level=20)
+        aa = AutoAnki(language="zh", debug_level=20)
         assert aa.book_list == []
         aa.print_database_info()
 
         self.tearDown()
 
     def test_book_list(self):
-        aa = AutoAnki("zh", TEST_DB_NAME, debug_level=20)
+        aa = AutoAnki(language="zh", debug_level=20)
 
         # No books
         assert len(aa.book_list) == 0
@@ -51,16 +51,166 @@ class TestAutoAnki:
         self.tearDown()
 
     def test_example_code(self):
-        if not AutoAnki.is_database(TEST_DB_NAME):
-            AutoAnki.create_database(TEST_DB_NAME)
+        # This code should match what is in the readme at all times
 
-        aa = AutoAnki("zh", database_filepath="test_autoanki.db")
+        aa = AutoAnki()
 
         # Add whatever books you want in your deck. These can be a single file, or a string
-        aa.add_book_from_string("你好。我的名字是朝霖", "My first book🍎")
+        aa.add_book_from_string("...", "My first book🍎")
+        aa.add_book_from_string("short-story.txt", "My first book🍎")
 
         # Once all of your books are added, the definitions need to be found, and then you can create a deck!
         aa.complete_unfinished_definitions()
         aa.create_deck("AutoAnki Deck", TEST_DECK_NAME)
 
         self.tearDown()
+
+    def test_add_book_from_file(self):
+
+        aa = AutoAnki()
+
+        # Add whatever books you want in your deck. These can be a single file, or a string
+        aa.add_book_from_file(
+            filepath="./files/chinese_novel_1.txt", book_name="Test Book"
+        )
+
+        # Once all of your books are added, the definitions need to be found, and then you can create a deck!
+        aa.complete_unfinished_definitions()
+        aa.create_deck("AutoAnki Deck", TEST_DECK_NAME)
+
+        self.tearDown()
+
+    def test_add_book_from_string(self):
+
+        aa = AutoAnki()
+
+        # Add whatever books you want in your deck. These can be a single file, or a string
+        aa.add_book_from_string(contents="你好我叫李先生", book_name="Test Add from string")
+
+        # Once all of your books are added, the definitions need to be found, and then you can create a deck!
+        aa.complete_unfinished_definitions()
+        aa.create_deck("AutoAnki Deck", TEST_DECK_NAME)
+
+        self.tearDown()
+
+    def test_add_book_from_folder(self):
+
+        aa = AutoAnki()
+
+        # Add whatever books you want in your deck. These can be a single file, or a string
+        aa.add_book_from_folder(
+            directory="./files/chinese_folder", book_name="Test Add from Folder"
+        )
+
+        # Once all of your books are added, the definitions need to be found, and then you can create a deck!
+        aa.complete_unfinished_definitions()
+        aa.create_deck("AutoAnki Deck", TEST_DECK_NAME)
+
+        self.tearDown()
+
+    def test_add_book_from_pleco(self):
+
+        aa = AutoAnki()
+
+        aa.add_book_from_pleco(
+            filepath="./files/chinese_pleco_1.txt", book_name="Test Add from Folder"
+        )
+
+        self.tearDown()
+
+    def test_set_deck_settings(self):
+        # TODO: Test each individual entry actually made it into the apkg file
+        # TODO: Re-enable include_audio when fuctionality is verified
+        # TODO: This should not be a monolith settings function. It should be multiple separate functions
+
+        aa = AutoAnki()
+
+        aa.add_book_from_pleco(
+            filepath="./files/chinese_pleco_1.txt", book_name="Test Add from Folder"
+        )
+        aa.deck_settings(
+            include_traditional=True,
+            include_part_of_speech=True,
+            include_audio=True,
+            include_pinyin=True,
+            include_zhuyin=True,
+            hsk_filter=None,
+            word_frequency_filter=None,
+        )
+
+        aa.complete_unfinished_definitions()
+        aa.create_deck("AutoAnki Deck", TEST_DECK_NAME)
+
+        self.tearDown()
+
+    def test_print_database_info(self):
+
+        # Before books added
+        aa = AutoAnki()
+        aa.print_database_info()
+
+        # After books added
+        aa.add_book_from_file(
+            filepath="./files/chinese_novel_1.txt", book_name="Test Book"
+        )
+        aa.print_database_info()
+
+        self.tearDown()
+
+    def test_get_number_of_words(self):
+        aa = AutoAnki()
+        assert 0 == aa.get_number_of_words()
+
+    def test_save_empty_dictionary_as_csv(self):
+
+        aa = AutoAnki()
+        aa.save_dictionary_as_csv(TEST_CSV_NAME)
+
+        self.tearDown()
+
+    def test_save_dictionary_as_csv(self):
+
+        aa = AutoAnki()
+
+        aa.add_book_from_file(
+            filepath="./files/chinese_novel_1.txt", book_name="Test Book"
+        )
+        aa.save_dictionary_as_csv(TEST_CSV_NAME)
+
+        self.tearDown()
+
+    def test_adding_same_book_twice(self):
+        aa = AutoAnki()
+
+        aa.add_book_from_file(
+            filepath="./files/chinese_novel_1.txt", book_name="Test Book"
+        )
+        aa.add_book_from_file(
+            filepath="./files/chinese_novel_1.txt", book_name="Test Book"
+        )
+
+    def test_custom_dictionary(self):
+        class CustomDict(Dictionary):
+            def __init__(self):
+                pass
+
+            def find_word(self, word: str) -> None | dict[str, str]:
+                return super().find_word(word)
+
+            def size(self) -> int:
+                return super().size()
+
+        aa = AutoAnki(dictionary=CustomDict)
+
+        aa.add_book_from_file(
+            filepath="./files/chinese_novel_1.txt", book_name="Test Book"
+        )
+        aa.add_book_from_file(
+            filepath="./files/chinese_novel_1.txt", book_name="Test Book"
+        )
+
+    # def test_hsk_filter(self):
+    # def test_word_frequency_filter(self):
+    # def test_card_fields_exist(self):
+    # check include works on zhuyin entry, etc.
+    # check include works on zhuyin data populated, etc.
