@@ -1,1 +1,1 @@
-from .CEDictionary import CEDictionary
+from .Dictionary import Dictionary
