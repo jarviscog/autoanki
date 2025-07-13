@@ -6,17 +6,21 @@ class LanguageAdapter(ABC):
         pass
 
     @abstractmethod
-    def tokenize(self, text):
+    def tokenize(self, text) -> list[str]:
         pass
 
     @abstractmethod
-    def lookup(self, token):
+    def lookup(self, token) -> dict:
         pass
 
     @abstractmethod
-    def available_settings(self):
+    def available_settings(self) -> dict:
         pass
 
     @abstractmethod
     def settings(self):
+        pass
+
+    @abstractmethod
+    def get_note_fields(self, token) -> dict:
         pass

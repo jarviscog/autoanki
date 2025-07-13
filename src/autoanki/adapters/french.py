@@ -15,3 +15,7 @@ class FrenchAdapter(LanguageAdapter):
 
     def settings(self):
         pass
+
+    def get_note_fields(self, token):
+        entry = self.lookup(token)
+        pass
