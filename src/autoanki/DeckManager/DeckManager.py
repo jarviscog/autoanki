@@ -42,49 +42,28 @@ class DeckManager:
         # length = general_functions.file_len(definitions_filename)
         # self.deck.add_note()
         self.deck = genanki.Deck(2020000110, deck_name)
-        WORD = 1
-        WORD_TRADITIONAL = 2
-        PINYIN = 3
-        PINYIN_NUMBERS = 4
-        ZHUYIN = 5
-        JYUTPING = 6
-        PART_OF_SPEECH = 7
-        NUMBER_OF_STROKES = 8
-        SUB_COMPONENTS = 9
-        DEFINITION = 10
-        FREQUENCY = 11
-        HSK_LEVEL = 12
-        TOCFL_LEVEL = 13
-        AUDIO_PATH = 14
-        IMAGE_PATH = 15
-        CHARACTER_GRAPHIC = 16
-        EXAMPLES = 17
 
         audio_file_list = []
         seen_audio_files = set(audio_file_list)
 
-        for row in words:
+        for word, row in words.items():
 
             # Apply filters
-            if self.word_frequency_filter and row[FREQUENCY]:
-                if self.word_frequency_filter < row[FREQUENCY]:
+            if self.word_frequency_filter and row["frequency"]:
+                if self.word_frequency_filter < row["frequency"]:
                     continue
-            if self.hsk_filter and row[HSK_LEVEL]:
-                if self.hsk_filter > row[HSK_LEVEL]:
+            if self.hsk_filter and row["hsk_level"]:
+                if self.hsk_filter > row["hsk_level"]:
                     continue
 
-            word = row[WORD]
-            if not word:
-                self.logger.error(f"Tried to add word with no word. Row: {row}")
-                continue
-            definition = "<br>" + row[DEFINITION]
+            definition = "<br>" + row["definition"]
             if not definition:
                 self.logger.error(f"Tried to add word with no definition. Row: {row}")
                 continue
 
             word_traditional = "Not found"
             if self.include_traditional:
-                raw_word_traditional = row[WORD_TRADITIONAL]
+                raw_word_traditional = row["word_traditional"]
                 if raw_word_traditional:
                     if len(word) != len(raw_word_traditional):
                         self.logger.error(
@@ -100,21 +79,21 @@ class DeckManager:
 
             # Pinyin
             pinyin = ""
-            if row[PINYIN]:
-                pinyin = row[PINYIN]
+            if row["pinyin"]:
+                pinyin = row["pinyin"]
             if self.include_pinyin_numbers:
-                pinyin = row[PINYIN_NUMBERS]
+                pinyin = row["pinyin_numbers"]
             if pinyin == "":
                 pinyin = "Not found"
 
             # Zhuyin
             zhuyin = "<br>Not found"
-            if self.include_zhuyin and row[ZHUYIN]:
-                zhuyin = "<br>" + row[ZHUYIN]
+            if self.include_zhuyin and row["zhuyin"]:
+                zhuyin = "<br>" + row["zhuyin"]
             else:
                 zhuyin = ""
 
-            part_of_speech = row[PART_OF_SPEECH]
+            part_of_speech = row["part_of_speech"]
             if not part_of_speech:
                 part_of_speech = "Not found"
 
@@ -123,7 +102,7 @@ class DeckManager:
             if self.include_audio and len(word) < 5:
 
                 # Get the filename
-                audio_name = str(row[PINYIN_NUMBERS])
+                audio_name = str(row["pinyin_numbers"])
                 audio_name.replace("ü", "u")
                 audio_name = audio_name.replace(" ", "")
                 audio_name = audio_name.replace("'", "")
