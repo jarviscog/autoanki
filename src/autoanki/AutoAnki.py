@@ -11,11 +11,12 @@ import time
 import sys
 from pprint import pprint
 
-from autoanki.DatabaseManager import ChineseDatabaseManager
-from autoanki.DatabaseManager.DatabaseManager import DatabaseManager
-from autoanki.DeckManager import DeckManager
-from autoanki.Dictionary.Dictionary import Dictionary
 from autoanki.adapters import *
+
+from autoanki.database_managers.base import DatabaseManager
+from autoanki.database_managers import ChineseDatabaseManager
+
+from autoanki.DeckManager import DeckManager
 
 BLACK = "\u001b[30m"
 RED = "\u001b[31m"
