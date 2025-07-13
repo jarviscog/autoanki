@@ -15,8 +15,7 @@ from autoanki.DatabaseManager import ChineseDatabaseManager
 from autoanki.DatabaseManager.DatabaseManager import DatabaseManager
 from autoanki.DeckManager import DeckManager
 from autoanki.Dictionary.Dictionary import Dictionary
-from autoanki.Tokenizer import ChineseTokenizer
-
+from autoanki.adapters import *
 
 BLACK = "\u001b[30m"
 RED = "\u001b[31m"
@@ -46,37 +45,57 @@ class LanguageResources:
 # dictionary_manager: CEDictionary
 # deck_manager: DeckManager
 
-supported_languages = ['zh', 'fr']
-
+def get_adapter(language_code: str, settings):
+    if language_code == 'zh':
+        return ChineseAdapter(settings)
+    elif language_code == 'fr':
+        return FrenchAdapter(settings)
 
 class AutoAnki:
     def __init__(
         self,
-        language: str = 'zh',
+        language_code: str = 'zh',
         debug_level=20,
         log_file=None,
-        force=False,
         dictionary=None,
+        settings=None,
     ):
-        # TODO Cleaning is gone; do we still need --force?
+        # TODO Document settings
+        # TODO Add settings logic
+        # TODO remove all other settings functions
         """
         Creates an instance of autoanki.
         This creates a database connection, dictionary connection, and deck maker
         Args:
-            `language`: The language to load, as per its ISO 639-1 two-letter code (en, zh, fr...)
-            `database_filepath`: The filepath for the database. If none specified a new one will be created
+            `language_code`: The language to load, as per its ISO 639-1 two-letter code (en, zh, fr...)
             `logging_level`: between 0 (DEBUG) and 50(CRITICAL)
-            `force`: Skip conformations for cleaning large numbers of files
+            `dictionary`: A custom dictionary to use instead of the builtin CEDict
+            `settings`: The settings for a given language
         """
         self.logger = logging.getLogger("autoanki")
+
         self.logger.setLevel(debug_level)
-        self.logger.debug(f"Autoanki logger active")
+        formatter = logging.Formatter(
+            f"{GREEN}%(asctime)s{RESET} {RED}%(levelname)8s{RESET} {YELLOW}%(name)-16s{RESET}: %(message)s",
+            "%Y-%m-%d %H:%M:%S",
+        )
+        # logging.basicConfig(
+        ## filename='HISTORY.log',
+        # level=logging.WARNING,
+        # format=f"{GREEN}%(asctime)s{RESET} {RED}%(levelname)8s{RESET} {YELLOW}%(name)-16s{RESET}: %(message)s",
+        # datefmt="%Y-%m-%d %H:%M:%S",
+        # )
 
-        self.logger.debug(f"Autoanki logger active")
+        stdout_handler = logging.StreamHandler(sys.stdout)
+        stdout_handler.setLevel(debug_level)
+        stdout_handler.setFormatter(formatter)
+        self.logger.addHandler(stdout_handler)
 
-        if language not in supported_languages:
-            self.logger.error(f"Unsupported language: [{language}]")
-            return
+        if log_file:
+            file_handler = logging.FileHandler(log_file)
+            file_handler.setLevel(debug_level)
+            file_handler.setFormatter(formatter)
+            self.logger.addHandler(file_handler)
 
         __version__ = importlib.metadata.version(__package__ or __name__)
         self.logger.info(f"===== {GREEN}autoanki version: {__version__} {RESET}=====")
