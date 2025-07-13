@@ -33,7 +33,7 @@ RESET = "\u001b[0m"
 # dictionary_manager: CEDictionary
 # deck_manager: DeckManager
 
-def get_adapter(language_code: str, settings):
+def get_adapter(language_code: str, settings) -> LanguageAdapter | None:
     if language_code == 'zh':
         return ChineseAdapter(settings)
     elif language_code == 'fr':
@@ -45,12 +45,8 @@ class AutoAnki:
         language_code: str = 'zh',
         debug_level=20,
         log_file=None,
-        dictionary=None,
         settings=None,
     ):
-        # TODO Document settings
-        # TODO Add settings logic
-        # TODO remove all other settings functions
         """
         Creates an instance of autoanki.
         This creates a database connection, dictionary connection, and deck maker
@@ -58,7 +54,7 @@ class AutoAnki:
             `language_code`: The language to load, as per its ISO 639-1 two-letter code (en, zh, fr...)
             `logging_level`: between 0 (DEBUG) and 50(CRITICAL)
             `dictionary`: A custom dictionary to use instead of the builtin CEDict
-            `settings`: The settings for a given language
+            `settings`: Settings passed in for a given language. To see the options, check `autoanki/adapters/<language>`
         """
         self.logger = logging.getLogger("autoanki")
 
@@ -68,7 +64,7 @@ class AutoAnki:
             "%Y-%m-%d %H:%M:%S",
         )
         # logging.basicConfig(
-        ## filename='HISTORY.log',
+        # #filename='HISTORY.log',
         # level=logging.WARNING,
         # format=f"{GREEN}%(asctime)s{RESET} {RED}%(levelname)8s{RESET} {YELLOW}%(name)-16s{RESET}: %(message)s",
         # datefmt="%Y-%m-%d %H:%M:%S",
