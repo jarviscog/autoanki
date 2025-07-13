@@ -83,54 +83,16 @@ class AutoAnki:
 
         __version__ = importlib.metadata.version(__package__ or __name__)
         self.logger.info(f"===== {GREEN}autoanki version: {__version__} {RESET}=====")
-        self.logger.info(
-            f"===== {GREEN}Starting to load config: [{language}] {RESET}====="
-        )
+        self.logger.info(f"===== {GREEN}Starting to load config: [{language_code}] {RESET}=====")
+
         total_start = time.time()
-        self.force = force
-
-        # self.book_cleaner = BookCleaner(debug_level, self.force)
-
-        start = time.time()
-        self.logger.info("Loading dictionary...")
-        if dictionary:
-            self.logger.info("Using custom dictionary")
-            self.dictionary = dictionary
-        else:
-            self.dictionary = CEDictionary(debug_level)
-        end = time.time()
-        self.logger.info(f"Done in {end - start:0.4f} seconds")
-
-        self.database_filepath = database_filepath
-        if database_filepath == "":
-            self.logger.info("No database specified. Creating a new one...")
-            timestr = time.strftime("%Y%m%d_%H%M%S")
-            self.database_filepath = str("autoanki_" + timestr + ".db")
-            ChineseDatabaseManager.create_database(self.database_filepath)
-        else:
-            if not ChineseDatabaseManager.is_database(self.database_filepath):
-                self.logger.info("Creating database...")
-                ChineseDatabaseManager.create_database(self.database_filepath)
-                self.logger.info("Done creating database.")
-
-        start = time.time()
-        self.logger.info("Connecting to database...")
-        self.database_manager = ChineseDatabaseManager(
-            self.database_filepath, debug_level, dictionary=self.dictionary
-        )
-        end = time.time()
-        self.logger.info(f"Done in {end - start:0.4f} seconds")
-
-        start = time.time()
-        self.logger.info("Connecting to DeckManager...")
-        self.deck_manager = DeckManager(debug_level)
-        end = time.time()
-        self.logger.info(f"Done in {end - start:0.4f} seconds")
+        self.language_adapter = get_adapter(language_code, settings)
+        if not self.language_adapter:
+            self.logger.error(f"Unsupported language: [{language_code}]")
+        self.logger.info(f"Available settings: {self.language_adapter.available_settings()}")
 
         total_end = time.time()
-        self.logger.info(
-            f"===== {GREEN}Done loading profile in {total_end - total_start:0.4f} seconds {RESET}====="
-        )
+        self.logger.info(f"===== {GREEN}Done init in {total_end - total_start:0.4f} seconds {RESET}=====")
 
     def add_book_from_string(self, contents: str, book_name: str = "Book Name"):
         """
