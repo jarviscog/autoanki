@@ -7,15 +7,25 @@ class FrenchAdapter(LanguageAdapter):
     def tokenize(self, text):
         pass
 
+    def store(self, tokens: list[str], group_name='default'):
+        pass
+
     def lookup(self, token):
         pass
 
-    def available_settings(self):
-        pass
+    def available_settings(self) -> dict:
+        return {}
 
     def settings(self):
         pass
 
-    def get_note_fields(self, token):
+    def get_note_fields(self, token) -> dict:
         entry = self.lookup(token)
-        pass
+        return {}
+
+    def get_tokens_to_generate(self) -> dict:
+        # TODO
+        return {
+            'Français': self.get_note_fields('Français')
+        }
+

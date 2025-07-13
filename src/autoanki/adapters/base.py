@@ -6,8 +6,16 @@ class LanguageAdapter(ABC):
         pass
 
     @abstractmethod
-    def tokenize(self, text) -> list[str]:
+    def tokenize(self, text: str) -> list[str]:
+        """ Tokenizes the input and returns the tokenized output
+        """
         pass
+
+    @abstractmethod
+    def store(self, tokens: list[str], group_name='default'):
+        """ Stores a list of tokens in the internal database
+
+        """
 
     @abstractmethod
     def lookup(self, token) -> dict:
@@ -24,3 +32,8 @@ class LanguageAdapter(ABC):
     @abstractmethod
     def get_note_fields(self, token) -> dict:
         pass
+
+    @abstractmethod
+    def get_tokens_to_generate(self) -> dict:
+        pass
+

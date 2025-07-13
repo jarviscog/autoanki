@@ -10,17 +10,16 @@ class ChineseAdapter(LanguageAdapter):
         self.include_traditional = settings.get("include_traditional", False)
         self.include_audio = settings.get("include_traditional", False)
         self.word_frequency_filter = settings.get("word_frequency_filter", 0)
+        self.set_hsk_filter = settings.get("set_hsk_filter", 0)
 
-    def set_hsk_filter():
-        # TODO
-        """
-        `hsk_filter`: Float between 0 and 1. 1 being every word is included, 0 being none are included
-        """
-        pass
+
 
     def tokenize(self, text) -> list[str]:
         tokenizer = ChineseTokenizer()
         return tokenizer.tokenize(text)
+
+    def store(self, tokens: list[str], group_name='default'):
+        pass
 
     def lookup(self, token) -> dict:
         # TODO set up the database manager here
@@ -45,7 +44,30 @@ class ChineseAdapter(LanguageAdapter):
             'front': entry['word']
 
         }
+        #'number_of_occurrences': 0,
+        #'word': '',
+        #'word_traditional': '',
+        #'pinyin': '',
+        #'pinyin_numbers': '',
+        #'zhuyin': '',
+        #'jyutping': '',
+        #'part_of_speech': '',
+        #'number_of_strokes': 0,
+        #'sub_components': '',
+        #'definition': '',
+        #'frequency': 0,
+        #'hsk_level': 0,
+        #'tocfl_level': 0,
+        #'audio_path': '',
+        #'image_path': '',
+        #'character_graphic': '',
+        #'examples': [],
 
+    def get_tokens_to_generate(self) -> dict:
+        # TODO
+        return {
+            '中文': self.get_note_fields('中文')
+        }
 
 
 
