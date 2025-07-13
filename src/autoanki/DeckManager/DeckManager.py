@@ -207,7 +207,7 @@ class DeckManager:
                     definition,
                 ],
                 # sort_field can be used to sort when the cards appear.
-                # By default they are shown in the order they are addeed, so this is not currently used
+                # By default they are shown in the order they are added, so this is not currently used
                 sort_field=1,
             )
             self.deck.add_note(note)
@@ -222,72 +222,11 @@ class DeckManager:
         my_package.media_files = audio_file_list
         my_package.write_to_file(filename)
 
-        self.logger.info(
-            "Deck "
-            + deck_name
-            + " created with "
-            + str(num_of_valid_cards_added)
-            + " cards"
-        )
+        self.logger.info(f"Deck [{deck_name}] created with {num_of_valid_cards_added} cards")
         return filename
 
 
-def create_chinese_audio_file(audio_name: str) -> str:
-    """Create a chinese audio file by splicing other files together
-    This function assumes the folder with all of the base mp3s is in the right spot
-    Return: path to the audio file
-    """
 
-    # print("Audio: " + audio_name)
-    audio_name = audio_name.replace(" ", "")
-    audio_path = os.path.join(
-        os.path.dirname(__file__), "mandarin_sounds", "spliced", audio_name + ".mp3"
-    )
 
-    file_list = []
-    current_pinyin = ""
-    for char in audio_name:
-        current_pinyin += char
-        if char.isdigit():
-            current_pinyin = current_pinyin.replace("ü", "u")
-            current_pinyin = current_pinyin.strip()
-            file_list.append(current_pinyin)
-            current_pinyin = ""
 
-    # print(file_list)
 
-    # If the pre-made list doesnt have a 5th tone file, just use first tone
-    for i, file in enumerate(file_list):
-        full_path = os.path.join(
-            os.path.dirname(__file__), "mandarin_sounds", file_list[0] + ".mp3"
-        )
-        if not os.path.exists(full_path):
-            file_list[i] = file.replace("5", "1")
-
-    try:
-        # print("Grabbing files...")
-        file_path = os.path.join(
-            os.path.dirname(__file__), "mandarin_sounds", file_list[0] + ".mp3"
-        )
-        # print(file_path)
-        total_sound = AudioSegment.from_mp3(file_path)
-        for file in file_list[1:]:
-            file_to_grab = os.path.join(
-                os.path.dirname(__file__), "mandarin_sounds", file + ".mp3"
-            )
-            # print(file_to_grab)
-            sound = AudioSegment.from_mp3(file_to_grab)
-            total_sound += sound
-
-        # Writing mp3 files is a one liner
-        total_sound.export(audio_path, format="mp3")
-
-        print("This will be saved to: " + audio_path)
-        print()
-
-        return audio_path
-
-    except Exception as e:
-        print(f"Error with {file_list}")
-        print(e)
-        return ""
