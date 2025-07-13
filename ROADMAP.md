@@ -9,6 +9,8 @@ Current roadmap for the project.
 - [x] Remove loading bar. Show timing info in logs
 - [x] Add more unit tests
 
+- [ ] Add a features section to the readme for new beginners
+- [ ] update the readme to reflect new changes
 
 Features:
 - [ ] Tone Colors
