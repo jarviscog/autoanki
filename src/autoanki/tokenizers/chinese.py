@@ -1,25 +1,24 @@
 import logging
-
 import jieba
+
+from autoanki.tokenizers.base import Tokenizer
 
 logging.getLogger("jieba").setLevel(logging.WARNING)
 import chinese_converter
 from string import punctuation
 
-
-# TODO Is there a way to do this in a smarter way? Maybe check if the characters are in a certian UTF-8 block?
+# TODO Is there a way to do this in a smarter way? Maybe check if the characters are in a certain UTF-8 block?
 PUNCTUATION = """
 +,;:'()[]{}&*^%$#@!◇♦•·■◎∞=¥™©×
 """
 CHINESE_PUNC = "　！？®｡。．.…、＂＃＄％＆＇（）＊＋，－／：；＜＝＞＠［＼］＾＿｀｛｜｝～｟｠｢｣､、〃《》「」『』【】〔〕〖〗〘〙〚〛〜〝〞«〟〰〾〿–—‘’‛“”„‟…‧﹏  ① ② ③ ④ ⑽ "
 
-# TODO: This can be extened and implemented
+# TODO: This can be extended and implemented
 OTHER = "123456789ｗ９ｌｉｔｂｎｅｐｈⅠ Ⅱ Ⅲ Ⅳ "
 
 # TODO Remove straight numbers and english words
 
-
-class ChineseTokenizer:
+class ChineseTokenizer(Tokenizer):
     def __init__(self, debug_level=20, dictionary=None):
         self.logger = logging.getLogger("autoanki.dbmngr")
         self.logger.setLevel(debug_level)
@@ -35,7 +34,7 @@ class ChineseTokenizer:
 
             self.dictionary = CEDictionary(debug_level=20)
 
-    def tokenize(self, line: str) -> None | list[str]:
+    def tokenize(self, line: str) -> list[str]:
 
         # TODO jieba has more features that we should take advantage of to get better tokenizing
         dirty_words = jieba.lcut(line)
@@ -61,6 +60,8 @@ class ChineseTokenizer:
                     continue
 
             clean_words.append(word)
+
+            # TODO remove this continue. I think this is here for faster output vs. better output
             continue
             # If there is a definition in the dictionary, skip any more processing
             if not word:
