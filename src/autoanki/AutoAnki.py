@@ -27,19 +27,6 @@ MAGENTA = "\u001b[35m"
 CYAN = "\u001b[36m"
 WHITE = "\u001b[37m"
 RESET = "\u001b[0m"
-logging.basicConfig(
-    # filename='HISTORY.log',
-    level=logging.WARNING,
-    format=f"{GREEN}%(asctime)s{RESET} {RED}%(levelname)8s{RESET} {YELLOW}%(name)-16s{RESET}: %(message)s",
-    datefmt="%Y-%m-%d %H:%M:%S",
-)
-
-
-class LanguageResources:
-    database_manager: DatabaseManager
-    dictionary: Dictionary
-    deck_manager: DeckManager
-
 
 # class Chinese(LanguageResources):
 # database_manager: ChineseDatabaseManager
