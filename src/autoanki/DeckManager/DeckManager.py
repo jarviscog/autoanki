@@ -21,54 +21,14 @@ class DeckManager:
     def __init__(
         self,
         debug_level,
-        include_traditional=True,
-        include_pinyin=True,
-        include_pinyin_numbers=False,
-        include_zhuyin=False,
-        include_part_of_speech=True,
-        include_audio=False,
-        word_frequency_filter=None,
-        hsk_filter=None,
     ):
         self.logger = logging.getLogger("autoanki.dckmngr")
         self.logger.setLevel(debug_level)
         self.deck = genanki.Deck(2020000110, "autoankiTesting")
 
-        self.include_pinyin = include_pinyin
-        self.include_pinyin_numbers = include_pinyin_numbers
-        self.include_zhuyin = include_zhuyin
-        self.include_traditional = include_traditional
-        self.include_audio = include_audio
-        self.include_part_of_speech = include_part_of_speech
-
-        self.word_frequency_filter = word_frequency_filter
-        self.hsk_filter = hsk_filter
-
         self.book_list = []
 
-    def settings(
-        self,
-        include_traditional,
-        include_part_of_speech,
-        include_audio,
-        include_pinyin,
-        include_zhuyin,
-        word_frequency_filter,
-        hsk_filter,
-    ):
-        """
-        Configures settings for what's in the deck, and how it looks
-        """
-        self.include_traditional = include_traditional
-        self.include_part_of_speech = include_part_of_speech
-        self.include_audio = include_audio
-        self.logger.debug(f"Audio: {self.include_audio}")
-        self.include_pinyin = include_pinyin
-        self.include_zhuyin = include_zhuyin
-        self.word_frequency_filter = word_frequency_filter
-        self.hsk_filter = hsk_filter
-
-    def generate_deck_file(self, words: list[dict], deck_name: str, filename: str):
+    def generate_deck_file(self, words: dict[str, dict], deck_name: str, filename: str):
         """
         Generates a deck file from the database
         :param deck_name: The name of the deck to be created
