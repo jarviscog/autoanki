@@ -3,7 +3,7 @@ from autoanki.tokenizers import ChineseTokenizer
 
 
 class ChineseAdapter(LanguageAdapter):
-    def __init__(self, settings):
+    def __init__(self, settings: dict = {}):
         self.include_pinyin = settings.get("include_pinyin", False)
         self.include_zhuyin = settings.get("include_zhuyin", False)
         self.include_part_of_speech = settings.get("include_part_of_speech", False)

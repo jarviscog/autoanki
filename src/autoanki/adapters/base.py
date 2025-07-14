@@ -3,7 +3,7 @@ from abc import ABC, abstractmethod
 
 class LanguageAdapter(ABC):
     @abstractmethod
-    def __init__(self, settings):
+    def __init__(self, settings: dict = {}):
         pass
 
     @abstractmethod

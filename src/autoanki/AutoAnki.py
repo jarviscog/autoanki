@@ -47,7 +47,7 @@ class AutoAnki:
         language_code: str = "zh",
         debug_level=20,
         log_file=None,
-        settings=None,
+        settings={},
     ):
         """
         Creates an instance of autoanki.
@@ -85,16 +85,22 @@ class AutoAnki:
 
         __version__ = importlib.metadata.version(__package__ or __name__)
         self.logger.info(f"===== {GREEN}autoanki version: {__version__} {RESET}=====")
-        self.logger.info(f"===== {GREEN}Starting to load config: [{language_code}] {RESET}=====")
+        self.logger.info(
+            f"===== {GREEN}Starting to load config: [{language_code}] {RESET}====="
+        )
 
         total_start = time.time()
         self.language_adapter = get_adapter(language_code, settings)
         if not self.language_adapter:
             self.logger.error(f"Unsupported language: [{language_code}]")
-        self.logger.info(f"Available settings: {self.language_adapter.available_settings()}")
+        self.logger.info(
+            f"Available settings: {self.language_adapter.available_settings()}"
+        )
 
         total_end = time.time()
-        self.logger.info(f"===== {GREEN}Done init in {total_end - total_start:0.4f} seconds {RESET}=====")
+        self.logger.info(
+            f"===== {GREEN}Done init in {total_end - total_start:0.4f} seconds {RESET}====="
+        )
 
     def add_book_from_string(self, contents: str, book_name: str = "unnamedbook"):
         """
@@ -124,9 +130,7 @@ class AutoAnki:
             `filepath`: path to the directory that contains the files to add
             `book_name`: The name of the book being added e.g. "Lost Prince"
         """
-        self.logger.debug(
-            f"autoanki: Adding book [{book_name}] from file: [{filepath}]"
-        )
+        self.logger.debug(f"autoanki: Adding [{book_name}] from file: [{filepath}]")
         if not filepath:
             self.logger.info(f"No filepath supplied")
             return
@@ -198,6 +202,7 @@ class AutoAnki:
             `filepath`: path to the directory that contains the files to add
             `book_name`: The name of the book being added e.g. "Lost Prince"
         """
+        # TODO this is broken
         self.logger.debug(
             f"autoanki: Adding [{book_name}] from directory: [{directory}]"
         )
@@ -219,9 +224,8 @@ class AutoAnki:
             `filepath`: path to the directory that contains the files to add
             `book_name`: The name of the book being added e.g. "Lost Prince"
         """
-        self.logger.debug(
-            f"autoanki: Adding book [{book_name}] from pleco: [{filepath}]"
-        )
+        self.logger.debug(f"autoanki: Adding [{book_name}] from pleco: [{filepath}]")
+
         if not filepath:
             self.logger.warning(f"No filepath supplied")
             return
@@ -243,6 +247,7 @@ class AutoAnki:
         autoanki, their definitions must be found.
         This function finds definitions and adds them to the table
         """
+        # TODO This can be both a background task, and multithreaded
         start = time.time()
         self.logger.debug("Checking for records...")
         response_rows = self.database_manager.unfinished_definitions()
@@ -339,7 +344,7 @@ class AutoAnki:
         self.logger.info("Done saving to csv...")
 
     @property
-    def book_list(self):
+    def book_list(self) -> list[str]:
         """
         Get a list of the books in the database
         :return: List of book names
