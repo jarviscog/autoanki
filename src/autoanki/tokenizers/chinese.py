@@ -18,6 +18,7 @@ OTHER = "123456789ｗ９ｌｉｔｂｎｅｐｈⅠ Ⅱ Ⅲ Ⅳ "
 
 # TODO Remove straight numbers and english words
 
+
 class ChineseTokenizer(Tokenizer):
     def __init__(self, debug_level=20, dictionary=None):
         self.logger = logging.getLogger("autoanki.dbmngr")

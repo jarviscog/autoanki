@@ -1,5 +1,6 @@
 from autoanki.adapters.base import LanguageAdapter
 
+
 class FrenchAdapter(LanguageAdapter):
     def __init__(self, settings):
         pass
@@ -7,7 +8,7 @@ class FrenchAdapter(LanguageAdapter):
     def tokenize(self, text):
         pass
 
-    def store(self, tokens: list[str], group_name='default'):
+    def store(self, tokens: list[str], group_name="default"):
         pass
 
     def lookup(self, token):
@@ -25,7 +26,4 @@ class FrenchAdapter(LanguageAdapter):
 
     def get_tokens_to_generate(self) -> dict:
         # TODO
-        return {
-            'Français': self.get_note_fields('Français')
-        }
-
+        return {"Français": self.get_note_fields("Français")}

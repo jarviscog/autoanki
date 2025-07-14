@@ -33,16 +33,18 @@ RESET = "\u001b[0m"
 # dictionary_manager: CEDictionary
 # deck_manager: DeckManager
 
+
 def get_adapter(language_code: str, settings) -> LanguageAdapter | None:
-    if language_code == 'zh':
+    if language_code == "zh":
         return ChineseAdapter(settings)
-    elif language_code == 'fr':
+    elif language_code == "fr":
         return FrenchAdapter(settings)
+
 
 class AutoAnki:
     def __init__(
         self,
-        language_code: str = 'zh',
+        language_code: str = "zh",
         debug_level=20,
         log_file=None,
         settings=None,

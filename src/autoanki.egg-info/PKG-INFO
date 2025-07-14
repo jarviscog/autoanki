@@ -1,4 +1,4 @@
-Metadata-Version: 2.1
+Metadata-Version: 2.4
 Name: autoanki
 Version: 1.2.2
 Summary: Automatically make Anki Decks for Chinese text
@@ -12,17 +12,7 @@ Classifier: Operating System :: OS Independent
 Requires-Python: >=3.10
 Description-Content-Type: text/markdown
 License-File: LICENSE.txt
-Requires-Dist: chinese-converter>=1.1.1
-Requires-Dist: beautifulsoup4~=4.12.2
-Requires-Dist: ebooklib
-Requires-Dist: genanki~=0.13.0
-Requires-Dist: jieba~=0.42.1
-Requires-Dist: pandas
-Requires-Dist: pdfplumber~=0.11.0
-Requires-Dist: pinyin~=0.4.0
-Requires-Dist: pydub
-Requires-Dist: requests~=2.31.0
-Requires-Dist: wordfreq
+Dynamic: license-file
 
 ![AutoAnki Logo](media/logo/autoanki.svg)  
 Tool for generating Chinese flashcards for Anki

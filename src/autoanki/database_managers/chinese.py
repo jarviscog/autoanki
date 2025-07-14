@@ -55,6 +55,7 @@ def merge(source, destination):
 
     return destination
 
+
 class ChineseDatabaseManager(DatabaseManager):
     def __init__(self, debug_level, dictionary=None):
         """Contains all entries, including number of occurrences, word, and definition"""

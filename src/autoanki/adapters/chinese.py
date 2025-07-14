@@ -12,8 +12,6 @@ class ChineseAdapter(LanguageAdapter):
         self.word_frequency_filter = settings.get("word_frequency_filter", 0)
         self.set_hsk_filter = settings.get("set_hsk_filter", 0)
 
-
-
     def tokenize(self, text) -> list[str]:
         tokenizer = ChineseTokenizer()
         return tokenizer.tokenize(text)
@@ -65,23 +63,4 @@ class ChineseAdapter(LanguageAdapter):
 
     def get_tokens_to_generate(self) -> dict:
         # TODO
-        return {
-            '中文': self.get_note_fields('中文')
-        }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+        return {"中文": self.get_note_fields("中文")}
