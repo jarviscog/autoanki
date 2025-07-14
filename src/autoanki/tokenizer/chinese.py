@@ -28,6 +28,7 @@ class ChineseTokenizer(Tokenizer):
         #   and shortented if there is not a match
         # TODO It's silly how much processing power this might use in worst-case.
         #   Can we improve on this?
+        return
         if dictionary:
             self.dictionary = dictionary
         else:
