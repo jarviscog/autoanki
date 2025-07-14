@@ -20,10 +20,7 @@ class DeckManager:
         is pretty significant for understanding this.
     """
 
-    def __init__(
-        self,
-        debug_level,
-    ):
+    def __init__(self, debug_level):
         self.logger = logging.getLogger("autoanki.dckmngr")
         self.logger.setLevel(debug_level)
         self.deck = genanki.Deck(2020000110, "autoankiTesting")
@@ -84,9 +81,7 @@ class DeckManager:
         my_package = genanki.Package(self.deck)
         my_package.write_to_file(filename)
 
-        self.logger.info(f"Deck [{deck_name}] created with {num_of_valid_cards_added} cards")
+        self.logger.info(
+            f"Deck [{deck_name}] created with {num_of_valid_cards_added} cards"
+        )
         return filename
-
-
-
-

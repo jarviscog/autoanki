@@ -65,6 +65,3 @@ CARD_MODEL = Model(
     background-color: white;\n
     }\n""",
 )
-
-
-
