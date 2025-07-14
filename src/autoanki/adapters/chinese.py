@@ -16,7 +16,7 @@ class ChineseAdapter(LanguageAdapter):
         tokenizer = ChineseTokenizer()
         return tokenizer.tokenize(text)
 
-    def store(self, tokens: list[str], group_name='default'):
+    def store(self, tokens: list[str], group_name="default"):
         pass
 
     def lookup(self, token) -> dict:
@@ -38,10 +38,7 @@ class ChineseAdapter(LanguageAdapter):
 
     def get_note_fields(self, token) -> dict:
         entry = self.lookup(token)
-        return {
-            'front': entry['word']
-
-        }
+        return {"front": entry["word"]}
         #'number_of_occurrences': 0,
         #'word': '',
         #'word_traditional': '',

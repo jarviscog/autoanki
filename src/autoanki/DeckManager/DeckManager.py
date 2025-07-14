@@ -161,5 +161,7 @@ class DeckManager:
         my_package.media_files = audio_file_list
         my_package.write_to_file(filename)
 
-        self.logger.info(f"Deck [{deck_name}] created with {num_of_valid_cards_added} cards")
+        self.logger.info(
+            f"Deck [{deck_name}] created with {num_of_valid_cards_added} cards"
+        )
         return filename
