@@ -5,8 +5,10 @@ import genanki
 from wordfreq import word_frequency
 from pydub import AudioSegment
 from pprint import pprint
+import importlib.metadata
 
-from autoanki.DeckManager import template_decks
+from autoanki.DeckManager.template import CARD_MODEL
+from autoanki.DeckManager.template_zh import CHINESE_CARD_MODEL
 
 
 class DeckManager:
@@ -31,117 +33,40 @@ class DeckManager:
     def generate_deck_file(self, words: dict[str, dict], deck_name: str, filename: str):
         """
         Generates a deck file from the database
+        :param words: Dictionary of words with their fields to be included
         :param deck_name: The name of the deck to be created
-        :param definitions_filename: The name of the file containing the definitions.
+        :param filename: The name of the file containing the definitions.
         :return:
         """
+        __version__ = importlib.metadata.version(__package__ or __name__)
 
         # Number of valid cards that have been added to the deck
         num_of_valid_cards_added = 0
 
-        # length = general_functions.file_len(definitions_filename)
-        # self.deck.add_note()
         self.deck = genanki.Deck(2020000110, deck_name)
 
-        audio_file_list = []
-        seen_audio_files = set(audio_file_list)
+        for word, word_dict in words.items():
 
-        for word, row in words.items():
+            word_alternate = word_dict.get("word_alternate", None)
+            pronunciation = word_dict.get("pronunciation", None)
+            pronunciation_alternate = word_dict.get("pronunciation_alternate", None)
+            part_of_speech = word_dict.get("part_of_speech", None)
 
-            # Apply filters
-            if self.word_frequency_filter and row["frequency"]:
-                if self.word_frequency_filter < row["frequency"]:
-                    continue
-            if self.hsk_filter and row["hsk_level"]:
-                if self.hsk_filter > row["hsk_level"]:
-                    continue
-
-            definition = "<br>" + row["definition"]
+            definition = word_dict.get("definition", None)
             if not definition:
-                self.logger.error(f"Tried to add word with no definition. Row: {row}")
+                self.logger.error(f"Tried to add word with no definition. Word: {word}")
                 continue
 
-            word_traditional = "Not found"
-            if self.include_traditional:
-                raw_word_traditional = row["word_traditional"]
-                if raw_word_traditional:
-                    if len(word) != len(raw_word_traditional):
-                        self.logger.error(
-                            f"{word} and {raw_word_traditional} should be the same length"
-                        )
-                    # Replace all matching characters with a dash
-                    word_traditional = ""
-                    for i in range(len(word)):
-                        if word[i] == raw_word_traditional[i]:
-                            word_traditional += "-"
-                        else:
-                            word_traditional += raw_word_traditional[i]
-
-            # Pinyin
-            pinyin = ""
-            if row["pinyin"]:
-                pinyin = row["pinyin"]
-            if self.include_pinyin_numbers:
-                pinyin = row["pinyin_numbers"]
-            if pinyin == "":
-                pinyin = "Not found"
-
-            # Zhuyin
-            zhuyin = "<br>Not found"
-            if self.include_zhuyin and row["zhuyin"]:
-                zhuyin = "<br>" + row["zhuyin"]
-            else:
-                zhuyin = ""
-
-            part_of_speech = row["part_of_speech"]
-            if not part_of_speech:
-                part_of_speech = "Not found"
-
-            # Audio
-            audio = ""
-            if self.include_audio and len(word) < 5:
-
-                # Get the filename
-                audio_name = str(row["pinyin_numbers"])
-                audio_name.replace("ü", "u")
-                audio_name = audio_name.replace(" ", "")
-                audio_name = audio_name.replace("'", "")
-
-                audio_file = audio_name + ".mp3"
-
-                # If it's not there, create it from spliced files
-                path_to_audio_file = os.path.join(
-                    os.path.dirname(__file__), "mandarin_sounds", audio_file
-                )
-                path_to_spliced_audio_file = os.path.join(
-                    os.path.dirname(__file__), "mandarin_sounds", "spliced", audio_file
-                )
-                self.logger.debug(f"Audio file path: {path_to_audio_file}")
-                if os.path.exists(path_to_audio_file):
-                    audio_path = path_to_audio_file
-                elif os.path.exists(path_to_spliced_audio_file):
-                    audio_path = path_to_spliced_audio_file
-                else:
-                    audio_path = create_chinese_audio_file(audio_name)
-
-                audio = f"[sound:{audio_file}]"
-
-                # Look for the audio file
-                if audio_path not in seen_audio_files:
-                    seen_audio_files.add(audio_path)
-                    audio_file_list.append(audio_path)
-
-            card_tags = ["autoanki"]
+            card_tags = [f"autoanki-{__version__}"]
 
             note = genanki.Note(
-                model=template_decks.CHINESE_CARD_MODEL,
+                model=CARD_MODEL,
                 tags=card_tags,
                 fields=[
                     word,
-                    word_traditional,
-                    pinyin,
-                    audio,
-                    zhuyin,
+                    word_alternate,
+                    pronunciation,
+                    pronunciation_alternate,
                     part_of_speech,
                     definition,
                 ],
@@ -156,12 +81,12 @@ class DeckManager:
             filename += ".apkg"
 
         # pprint("Audio files:")
-        # pprint(audio_file_list)
         my_package = genanki.Package(self.deck)
-        my_package.media_files = audio_file_list
         my_package.write_to_file(filename)
 
-        self.logger.info(
-            f"Deck [{deck_name}] created with {num_of_valid_cards_added} cards"
-        )
+        self.logger.info(f"Deck [{deck_name}] created with {num_of_valid_cards_added} cards")
         return filename
+
+
+
+
