@@ -231,7 +231,7 @@ class ChineseDatabaseManager(DatabaseManager):
         return filtered_dict
 
     @property
-    def books(self):
+    def books(self) -> list[str]:
         return self.book_list
 
     @books.setter
