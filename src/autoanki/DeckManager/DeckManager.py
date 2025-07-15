@@ -1,11 +1,8 @@
 import logging
 import os
 
-import genanki
-from wordfreq import word_frequency
-from pydub import AudioSegment
 from pprint import pprint
-import importlib.metadata
+import genanki
 
 from autoanki.DeckManager.template import CARD_MODEL
 from autoanki.DeckManager.template_zh import CHINESE_CARD_MODEL

@@ -9,13 +9,10 @@ import importlib.metadata
 import importlib.metadata
 import time
 import sys
+from glob import glob
 from pprint import pprint
 
 from autoanki.adapters import *
-
-from autoanki.database_managers.base import DatabaseManager
-from autoanki.database_managers import ChineseDatabaseManager
-
 from autoanki.DeckManager import DeckManager
 
 BLACK = "\u001b[30m"

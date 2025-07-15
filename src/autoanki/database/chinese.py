@@ -9,8 +9,8 @@ from pprint import pprint
 from pathlib import Path
 from collections import Counter
 
-from autoanki.database_managers.base import DatabaseManager
-from autoanki.tokenizers.chinese import ChineseTokenizer
+from autoanki.database import DatabaseManager
+from autoanki.tokenizer import ChineseTokenizer
 
 BLACK = "\u001b[30m"
 RED = "\u001b[31m"

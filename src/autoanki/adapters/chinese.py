@@ -1,5 +1,6 @@
 from autoanki.adapters.base import LanguageAdapter
-from autoanki.tokenizers import ChineseTokenizer
+from autoanki.database.chinese import ChineseDatabaseManager
+from autoanki.tokenizer import ChineseTokenizer
 
 
 class ChineseAdapter(LanguageAdapter):

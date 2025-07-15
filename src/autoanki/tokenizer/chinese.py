@@ -1,7 +1,7 @@
 import logging
 import jieba
 
-from autoanki.tokenizers.base import Tokenizer
+from autoanki.tokenizer import Tokenizer
 
 logging.getLogger("jieba").setLevel(logging.WARNING)
 import chinese_converter
