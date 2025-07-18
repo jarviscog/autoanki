@@ -30,7 +30,6 @@ class TestAutoAnki:
     def test_init(self):
         aa = AutoAnki(language_code="zh", debug_level=20)
         assert aa.book_list == []
-        aa.print_database_info()
 
         self.tearDown()
 
@@ -62,7 +61,7 @@ class TestAutoAnki:
         # Once all of your books are added, the definitions need to be found, and then you can create a deck!
         aa.create_deck("AutoAnki Deck", TEST_DECK_NAME)
 
-        #self.tearDown()
+        # self.tearDown()
 
     def test_add_book_from_file(self):
 
@@ -96,7 +95,8 @@ class TestAutoAnki:
 
         # Add whatever books you want in your deck. These can be a single file, or a string
         aa.add_book_from_folder(
-            directory="./tests/files/zh/chinese_folder", book_name="Test Add from Folder"
+            directory="./tests/files/zh/chinese_folder",
+            book_name="Test Add from Folder",
         )
 
         # Once all of your books are added, the definitions need to be found, and then you can create a deck!
@@ -104,15 +104,15 @@ class TestAutoAnki:
 
         self.tearDown()
 
-#    def test_add_book_from_pleco(self):
-#
-#        aa = AutoAnki()
-#
-#        aa.add_book_from_pleco(
-#            filepath="./files/zh/chinese_pleco_1.txt", book_name="Test Add from Folder"
-#        )
-#
-#        self.tearDown()
+    #    def test_add_book_from_pleco(self):
+    #
+    #        aa = AutoAnki()
+    #
+    #        aa.add_book_from_pleco(
+    #            filepath="./files/zh/chinese_pleco_1.txt", book_name="Test Add from Folder"
+    #        )
+    #
+    #        self.tearDown()
 
     #    def test_set_deck_settings(self):
     #        # TODO: Test each individual entry actually made it into the apkg file
@@ -137,20 +137,6 @@ class TestAutoAnki:
     #        aa.create_deck("AutoAnki Deck", TEST_DECK_NAME)
     #
     #        self.tearDown()
-
-    def test_print_database_info(self):
-
-        # Before books added
-        aa = AutoAnki()
-        aa.print_database_info()
-
-        # After books added
-        aa.add_book_from_file(
-            filepath="./tests/files/zh/chinese_novel_1.txt", book_name="Test Book"
-        )
-        aa.print_database_info()
-
-        self.tearDown()
 
     def test_get_number_of_words(self):
         aa = AutoAnki()
@@ -184,7 +170,7 @@ class TestAutoAnki:
             filepath="./tests/files/zh/chinese_novel_1.txt", book_name="Test Book"
         )
 
-    # TODO add assertions that there were no errors in ingesting the info into autoanki. 
+    # TODO add assertions that there were no errors in ingesting the info into autoanki.
     # It will put it in the logs, but not fail the test
 
     # def test_hsk_filter(self):
