@@ -11,6 +11,7 @@ import time
 import sys
 from glob import glob
 from pprint import pprint
+from pprint import pformat
 
 from autoanki.adapters import *
 from autoanki.DeckManager import DeckManager
@@ -25,17 +26,37 @@ CYAN = "\u001b[36m"
 WHITE = "\u001b[37m"
 RESET = "\u001b[0m"
 
-# class Chinese(LanguageResources):
-# database_manager: ChineseDatabaseManager
-# dictionary_manager: CEDictionary
-# deck_manager: DeckManager
-
 
 def get_adapter(language_code: str, settings) -> LanguageAdapter | None:
     if language_code == "zh":
         return ChineseAdapter(settings)
     elif language_code == "fr":
         return FrenchAdapter(settings)
+    return None
+
+
+def get_folder_contents(directory: str) -> str:
+    """Adds a book from a folder full of files
+    Only opens any .txt files in the subdirectory
+    """
+
+    # Read all files into a string, and use to add from string
+    all_files_contents = ""
+
+    # self.logger.debug("Bookpath: " + directory)
+    if os.path.isdir(directory):
+        # self.logger.debug("Directory found:")
+        text_files = [
+            y for x in os.walk(directory) for y in glob(os.path.join(x[0], "*.txt"))
+        ]
+        for path in text_files:
+            # self.logger.debug(path)
+            # Open and append to string
+            with open(path) as f:
+                contents = f.read()
+                all_files_contents += contents
+
+    return all_files_contents
 
 
 class AutoAnki:
@@ -52,7 +73,7 @@ class AutoAnki:
         Args:
             `language_code`: The language to load, as per its ISO 639-1 two-letter code (en, zh, fr...)
             `logging_level`: between 0 (DEBUG) and 50(CRITICAL)
-            `dictionary`: A custom dictionary to use instead of the builtin CEDict
+            `log_file`: Location to store logs, otherwise will use stdout
             `settings`: Settings passed in for a given language. To see the options, check `autoanki/adapters/<language>`
         """
         self.logger = logging.getLogger("autoanki")
@@ -90,9 +111,8 @@ class AutoAnki:
         self.language_adapter = get_adapter(language_code, settings)
         if not self.language_adapter:
             self.logger.error(f"Unsupported language: [{language_code}]")
-        self.logger.info(
-            f"Available settings: {self.language_adapter.available_settings()}"
-        )
+
+        self.deck_manager = DeckManager(debug_level=debug_level)
 
         total_end = time.time()
         self.logger.info(
@@ -111,14 +131,8 @@ class AutoAnki:
             self.logger.info(f"No contents supplied")
             return
 
-        # TODO Handle pdfs in file
-        # TODO Restructure so each file can be passed to database_manager and still get added to the same book
-
-        # Add the book to the database
-        if not self.database_manager.add_book_from_string(contents, book_name):
-            self.logger.warning("Unable to add [" + book_name + "] to database.")
-            return
-
+        tokens = self.language_adapter.tokenize(contents)
+        self.language_adapter.store(tokens, book_name)
         self.logger.info("autoanki: Added book from string.")
 
     def add_book_from_file(self, filepath: str, book_name: str = "unnamedbook"):
@@ -131,30 +145,28 @@ class AutoAnki:
         if not filepath:
             self.logger.info(f"No filepath supplied")
             return
-        # pip3 install pdfplumber
 
         # Handle pdf
         extension = os.path.splitext(filepath)[1]
 
-        if extension == ".pdf":
-            self.logger.info(f"PDF detected")
-            # for every page
-            print(filepath)
-            print(os.path.exists(filepath))
+        # TODO handle PDFs
+        #        if extension == ".pdf":
+        #            self.logger.info(f"PDF detected")
+        #            # for every page
+        #            print(filepath)
+        #            print(os.path.exists(filepath))
+        #
+        #            with pdfplumber.open(filepath) as pdf:
+        #                print(pdf)
+        #                for pages in pdf.pages:
+        #                    print(pages.pages)
+        #                    # print(pages.extract_text())
+        #
+        #                    text = pages.extract_text()
+        #                    tokens = self.language_adapter.tokenize(text)
+        #                    self.language_adapter.store(tokens)
 
-            with pdfplumber.open(filepath) as pdf:
-                print(pdf)
-                for pages in pdf.pages:
-                    print(pages.pages)
-                    print(pages.extract_text())
-                    if not self.database_manager.add_book_from_string(
-                        pages.extract_text(), book_name
-                    ):
-                        self.logger.warning(
-                            "Unable to add [" + book_name + "] to database."
-                        )
-                        return
-        elif extension == ".epub":
+        if extension == ".epub":
             book = epub.read_epub(filepath)
             # Get the chapters
             chapters = ""
@@ -180,17 +192,23 @@ class AutoAnki:
             for t in text:
                 if t.parent.name not in blacklist:
                     contents += "{} ".format(t)
-            if not self.database_manager.add_book_from_string(contents, book_name):
-                self.logger.warning("Unable to add [" + book_name + "] to database.")
-                return
+
+            tokens = self.language_adapter.tokenize(contents)
+            self.language_adapter.store(tokens, book_name)
+
         elif extension == ".txt":
             self.logger.info(f"txt detected")
             # Add the book to the database
-            if not self.database_manager.add_book_from_file(filepath, book_name):
-                self.logger.warning("Unable to add [" + book_name + "] to database.")
+            if not os.path.isfile(filepath):
+                self.logger.warning(f"File does not exist: [{filepath}]")
                 return
 
-        self.logger.info("autoanki: Added [" + filepath + "].")
+            with open(filepath, "r") as file:
+                contents = file.read()
+            tokens = self.language_adapter.tokenize(contents)
+            self.language_adapter.store(tokens, book_name)
+
+        self.logger.info(f"autoanki: Added [{filepath}].")
 
     def add_book_from_folder(self, directory: str, book_name: str = "unnamedbook"):
         """
@@ -209,11 +227,10 @@ class AutoAnki:
             return
 
         # Add the book to the database
-        if not self.database_manager.add_book_from_folder(directory, book_name):
-            self.logger.warning("Unable to add [" + book_name + "] to database.")
-            return
-
-        self.logger.info("autoanki: Added [" + directory + "].")
+        contents = get_folder_contents(directory)
+        tokens = self.language_adapter.tokenize(contents)
+        self.language_adapter.store(tokens, book_name)
+        self.logger.info(f"autoanki: Added [{directory}].")
 
     def add_book_from_pleco(self, filepath: str, book_name: str = "unnamedbook"):
         """Reads the contents of a Pleco export file (txt, not xml)
@@ -236,79 +253,19 @@ class AutoAnki:
 
         contents = ""
         self.logger.debug(f"Done reading Pleco. len: {len(contents)}")
-        self.database_manager.add_book_from_string(contents, book_name)
+        tokens = self.language_adapter.tokenize(contents)
+        self.language_adapter.store(tokens, book_name)
 
-    def complete_unfinished_definitions(self):
-        """
-        autoanki contains an internal definitions table that is scraped from the internet. As words are added to
-        autoanki, their definitions must be found.
-        This function finds definitions and adds them to the table
-        """
-        # TODO This can be both a background task, and multithreaded
-        start = time.time()
-        self.logger.debug("Checking for records...")
-        response_rows = self.database_manager.unfinished_definitions()
-        if len(response_rows) == 0:
-            self.logger.info("No new rows to complete in dictionary table")
-            return
+    def pprint_unfinished_definitions(self):
+        pprint(self.database_manager.unfinished_definitions())
 
-        self.logger.info(
-            "Adding " + str(len(response_rows)) + " rows to dictionary table"
-        )
-        self.tokenizer = ChineseTokenizer(dictionary=self.dictionary)
+    def get_number_of_words(self):
+        return self.language_adapter.get_number_of_entries()
 
-        for row in progressBar(response_rows, prefix="Progress:", length=50):
-            word = str(row[0])
-
-            # self.logger.debug(f"Finding: [{word}]")
-            # self.logger.debug("Trying local dictionary...")
-            params = self.dictionary.find_word(word)
-            # self.logger.info(params)
-            if params:
-                # self.logger.debug(f"✅Found: [{params[8]}]")
-                self.database_manager.update_definition(params)
-                continue
-
-            self.logger.info(f"❌Could not find: [{word}]")
-        end = time.time()
-        self.logger.info(
-            f"Finished collecting definitions in {end - start:0.4f} seconds"
-        )
-
-    def deck_settings(
-        self,
-        include_traditional=True,
-        include_part_of_speech=True,
-        include_audio=False,
-        include_pinyin=True,
-        include_zhuyin=False,
-        hsk_filter=None,
-        word_frequency_filter=None,
-    ):
-        """Configures settings for what's in the deck, and how it looks"
-
-        `word_frequency_filter`: Float between 0 and 1. 1 being every word is included, 0 being none are included
-        """
-        self.deck_manager.settings(
-            include_traditional=include_traditional,
-            include_pinyin=include_pinyin,
-            include_zhuyin=include_zhuyin,
-            include_part_of_speech=include_part_of_speech,
-            include_audio=include_audio,
-            word_frequency_filter=word_frequency_filter,
-            hsk_filter=hsk_filter,
-        )
-
-    def print_database_info(self):
-        self.database_manager.print_info()
-
-    @staticmethod
-    def is_database(db_path):
-        return ChineseDatabaseManager.is_database(db_path)
-
-    @staticmethod
-    def create_database(db_path: str):
-        ChineseDatabaseManager.create_database(db_path)
+    def print_settings(self):
+        self.logger.info("Settings:")
+        for setting, value in self.language_adapter.get_settings().items():
+            self.logger.info(f"{setting:<25} [{value}]")
 
     def create_deck(self, deck_name: str, filepath: str):
         """
@@ -318,24 +275,21 @@ class AutoAnki:
         :return:
         """
 
-        self.logger.info("Generating deck file [" + deck_name + ".apk]")
-        words = self.database_manager.get_all_completed_definitions()
-
+        self.logger.info(f"Generating deck file [{deck_name}]")
+        words = self.language_adapter.get_tokens_to_generate()
         deck_path = self.deck_manager.generate_deck_file(words, deck_name, filepath)
         if deck_path is None:
-            self.logger.warning(
-                "Was not able to create deck file for [", deck_name, "]"
-            )
+            self.logger.warning(f"Was not able to create deck file for [{deck_name}]")
         else:
-            self.logger.info("Generated deck file [" + deck_path + "]")
+            self.logger.info(f"Generated deck file [{deck_path}]")
 
     def save_dictionary_as_csv(self, filepath: str):
+        # TODO this is broken
         self.logger.info("Saving to csv...")
-        all = self.database_manager.get_all_definitions()
-        # pprint(all)
+        all = self.language_adapter.get_tokens_to_generate()
 
         df = pd.DataFrame(all)
-        headers = self.database_manager.get_columns()
+        headers = self.language_adapter.get_note_fields("中文").keys()
         df.columns = headers
         df.to_csv(filepath)
         self.logger.info("Done saving to csv...")
@@ -346,7 +300,7 @@ class AutoAnki:
         Get a list of the books in the database
         :return: List of book names
         """
-        return self.database_manager.books
+        return self.language_adapter.get_groups()
 
     @book_list.setter
     def book_list(self, _):
