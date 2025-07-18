@@ -29,8 +29,7 @@ aa = AutoAnki()
 aa.add_book_from_string("...", 'My first book🍎')
 aa.add_book_from_string('short-story.txt', 'My first book🍎')
 
-# Once all of your books are added, the definitions need to be found, and then you can create a deck!
-aa.complete_unfinished_definitions()
+# Once all of your books are added you can create a deck!
 aa.create_deck("AutoAnki Deck", "output")
 ```
 The `.apkg` extension will be added, which Anki uses. 
@@ -38,10 +37,6 @@ Import this file into Anki, and you're all set.
 
 
 #### Other commands
-Print information about the database:
-```python
-aa.print_database_info()
-```
 
 If you would like to create and use your own dictionary, you can pass it in:
 ```python
