@@ -21,10 +21,6 @@ CARD_MODEL = Model(
             "font": "Arial",
         },
         {
-            "name": "zhuyin",
-            "font": "Arial",
-        },
-        {
             "name": "part_of_speech",
             "font": "Arial",
             "color": "red",
