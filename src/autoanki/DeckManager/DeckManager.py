@@ -5,7 +5,6 @@ from pprint import pprint
 import genanki
 
 from autoanki.DeckManager.template import CARD_MODEL
-from autoanki.DeckManager.template_zh import CHINESE_CARD_MODEL
 
 
 class DeckManager:
@@ -32,26 +31,28 @@ class DeckManager:
         :param filename: The name of the file containing the definitions.
         :return:
         """
-        __version__ = importlib.metadata.version(__package__ or __name__)
 
         # Number of valid cards that have been added to the deck
         num_of_valid_cards_added = 0
 
         self.deck = genanki.Deck(2020000110, deck_name)
 
-        for word, word_dict in words.items():
+        for token, word_dict in words.items():
 
-            word_alternate = word_dict.get("word_alternate", None)
-            pronunciation = word_dict.get("pronunciation", None)
-            pronunciation_alternate = word_dict.get("pronunciation_alternate", None)
-            part_of_speech = word_dict.get("part_of_speech", None)
+            word = word_dict.get("word", "WORD")
+            word_alternate = word_dict.get("word_alternate", "WORD_ALT")
+            pronunciation = word_dict.get("pronunciation", "PRO")
+            pronunciation_alternate = word_dict.get(
+                "pronunciation_alternate", "PRO_ALT"
+            )
+            part_of_speech = word_dict.get("part_of_speech", "POS")
 
-            definition = word_dict.get("definition", None)
-            if not definition:
-                self.logger.error(f"Tried to add word with no definition. Word: {word}")
-                continue
+            definition = word_dict.get("definition", "No definition found")
+            #            if not definition:
+            #                self.logger.error(f"Tried to add word with no definition. Word: {word}")
+            #                continue
 
-            card_tags = [f"autoanki-{__version__}"]
+            card_tags = [f"autoanki"]
 
             note = genanki.Note(
                 model=CARD_MODEL,
