@@ -1,7 +1,9 @@
 from autoanki.adapters.base import LanguageAdapter
-from autoanki.database.chinese import ChineseDatabaseManager
+from autoanki.dictionary.lookup_result.base import ChineseLookupResult
 from autoanki.tokenizer import ChineseTokenizer
 
+from autoanki.dictionary.base import ChineseDictionary
+from pprint import pprint
 
 class ChineseAdapter(LanguageAdapter):
     def __init__(self, settings: dict = {}):
@@ -41,10 +43,13 @@ class ChineseAdapter(LanguageAdapter):
                 "group": group_name,
             }
 
-    def lookup(self, token) -> dict | None:
-        # TODO set up the database manager here
-        res = self.test_dict.get(token, None)
-        return res
+    def set_dictionary(self, dictionary: ChineseDictionary) -> None:
+        self.dictionary = dictionary
+        pass
+
+    def _lookup(self, token) -> ChineseLookupResult | None:
+        result = self.dictionary.lookup(token)
+        return result
 
     def get_number_of_entries(self) -> int:
         return len(self.test_dict)
@@ -58,58 +63,39 @@ class ChineseAdapter(LanguageAdapter):
         return list(set(groups))
         # return self.database_manager.books
 
-    def available_settings(self) -> dict:
+    def available_settings(self) -> list:
         return list(self.settings.keys())
 
     def get_settings(self) -> dict:
         return self.settings
 
     def get_note_fields(self, token) -> dict:
-        entry = self.lookup(token)
+        entry = self._lookup(token)
         if not entry:
             return {}
 
         if self.settings["tone_colors"]:
-            entry[
-                "word"
-            ] = f"""<span style="color:red">{entry.get("word", "")}</span>"""
+            entry.word = f"""<span style="color:red">{entry.word}</span>"""
 
         # if traditional == simplified, replace with dash
         word_traditional = ""
-        raw_word_traditional = entry.get("word_traditional", "")
-        for i in range(len(token)):
-            if token[i] == raw_word_traditional[i]:
-                word_traditional += "-"
-            else:
-                word_traditional += raw_word_traditional[i]
-        entry["word_traditional"] = word_traditional
+        raw_word_traditional = entry.traditional
+        if entry.traditional:
+            for i in range(len(token)):
+                if token[i] == raw_word_traditional[i]:
+                    word_traditional += "-"
+                else:
+                    word_traditional += raw_word_traditional[i]
+            entry.traditional = word_traditional
 
         return {
-            "word": entry["word"],
-            "word_alternate": entry.get("word_traditional", ""),
-            "pronunciation": entry.get("pinyin", ""),
-            "pronunciation_alternate": entry.get("zhuyin", ""),
-            "part_of_speech": entry.get("part_of_speech", ""),
-            "definition": entry.get("definition", ""),
+            "word": entry.word,
+            "word_alternate": entry.traditional,
+            "pronunciation": entry.pinyin,
+            "pronunciation_alternate": entry.zhuyin,
+            "part_of_speech": entry.part_of_speech,
+            "definition": entry.definition
         }
-        #'number_of_occurrences': 0,
-        #'word': '',
-        #'word_traditional': '',
-        #'pinyin': '',
-        #'pinyin_numbers': '',
-        #'zhuyin': '',
-        #'jyutping': '',
-        #'part_of_speech': '',
-        #'number_of_strokes': 0,
-        #'sub_components': '',
-        #'definition': '',
-        #'frequency': 0,
-        #'hsk_level': 0,
-        #'tocfl_level': 0,
-        #'audio_path': '',
-        #'image_path': '',
-        #'character_graphic': '',
-        #'examples': [],
 
     def get_tokens_to_generate(self) -> dict:
 
@@ -117,3 +103,6 @@ class ChineseAdapter(LanguageAdapter):
         for key, val in self.test_dict.items():
             return_dict[key] = self.get_note_fields(key)
         return return_dict
+
+
+
