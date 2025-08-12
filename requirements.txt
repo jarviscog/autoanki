@@ -1,11 +1,6 @@
-requests
 beautifulsoup4==4.13.4
 chinese_converter==1.1.1
-ebooklib==0.19
+ebookLib==0.18
 genanki==0.13.1
 jieba==0.42.1
-pandas==2.0.0
-pdfplumber==0.11.7
-pinyin==0.4.0
-pydub==0.25.1
-pytest==8.4.1
+pandas==2.3.1
