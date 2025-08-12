@@ -1,13 +1,7 @@
-import os
-import sqlite3
 import logging
-from glob import glob
+import os
 import time
-import operator
-from pprint import pprint
-
-from pathlib import Path
-from collections import Counter
+from glob import glob
 
 from autoanki.database import DatabaseManager
 from autoanki.tokenizer import ChineseTokenizer
@@ -75,15 +69,15 @@ class ChineseDatabaseManager(DatabaseManager):
         Args:
             `contents`:
         """
-        self.logger.info(f"Adding contents to database...")
+        self.logger.info("Adding contents to database...")
         word_appearances = {}
         # lines = contents.splitlines()
-        self.logger.debug(f"Tokenizing...")
+        self.logger.debug("Tokenizing...")
         start = time.time()
         tokens = self.tokenizer.tokenize(contents)
         end = time.time()
         if not tokens:
-            self.logger.error(f"No tokens returned")
+            self.logger.error("No tokens returned")
             return
         self.logger.info(
             f"Tokenized in {GREEN}{end - start:0.4f}{RESET} seconds. Tokens: [{len(tokens)}]"
@@ -91,7 +85,7 @@ class ChineseDatabaseManager(DatabaseManager):
         if not tokens:
             return
 
-        self.logger.debug(f"Generating dict...")
+        self.logger.debug("Generating dict...")
         start = time.time()
 
         for token in tokens:
@@ -111,7 +105,7 @@ class ChineseDatabaseManager(DatabaseManager):
         end = time.time()
         self.logger.info(f"Generated dict in {GREEN}{end - start:0.4f}{RESET} seconds")
 
-        self.logger.debug(f"Merging into existing dict...")
+        self.logger.debug("Merging into existing dict...")
         start = time.time()
 
         self.database = merge(self.database, new_dict)
@@ -147,7 +141,7 @@ class ChineseDatabaseManager(DatabaseManager):
             self.logger.info(f"File does not exist: [{filepath}]")
             return False
 
-        with open(filepath, "r") as file:
+        with open(filepath) as file:
             contents = file.read()
             return self._add_book(contents, book_name)
 
@@ -206,7 +200,6 @@ class ChineseDatabaseManager(DatabaseManager):
         except KeyError:
             self.logger.error(f"Error with: [{word}]")
             self.logger.error(params)
-        return
 
     def get_all_definitions(self) -> dict:
         return self.database
