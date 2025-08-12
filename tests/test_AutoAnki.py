@@ -1,8 +1,7 @@
 import os
-import pytest
 
-from autoanki.AutoAnki import AutoAnki
-from autoanki.dictionary import Dictionary
+#from autoanki import AutoAnki
+from autoanki.autoanki import AutoAnki
 
 TEST_DB_NAME = "tests/UnitTest.db"
 TEST_DECK_NAME = "tests/test.apkg"
@@ -116,7 +115,7 @@ class TestAutoAnki:
 
     #    def test_set_deck_settings(self):
     #        # TODO: Test each individual entry actually made it into the apkg file
-    #        # TODO: Re-enable include_audio when fuctionality is verified
+    #        # TODO: Re-enable include_audio when functionality is verified
     #        # TODO: This should not be a monolith settings function. It should be multiple separate functions
     #
     #        aa = AutoAnki()
@@ -140,7 +139,7 @@ class TestAutoAnki:
 
     def test_get_number_of_words(self):
         aa = AutoAnki()
-        assert 0 == aa.get_number_of_words()
+        assert aa.get_number_of_words() == 0
 
     def test_save_empty_dictionary_as_csv(self):
 
