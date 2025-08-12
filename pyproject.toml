@@ -1,13 +1,50 @@
 [build-system]
-requires = [
-    "setuptools>=42",
-    "wheel",
-    "chinese-converter>=1.1.1",
-    "beautifulsoup4~=4.12.2",
-    "genanki~=0.13.0",
-    "jieba~=0.42.1",
-    "pinyin~=0.4.0",
-    "requests~=2.32.0",
-    "wordfreq",
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "autoanki"
+dynamic = ["version"]
+description = "Automatically make Anki Decks for Chinese text"
+readme = "README.md"
+license = "MIT"
+requires-python = ">=3.10"
+authors = [
+    { name = "Jarvis Coghlin", email = "jarviscoghlin@gmail.com" },
 ]
-build-backend = "setuptools.build_meta"
+classifiers = [
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+]
+dependencies = [
+	"beautifulsoup4==4.13.4",
+	"chinese_converter==1.1.1",
+	"EbookLib==0.18",
+	"genanki==0.13.1",
+	"jieba==0.42.1",
+	"pandas==2.3.1",
+]
+
+[project.urls]
+"Bug Tracker" = "https://github.com/jarviscog/autoanki/issues"
+Homepage = "https://github.com/jarviscog/autoanki"
+
+[tool.hatch.version]
+path = "src/autoanki/__init__.py"
+
+[tool.hatch.metadata]
+include = ["src/autoanki/**"]
+sources = { autoanki = "src/autoanki" }
+
+[tool.hatch.envs.default]
+paths = ["src", "src/autoanki"]
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/autoanki",]
+
+[tool.hatch.build.targets.sdist]
+include = [
+    "/src",
+]
+
