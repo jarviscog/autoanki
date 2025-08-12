@@ -6,7 +6,6 @@ class DatabaseManager(ABC):
     def __init__(self, debug_level=20):
         """Contains all entries, including number of occurrences, word, and definition"""
         self.database = {}
-        pass
 
     @abstractmethod
     def get_columns(self) -> list:

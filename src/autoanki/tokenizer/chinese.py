@@ -1,9 +1,11 @@
 import logging
+
 import jieba
 
 from autoanki.tokenizer import Tokenizer
 
 logging.getLogger("jieba").setLevel(logging.WARNING)
+
 import chinese_converter
 from string import punctuation
 
@@ -16,7 +18,7 @@ CHINESE_PUNC = "　！？®｡。．.…、＂＃＄％＆＇（）＊＋，－�
 # TODO: This can be extended and implemented
 OTHER = "123456789ｗ９ｌｉｔｂｎｅｐｈⅠ Ⅱ Ⅲ Ⅳ "
 
-# TODO Remove straight numbers and english words
+# TODO: Remove straight numbers and english words
 
 
 class ChineseTokenizer(Tokenizer):
@@ -26,7 +28,7 @@ class ChineseTokenizer(Tokenizer):
 
         # Currently, each element tokenized will be checked against the dictionary,
         #   and shortented if there is not a match
-        # TODO It's silly how much processing power this might use in worst-case.
+        # TODO: It's silly how much processing power this might use in worst-case.
         #   Can we improve on this?
         return
         if dictionary:
@@ -38,7 +40,7 @@ class ChineseTokenizer(Tokenizer):
 
     def tokenize(self, line: str) -> list[str]:
 
-        # TODO jieba has more features that we should take advantage of to get better tokenizing
+        # TODO: jieba has more features that we should take advantage of to get better tokenizing
         dirty_words = jieba.lcut(line)
         clean_words = []
         self.logger.debug("Dirty words:")
@@ -63,7 +65,7 @@ class ChineseTokenizer(Tokenizer):
 
             clean_words.append(word)
 
-            # TODO remove this continue. I think this is here for faster output vs. better output
+            # TODO: remove this continue. I think this is here for faster output vs. better output
             continue
             # If there is a definition in the dictionary, skip any more processing
             if not word:
@@ -114,13 +116,13 @@ class ChineseTokenizer(Tokenizer):
                 clean_words.append(word)
                 continue
 
-            # TODO 2 repeated, 1?
+            # TODO: 2 repeated, 1?
             #   点点头
             #   长长的
-            # TODO 的 at the end?
-            # TODO 2 repeated, 2 repeated?
+            # TODO: 的 at the end?
+            # TODO: 2 repeated, 2 repeated?
             #   起起伏伏
-            # TODO Some gramatical patterns?
+            # TODO: Some gramatical patterns?
             # 在。。。上
 
             if len(word) == 2:

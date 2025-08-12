@@ -16,6 +16,7 @@ from pprint import pformat
 from autoanki.adapters import *
 from autoanki.DeckManager import DeckManager
 
+
 BLACK = "\u001b[30m"
 RED = "\u001b[31m"
 GREEN = "\u001b[32m"
