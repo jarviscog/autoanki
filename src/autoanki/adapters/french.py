@@ -3,30 +3,29 @@ from autoanki.adapters.base import LanguageAdapter
 
 class FrenchAdapter(LanguageAdapter):
     def __init__(self, settings):
-        pass
+        raise NotImplementedError
 
     def tokenize(self, text):
-        pass
+        raise NotImplementedError
 
     def store(self, tokens: list[str], group_name="default"):
-        pass
+        raise NotImplementedError
 
-    def lookup(self, token) -> dict | None:
-        pass
+    def _lookup(self, token) -> dict | None:
+        raise NotImplementedError
 
     def get_number_of_entries(self) -> int:
-        # TODO
-        return 0
+        raise NotImplementedError
 
     def get_groups(self) -> list[str]:
         # TODO
         return []
 
-    def available_settings(self) -> dict:
-        return {}
+    def available_settings(self) -> list:
+        raise NotImplementedError
 
     def get_settings(self):
-        pass
+        raise NotImplementedError
 
     def get_note_fields(self, token) -> dict:
         entry = self.lookup(token)
