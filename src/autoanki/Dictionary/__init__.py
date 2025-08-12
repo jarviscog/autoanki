@@ -1,1 +1,2 @@
-from .Dictionary import Dictionary
+from .base import Dictionary
+from .lookup_result import ChineseLookupResult
