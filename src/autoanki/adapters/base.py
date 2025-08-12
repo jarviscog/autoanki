@@ -1,5 +1,7 @@
 from abc import ABC, abstractmethod
 
+from autoanki.dictionary.base import Dictionary
+from autoanki.dictionary.lookup_result.base import LookupResult
 
 """
 All resources specific to a given language
@@ -14,7 +16,6 @@ class LanguageAdapter(ABC):
     @abstractmethod
     def tokenize(self, text: str) -> list[str]:
         """Tokenizes the input and returns the tokenized output"""
-        pass
 
     @abstractmethod
     def store(self, tokens: list[str], group_name="default"):
@@ -25,21 +26,16 @@ class LanguageAdapter(ABC):
         pass
 
     @abstractmethod
-    def lookup(self, token) -> dict | None:
-        pass
-
-    @abstractmethod
     def get_groups(self) -> list[str]:
         pass
 
     @abstractmethod
-    def available_settings(self) -> dict:
+    def available_settings(self) -> list:
         pass
 
     @abstractmethod
     def get_settings(self) -> dict:
         """Returns the current value for each setting"""
-        pass
 
     @abstractmethod
     def get_note_fields(self, token) -> dict:
@@ -56,11 +52,9 @@ class LanguageAdapter(ABC):
 
         """
         # TODO the code should be self documenting (make this into a class?)
-        pass
 
     @abstractmethod
     def get_tokens_to_generate(self) -> dict:
         """
         Get all tokens to turn into cards, after filters and missing definitions
         """
-        pass
