@@ -1,7 +1,5 @@
 import logging
-import os
 
-from pprint import pprint
 import genanki
 
 from autoanki.DeckManager.template import CARD_MODEL
@@ -39,7 +37,7 @@ class DeckManager:
 
         for token, word_dict in words.items():
 
-            word = word_dict.get("word", "WORD")
+            word = word_dict.get("word", None)
             word_alternate = word_dict.get("word_alternate", "WORD_ALT")
             pronunciation = word_dict.get("pronunciation", "PRO")
             pronunciation_alternate = word_dict.get(
@@ -47,13 +45,22 @@ class DeckManager:
             )
             part_of_speech = word_dict.get("part_of_speech", "POS")
 
-            definition = word_dict.get("definition", "No definition found")
-            #            if not definition:
-            #                self.logger.error(f"Tried to add word with no definition. Word: {word}")
-            #                continue
+            definition = word_dict.get("definition", None)
 
-            card_tags = [f"autoanki"]
+            if not word:
+                continue
+            if not word_alternate:
+                word_alternate = ""
+            if not pronunciation:
+                pronunciation = ""
+            if not pronunciation_alternate:
+                pronunciation_alternate = ""
+            if not part_of_speech:
+                part_of_speech = ""
+            if not definition:
+                continue
 
+            card_tags = ["autoanki"]
             note = genanki.Note(
                 model=CARD_MODEL,
                 tags=card_tags,
