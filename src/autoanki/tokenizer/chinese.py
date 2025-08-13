@@ -7,9 +7,8 @@ from autoanki.tokenizer import Tokenizer
 logging.getLogger("jieba").setLevel(logging.WARNING)
 
 import chinese_converter
-from string import punctuation
 
-# TODO Is there a way to do this in a smarter way? Maybe check if the characters are in a certain UTF-8 block?
+# TODO: Is there a way to do this in a smarter way? Maybe check if the characters are in a certain UTF-8 block?
 PUNCTUATION = """
 +,;:'()[]{}&*^%$#@!◇♦•·■◎∞=¥™©×
 """
